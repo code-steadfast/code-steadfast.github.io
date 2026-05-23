@@ -1,0 +1,779 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>SPLED meets Arduino Uno &#8212; Akshit Kobagapu</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=4004345f" />
+    <link rel="stylesheet" type="text/css" href="../../_static/lessons.css?v=25c46371" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=7026087e"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=1ae7504c"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'blogs/2025/spled_meets_arduino';</script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+    <meta name="docbuild:last-update" content="May 23, 2026"/> 
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../blogs/atom.xml"
+  title="Akshit Kobagapu"
+/>
+  
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/bio-photo-circle.png" class="logo__image only-light" alt="Akshit Kobagapu - Home"/>
+    <img src="../../_static/bio-photo-circle.png" class="logo__image only-dark pst-js-only" alt="Akshit Kobagapu - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../about.html">
+    About me
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../blogs.html">
+    Blogs
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../presentations.html">
+    Presentations
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../teaching.html">
+    Teaching
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/code-steadfast/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://www.linkedin.com/in/akshit-kobagapu/" title="LinkedIn" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-linkedin fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">LinkedIn</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://akshitkobagapu.com/blogs/atom.xml" title="Blog RSS feed" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-rss fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog RSS feed</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../about.html">
+    About me
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../blogs.html">
+    Blogs
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../presentations.html">
+    Presentations
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../teaching.html">
+    Teaching
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/code-steadfast/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://www.linkedin.com/in/akshit-kobagapu/" title="LinkedIn" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-linkedin fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">LinkedIn</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://akshitkobagapu.com/blogs/atom.xml" title="Blog RSS feed" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-rss fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Blog RSS feed</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<div class="ablog-sidebar-item ablog__postcard">
+   
+  <h2>
+     
+    <i class="fa fa-calendar"></i>
+    
+    <span>03 October 2025</span>
+    
+  </h2>
+  <ul>
+    <div class="ablog-sidebar-item ablog__postcard2">
+      
+  <li id="ablog-sidebar-item category ablog__category">
+    <span>
+      
+      <i class="fa-fw fa fa-folder-open"></i>
+      
+    </span>
+     
+    <a href="../category/learning.html">learning</a>
+      
+  </li>
+   
+  <li id="ablog-sidebar-item tags ablog__tags">
+    <span>
+       
+      <i class="fa-fw fa fa-tags"></i>
+       
+    </span>
+     
+    <a href="../tag/spl.html">spl</a>
+        
+    <a href="../tag/yanga.html">yanga</a>
+        
+    <a href="../tag/spled.html">spled</a>
+        
+    <a href="../tag/arduino.html">arduino</a>
+        
+    <a href="../tag/windows.html">windows</a>
+      
+  </li>
+   
+</div>
+  </ul>
+</div>
+</div>
+        <div class="sidebar-primary-item">
+<div class="ablog-sidebar-item ablog__recentposts">
+  <h3>
+    <a href="../../blogs.html">Recent Posts</a>
+  </h3>
+  <ul>
+     
+    <li>
+      <a href="../2026/smarty_p2.html">
+        25 January - Smarty - Matter on ESP32 with Zephyr - Part 2
+      </a>
+    </li>
+    
+    <li>
+      <a href="../2026/smarty_p1.html">
+        25 January - Smarty - Matter on ESP32 with Zephyr - Part 1
+      </a>
+    </li>
+    
+    <li>
+      <a href="../2026/hello_di%C3%A1taxis.html">
+        25 January - Hello Diátaxis
+      </a>
+    </li>
+    
+    <li>
+      <a href="spl_bootstrap.html">
+        24 November - SPL Bootstrap - Handle Python Version
+      </a>
+    </li>
+    
+    <li>
+      <a href="yanga_spl_components.html">
+        15 October - SPL components in YANGA
+      </a>
+    </li>
+    
+  </ul>
+</div>
+</div>
+        <div class="sidebar-primary-item">
+<div class="ablog-sidebar-item ablog__archives">
+  <h3>
+    <a href="../archive.html">Archives</a>
+  </h3>
+  <ul>
+     
+    <li>
+      <a href="../2026.html">2026 (3)</a>
+    </li>
+      
+    <li>
+      <a href="../2025.html">2025 (8)</a>
+    </li>
+      
+    <li>
+      <a href="../2024.html">2024 (3)</a>
+    </li>
+     
+  </ul>
+</div>
+</div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">SPLED meets Arduino Uno</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <section id="spled-meets-arduino-uno">
+<h1>SPLED meets Arduino Uno<a class="headerlink" href="#spled-meets-arduino-uno" title="Link to this heading">#</a></h1>
+<p>For our Software Product Line Engineering (SPLE) training we use the <a class="reference external" href="https://github.com/avengineers/SPLed">SPLED</a> repository,
+which is a simple software product line for controlling an LED with different variants:</p>
+<ul class="simple">
+<li><p>Disco: the LED blinks and one can change the blinking frequency</p></li>
+<li><p>Sleep: the LED has a constant color and one can change the brightness</p></li>
+<li><p>Spa: the LED brightness pulsates and cycles through different colors</p></li>
+</ul>
+<p>The current implementation creates an executable which can be run in the terminal and uses ANSI escape codes to change the color of the text.</p>
+<p>What I want to do is to port this example to an Arduino Uno, so that we can control an RGB LED with it.</p>
+<p>I will not use the CMake build environment based on the <a class="reference external" href="https://github.com/avengineers/spl-core">spl-core</a> CMake modules,
+but instead use <a class="reference external" href="https://github.com/cuinixam/yanga">YANGA</a> which is a software product line build environment written in Python.
+YANGA uses <code class="docutils literal notranslate"><span class="pre">.yaml</span></code> configuration files and generates the CMake files for the actual build.</p>
+<p>Although YANGA is platform independent, SPLED tools dependencies are only defined as <a class="reference external" href="https://scoop.sh/">scoop</a> packages for Windows.
+I am using a Windows 11 machine for this hacking session.</p>
+<section id="get-the-code">
+<h2>Get the code<a class="headerlink" href="#get-the-code" title="Link to this heading">#</a></h2>
+<p>I forked SPLED and created the YANGA configuration files to build the different variants as with the original spl-core environment.</p>
+<p>Clone the repository and setup the virtual environment to be able to run yanga:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="p">-</span><span class="n">-branch</span> <span class="n">arduino_platform</span> <span class="p">-</span><span class="n">-single-branch</span> <span class="n">https</span><span class="p">://</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">cuinixam</span><span class="p">/</span><span class="n">SPLed</span> <span class="n">C</span><span class="p">:\</span><span class="n">temp</span><span class="p">\</span><span class="n">spled</span>
+<span class="nb">cd </span><span class="n">C</span><span class="p">:\</span><span class="n">temp</span><span class="p">\</span><span class="n">spled</span>
+<span class="p">.\</span><span class="n">build</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-install</span>
+</pre></div>
+</div>
+<p>We can check the SPL configuration with:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">.\</span><span class="n">yanga</span><span class="p">.</span><span class="n">ps1</span> <span class="n">run</span> <span class="p">-</span><span class="n">-print</span>
+</pre></div>
+</div>
+<p>This should print the variants, components and supported platforms:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="n">temp</span>\<span class="n">spled</span><span class="o">&gt;</span> <span class="o">.</span>\<span class="n">yanga</span><span class="o">.</span><span class="n">ps1</span> <span class="n">run</span> <span class="o">--</span><span class="nb">print</span>
+<span class="n">START</span>    <span class="o">|</span> <span class="n">Starting</span> <span class="n">run</span>
+<span class="n">INFO</span>     <span class="o">|</span> <span class="o">-----------------------------------------</span>
+<span class="n">INFO</span>     <span class="o">|</span> <span class="n">Project</span> <span class="n">directory</span><span class="p">:</span> <span class="n">C</span><span class="p">:</span>\<span class="n">temp</span>\<span class="n">spled</span>
+<span class="n">INFO</span>     <span class="o">|</span> <span class="n">Parsed</span> <span class="mi">6</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span>
+<span class="n">INFO</span>     <span class="o">|</span> <span class="n">Found</span> <span class="mi">20</span> <span class="n">component</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span>
+<span class="n">INFO</span>     <span class="o">|</span> <span class="n">Found</span> <span class="mi">5</span> <span class="n">variant</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="n">INFO</span>     <span class="o">|</span>   <span class="o">-</span> <span class="n">BlinkLed</span>
+<span class="n">INFO</span>     <span class="o">|</span>   <span class="o">-</span> <span class="n">Base</span><span class="o">/</span><span class="n">Dev</span>
+<span class="n">INFO</span>     <span class="o">|</span>   <span class="o">-</span> <span class="n">Disco</span>
+<span class="n">INFO</span>     <span class="o">|</span>   <span class="o">-</span> <span class="n">Sleep</span>
+<span class="n">INFO</span>     <span class="o">|</span>   <span class="o">-</span> <span class="n">Spa</span>
+<span class="n">INFO</span>     <span class="o">|</span> <span class="n">Found</span> <span class="mi">4</span> <span class="n">platforms</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="n">INFO</span>     <span class="o">|</span>   <span class="o">-</span> <span class="n">win_exe</span>
+<span class="n">INFO</span>     <span class="o">|</span>   <span class="o">-</span> <span class="n">gtest</span>
+<span class="n">INFO</span>     <span class="o">|</span>   <span class="o">-</span> <span class="n">arduino_nano</span>
+<span class="n">INFO</span>     <span class="o">|</span>   <span class="o">-</span> <span class="n">arduino_uno_r3</span>
+<span class="n">INFO</span>     <span class="o">|</span> <span class="n">Found</span> <span class="n">pipeline</span> <span class="n">config</span><span class="p">:</span>
+<span class="n">INFO</span>     <span class="o">|</span>     <span class="n">Group</span><span class="p">:</span> <span class="n">install</span>
+<span class="n">INFO</span>     <span class="o">|</span>         <span class="n">CreateVEnv</span>
+<span class="n">INFO</span>     <span class="o">|</span>         <span class="n">ScoopInstall</span>
+<span class="n">INFO</span>     <span class="o">|</span>         <span class="n">WestInstall</span>
+<span class="n">INFO</span>     <span class="o">|</span>         <span class="n">GenerateEnvSetupScript</span>
+<span class="n">INFO</span>     <span class="o">|</span>     <span class="n">Group</span><span class="p">:</span> <span class="n">gen</span>
+<span class="n">INFO</span>     <span class="o">|</span>         <span class="n">KConfigGen</span>
+<span class="n">INFO</span>     <span class="o">|</span>     <span class="n">Group</span><span class="p">:</span> <span class="n">build</span>
+<span class="n">INFO</span>     <span class="o">|</span>         <span class="n">GenerateBuildSystemFiles</span>
+<span class="n">INFO</span>     <span class="o">|</span>         <span class="n">ExecuteBuild</span>
+<span class="n">INFO</span>     <span class="o">|</span> <span class="o">-----------------------------------------</span>
+<span class="n">STOP</span>     <span class="o">|</span> <span class="n">Finished</span> <span class="n">run</span> <span class="ow">in</span> <span class="mf">0.05</span><span class="n">s</span>
+<span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="n">temp</span>\<span class="n">spled</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Our focus will be to build the <code class="docutils literal notranslate"><span class="pre">Spa</span></code> variant for the <code class="docutils literal notranslate"><span class="pre">arduino_uno_r3</span></code> platform.</p>
+<section id="build-the-spa-variant-for-arduino-uno-r3">
+<h3>Build the Spa variant for Arduino Uno R3<a class="headerlink" href="#build-the-spa-variant-for-arduino-uno-r3" title="Link to this heading">#</a></h3>
+<p>In order to build the Spa variant for the Arduino platform we have to make sure that the Windows executable (<code class="docutils literal notranslate"><span class="pre">win_exe</span></code> platform) specific components are not included when building for Arduino.
+YANGA supports variant and platform specific components, so we can define that some components are only included for the <code class="docutils literal notranslate"><span class="pre">win_exe</span></code> platform.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spa</span>
+<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The LED brightness pulsates and can cycle through different colors</span>
+<span class="w">  </span><span class="nt">components</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rte</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spled</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">power_signal_processing</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">light_controller</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">power_button</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main_control_knob</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">brightness_controller</span>
+<span class="w">  </span><span class="nt">features_selection_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">variants/Spa/config.txt</span>
+<span class="w">  </span><span class="nt">platforms</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">win_exe</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">components</span><span class="p">:</span>
+<span class="w">      </span><span class="c1"># Windows main</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+<span class="w">      </span><span class="c1"># Simulates a period task using `usleep`</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">os</span>
+<span class="w">      </span><span class="c1"># Prints to console using ANSI escape codes</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">console_interface</span>
+<span class="w">      </span><span class="c1"># Reads key presses to detect `power on/off` and `up/down`</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">keyboard_interface</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The variant platform specific components should be used to defined components which are relevant for this specific variant when built for the given platform.
+<code class="docutils literal notranslate"><span class="pre">main</span></code> and <code class="docutils literal notranslate"><span class="pre">os</span></code> components are needed actually by all variants when built for <code class="docutils literal notranslate"><span class="pre">win_exe</span></code>, so placing them in the variant platform specific section is not ideal.</p>
+<p>For this, YANGA supports platform specific components at the platform level, which would be a better place to define these components.</p>
+</div>
+<p>To be continued …</p>
+</section>
+</section>
+</section>
+
+<div class="section ablog__blog_comments">
+     
+<div class="section ablog__prev-next">
+  <span class="ablog__prev">
+     
+    <a href="what_you_did_not_want_to_know_about_your_code.html">
+      
+      <i class="fa fa-arrow-circle-left"></i>
+      
+      <span>What you did not want to know about your code</span>
+    </a>
+    
+  </span>
+  <span class="ablog__spacer">&nbsp;</span>
+  <span class="ablog__next">
+     
+    <a href="yanga_spl_components.html">
+      <span>SPL components in YANGA</span>
+      
+      <i class="fa fa-arrow-circle-right"></i>
+      
+    </a>
+    
+  </span>
+</div>
+  
+</div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-the-code">Get the code</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-the-spa-variant-for-arduino-uno-r3">Build the Spa variant for Arduino Uno R3</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/blogs/2025/spled_meets_arduino.md.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, Akshit Kobagapu.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
