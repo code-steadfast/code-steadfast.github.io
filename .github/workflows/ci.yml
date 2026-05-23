@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install pypeline runner
+        run: pip install pypeline-runner>=1.24
+        shell: bash
+      - name: Run pypeline
+        run: pypeline run
+        shell: bash
+      # If we've pushed to main, push the book's HTML to github-pages
+      - name: GitHub Pages action
+        if: github.ref_name == 'main'
+        uses: peaceiris/actions-gh-pages@v3.9.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/docs
+          cname: akshitkobagapu.com
