@@ -23,6 +23,7 @@ classifiers = [
 
 dependencies = [
   "marimo>=0.11,<1",
+  "markdown>=3,<4",
   "matplotlib>=3.10,<4",
   "py-app-dev>=2.5,<3",
   "typer>=0,<1",

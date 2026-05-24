@@ -50,7 +50,7 @@ source_suffix = [
 ]
 
 templates_path = ["_templates"]
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "timeline.md"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "timeline.md", "about.md"]
 
 # copy button for code block
 extensions.append("sphinx_copybutton")

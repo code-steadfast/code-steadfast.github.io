@@ -12,9 +12,3 @@ Welcome to my personal page.
 About me ℹ️
 :::
 ::::
-
-```{toctree}
-:maxdepth: 2
-:hidden:
-about
-```

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>{{ title }} — Akshit Kobagapu</title>
+<link rel="icon" href="_static/bio-photo-circle.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="_landing/landing.css" />
+</head>
+<body class="about-page">
+
+<nav>
+  <a class="brand" href="index.html">akshitkobagapu.com</a>
+  <ul>
+    <li><a href="index.html">← home</a></li>
+  </ul>
+</nav>
+
+<section class="about-hero">
+  <div class="eyebrow">// about</div>
+  <h1>{{ title }}<span class="accent">.</span></h1>
+</section>
+
+<section class="bio">
+  <div class="bio-grid">
+    <img class="bio-photo" src="_static/bio-photo-circle.png" alt="" aria-hidden="true" />
+    <div class="bio-prose">
+      {{ body_html | safe }}
+    </div>
+  </div>
+</section>
+
+<section class="timeline-section" id="timeline">
+  <div class="eyebrow">// the long version</div>
+  <h2>Over a decade of <span class="accent">building things that matter.</span></h2>
+  <div class="timeline">
+    {%- for entry in timeline_entries %}
+    <div class="tl-entry in">
+      <div class="year">{{ entry.year }}</div>
+      <div class="title">{{ entry.title | md }}</div>
+      <div class="desc">{{ entry.description | md }}</div>
+    </div>
+    {%- endfor %}
+  </div>
+</section>
+
+<footer>
+  <div>© <span id="year"></span> Akshit Kobagapu</div>
+  <div>
+    <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">github</a>
+    <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">linkedin</a>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ----- Timeline typewriter -----
+  (function () {
+    const entries = document.querySelectorAll('.tl-entry');
+    if (!entries.length) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function splitChars(root) {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      const textNodes = [];
+      while (walker.nextNode()) textNodes.push(walker.currentNode);
+      const chars = [];
+      for (const node of textNodes) {
+        const text = node.nodeValue;
+        if (!text) continue;
+        const frag = document.createDocumentFragment();
+        for (const ch of Array.from(text)) {
+          const span = document.createElement('span');
+          span.className = 'char';
+          span.textContent = ch;
+          frag.appendChild(span);
+          chars.push(span);
+        }
+        node.parentNode.replaceChild(frag, node);
+      }
+      return chars;
+    }
+
+    const data = Array.from(entries).map(el => ({
+      el,
+      groups: [
+        { root: el.querySelector('.year'),  delay: 30, chars: [] },
+        { root: el.querySelector('.title'), delay: 14, chars: [] },
+        { root: el.querySelector('.desc'),  delay: 5,  chars: [] },
+      ],
+    }));
+
+    for (const d of data) {
+      for (const g of d.groups) g.chars = splitChars(g.root);
+    }
+
+    if (reduced) {
+      for (const d of data) {
+        for (const g of d.groups) {
+          for (const c of g.chars) c.classList.add('shown');
+        }
+      }
+      return;
+    }
+
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+    async function typeEntry(d) {
+      const caret = document.createElement('span');
+      caret.className = 'typing-caret';
+      for (const g of d.groups) {
+        g.root.prepend(caret);
+        for (const c of g.chars) {
+          c.classList.add('shown');
+          c.after(caret);
+          await sleep(g.delay);
+        }
+      }
+      caret.remove();
+    }
+
+    const io = new IntersectionObserver((items) => {
+      for (const e of items) {
+        if (!e.isIntersecting) continue;
+        const d = data.find(x => x.el === e.target);
+        if (!d || d.started) continue;
+        d.started = true;
+        typeEntry(d);
+        io.unobserve(e.target);
+      }
+    }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
+
+    for (const d of data) io.observe(d.el);
+  })();
+</script>
+
+</body>
+</html>

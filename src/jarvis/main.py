@@ -7,6 +7,7 @@ from py_app_dev.core.exceptions import UserNotificationException
 from py_app_dev.core.logging import logger, setup_logger, time_it
 
 from jarvis import __version__
+from jarvis.about import AboutWriter
 from jarvis.blog import BlogWritter
 from jarvis.timeline import TimelineWriter
 
@@ -43,6 +44,16 @@ def blog(
     tags: Annotated[list[str] | None, typer.Option()] = None,
 ) -> None:
     BlogWritter(output_dir, title, category, tags).write()
+
+
+@app.command()
+@time_it("about")
+def about(
+    about_md_file: Path = typer.Option(help="Source markdown file (docs/about.md)."),  # noqa: B008
+    timeline_file: Path = typer.Option(help="Input timeline JSON file."),  # noqa: B008
+    output_dir: Path = typer.Option(help="Output directory (typically the Sphinx build root)."),  # noqa: B008
+) -> None:
+    AboutWriter(about_md_file, timeline_file, output_dir).write()
 
 
 def main() -> int:
