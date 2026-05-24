@@ -9,6 +9,7 @@ from py_app_dev.core.logging import logger, setup_logger, time_it
 from jarvis import __version__
 from jarvis.about import AboutWriter
 from jarvis.blog import BlogWritter
+from jarvis.landing import LandingWriter
 from jarvis.timeline import TimelineWriter
 
 package_name = "jarvis"
@@ -54,6 +55,14 @@ def about(
     output_dir: Path = typer.Option(help="Output directory (typically the Sphinx build root)."),  # noqa: B008
 ) -> None:
     AboutWriter(about_md_file, timeline_file, output_dir).write()
+
+
+@app.command()
+@time_it("landing")
+def landing(
+    output_dir: Path = typer.Option(help="Output directory (typically the Sphinx build root)."),  # noqa: B008
+) -> None:
+    LandingWriter(output_dir).write()
 
 
 def main() -> int:
