@@ -2,73 +2,73 @@
   "entries": [
     {
       "year": 2014,
-      "title": "National Level Technical Paper Presentation",
-      "description": "Presented a national level technical paper on **Moletronics - An Invisible Technology** during my engineering studies."
+      "title": "Technical Paper on Moletronics",
+      "description": "Presented a national level technical paper on **Moletronics — An Invisible Technology** during my engineering studies."
     },
     {
       "year": 2015,
-      "title": "Robosapiens Workshop - Robotryst 2015",
-      "description": "My first coding experience — wrote code to flash into a robot for line following and object detection at the Robosapiens fundamentals of robotics and electronics workshop."
+      "title": "First Coding Experience",
+      "description": "My first hands-on coding — wrote embedded code to flash into a robot for line following and object detection at the **Robosapiens** workshop."
     },
     {
       "year": 2015,
-      "title": "B.Tech Final Project - Healthcare Monitoring",
-      "description": "Designed an **Emerging Technologies for Specific Patients Health Care Monitoring** system using Zigbee protocol and LTE messaging to decrease patient death rates due to lack of caretakers in emergency conditions."
+      "title": "B.Tech Final Project — Healthcare Monitoring",
+      "description": "Designed a patient health care monitoring system using **Zigbee** protocol and **LTE** messaging to enable emergency alerts when caretakers are unavailable."
     },
     {
       "year": 2015,
-      "title": "Graduated in Electronics and Communication Engineering",
-      "description": "Completed my B.Tech in Electronics and Communication Engineering. From the 3rd year, I taught fellow students topics like Control Systems, Embedded Systems, Digital Signal Processing, and Microprocessors while working part-time to fund my education."
+      "title": "B.Tech in Electronics and Communication Engineering",
+      "description": "Completed my engineering degree. From the third year onward, I taught fellow students Control Systems, Embedded Systems, and Microprocessors — while working part-time to fund my education."
     },
     {
       "year": 2016,
-      "title": "PG Diploma in Embedded Systems - CDAC Kolkata",
-      "description": "Completed a Post Graduate Diploma in Embedded Systems Design at **CDAC Kolkata** with **Grade A**. My project involved developing a GPIO Device Driver on Linux for ARM to drive motors and LEDs."
+      "title": "PG Diploma — CDAC Kolkata",
+      "description": "Post Graduate Diploma in Embedded Systems Design with **Grade A**. My project was a **GPIO Device Driver on Linux** for ARM to control motors and LEDs."
     },
     {
       "year": 2016,
-      "title": "Continental Automotive - Graduate Engineer Trainee",
-      "description": "Joined **Continental Automotive** in the Vehicle Dynamics business unit. Automated the software milestone resource analysis process using Perl — extracting COSIPA data, generating reports, and updating internal webpages."
+      "title": "Continental Automotive",
+      "description": "Started my career at **Continental Automotive** in the Vehicle Dynamics business unit. I automated the resource analysis process using **Perl** — extracting data, generating reports, and updating internal webpages."
     },
     {
       "year": 2017,
-      "title": "Worldwide Resource Estimation Responsibility",
-      "description": "Promoted to Associate Engineer. Took worldwide responsibility for resource estimation across Asia, Germany, and the USA. Traveled to Germany to build the TB2015 control function database and estimate resources for MKC1 projects (Ford, BMW)."
+      "title": "Worldwide Resource Estimation",
+      "description": "Took worldwide responsibility for control function resource estimation across Asia, Germany, and the USA. Traveled to Germany to build the TB2015 database for MKC1 projects."
     },
     {
       "year": 2018,
-      "title": "Git Ambassador & Tricore Support",
-      "description": "Promoted to Executive Engineer. Became a Git Ambassador, training a 40-member team on GitHub workflows. Extended the resource estimation template to support new tricore microcontrollers. Fully automated testing, trace collection, report generation, and MKS check-in."
+      "title": "Git Ambassador",
+      "description": "Became a Git Ambassador, training a 40-member team on GitHub workflows. Extended resource estimation to support tricore microcontrollers and fully automated the end-to-end testing and reporting pipeline."
     },
     {
       "year": 2019,
-      "title": "GLIWA T1 Timing Analysis Integration",
-      "description": "Promoted to Senior Engineer. Traveled to Frankfurt for 3 months to integrate **GLIWA T1** timing analysis into the RTM component for Vector OS. Collected and analyzed timing parameters (gross execution time, response time, slack time, etc.) for vision control software across all global projects."
+      "title": "GLIWA T1 Timing Analysis",
+      "description": "Spent 3 months in Frankfurt integrating **GLIWA T1** timing analysis into the RTM component for Vector OS. Analyzed timing parameters for vision control software across all global projects."
     },
     {
       "year": 2021,
-      "title": "Technical Architect - Python & Timing Analysis",
-      "description": "Promoted to Technical Architect. Developed a Python application to extract detailed timing data from GLIWA T1 enabled software — my first experience with Python and databases. Supported all projects worldwide with timing and scheduling analysis."
+      "title": "Technical Architect",
+      "description": "Developed a **Python application** to extract detailed timing data from GLIWA T1 enabled software — my first experience with Python and databases. It became the standard tool for worldwide timing analysis."
     },
     {
       "year": 2022,
-      "title": "Moved to Germany - Marquardt GmbH",
-      "description": "After 6.5 years at Continental (15 spot awards, consistently exceeding expectations), moved to Germany and joined **Marquardt GmbH** as an Advanced Software Development Engineer in the Rhine-Main Team. Started working on the SPLE platform (spl-core) and build automation."
+      "title": "Marquardt GmbH, Germany",
+      "description": "After 6.5 years at Continental and 15 spot awards, moved to Germany and joined **Marquardt GmbH** as an Advanced Software Development Engineer. Started working on the SPLE platform build system."
     },
     {
       "year": 2023,
-      "title": "RAM/ROM Reporting & Build Extensions",
-      "description": "Introduced automated RAM/ROM consumption reporting into the build process — giving project teams resource visibility for the first time. Co-developed spl-build-extensions to automate post-processing artifact generation, replacing numerous manual scripts and saving approximately one day of manual work per project."
+      "title": "RAM/ROM Reporting & Build Automation",
+      "description": "Introduced automated **RAM/ROM consumption reporting** into the build process — giving project teams resource visibility for the first time. Co-developed build extensions that replaced numerous manual scripts, saving approximately one day per project per variant."
     },
     {
       "year": 2024,
-      "title": "Eliminating License Costs with Custom Python Tools",
-      "description": "Built custom Python tools to generate ODX/PDX/OUC artifacts and vFlashpacks, completely replacing expensive Vector tool licenses and eliminating recurring annual license costs for the company."
+      "title": "Replacing Licensed Tools with Python",
+      "description": "Built custom Python tooling to generate **ODX/PDX/OUC** artifacts and **vFlashpacks**, completely replacing expensive Vector tool licenses and eliminating recurring annual costs."
     },
     {
       "year": 2025,
-      "title": "SPLE Platform Trainer & AI Integration",
-      "description": "Co-conducted **10+ SPLE Platform Basic Training** sessions. Co-introduced AI-assisted development workflows for the SPLE platform, already adopted by teams achieving up to **85% code coverage** for legacy components in a single day."
+      "title": "SPLE Platform Trainer & AI Adoption",
+      "description": "Co-conducted **10+ SPLE Platform Basic Training** sessions. Co-introduced AI-assisted development workflows, already adopted by teams achieving up to **85% code coverage** for legacy components in a single day."
     }
   ]
 }
