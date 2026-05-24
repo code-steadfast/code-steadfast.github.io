@@ -16,6 +16,6 @@ I am interested in software product line engineering, build systems, automation,
 
 ## A rough timeline
 
-```{include} timeline.md
-
-```
+:::{include} timeline.md
+:parser: myst_parser.sphinx_
+:::
