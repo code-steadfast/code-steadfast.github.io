@@ -43,7 +43,6 @@ dev = [
   # docs
   "myst-parser>=4",
   "pre-commit>=4,<5",
-  "types-Markdown>=3,<4",
   "pydata-sphinx-theme>=0,<1",
   "pytest>=8,<9",
   "pytest-cov>=6,<7",
@@ -56,6 +55,7 @@ dev = [
   "sphinx-togglebutton>=0,<1",
   "sphinxcontrib-mermaid>=1,<2",
   "sphinxext-rediraffe>=0,<1",
+  "types-markdown>=3,<4",
 ]
 
 [tool.ruff]
