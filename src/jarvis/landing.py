@@ -1,5 +1,6 @@
 """Generate the standalone HTML landing page."""
 
+import shutil
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -25,3 +26,11 @@ class LandingWriter:
         tmpl = env.get_template("index.html.j2")
         html = tmpl.render()
         (self.output_dir / "index.html").write_text(html, encoding="utf-8")
+
+        # Copy CSS assets to the output directory
+        assets_src = Path(__file__).parent / "templates" / "landing" / "assets"
+        assets_dst = self.output_dir / "assets"
+        if assets_src.exists():
+            if assets_dst.exists():
+                shutil.rmtree(assets_dst)
+            shutil.copytree(assets_src, assets_dst)

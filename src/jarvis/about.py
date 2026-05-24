@@ -75,7 +75,7 @@ class AboutWriter:
 
         # Copy CSS assets to the output directory
         assets_src = Path(__file__).parent / "templates" / "landing" / "assets"
-        assets_dst = self.output_dir / "_landing"
+        assets_dst = self.output_dir / "assets"
         if assets_src.exists():
             if assets_dst.exists():
                 shutil.rmtree(assets_dst)
