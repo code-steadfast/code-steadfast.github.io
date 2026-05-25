@@ -8,26 +8,187 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/landing.css" />
-</head>
-<body class="about-page">
+<style>
+:root {
+  --bg: #0f1114;
+  --surface: #191c20;
+  --text: #eae8de;
+  --muted: #8f9196;
+  --dim: #5d6065;
+  --border: #2a2d32;
+  --accent: #4ecdc4;
+  --accent2: #ff6b6b;
+  --mono: "Fira Code", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
-<nav>
-  <a class="brand" href="index.html">akshitkobagapu.com</a>
-  <ul>
-    <li><a href="index.html">← home</a></li>
-  </ul>
+/* ── Slides ── */
+.slide {
+  min-height: 100vh; scroll-snap-align: start;
+  display: flex; align-items: center; justify-content: center;
+  padding: 4rem 2.5rem; position: relative;
+}
+
+/* Dot nav */
+.dot-nav {
+  position: fixed; right: 1.5rem; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 0.8rem; z-index: 100;
+}
+.dot-nav a {
+  display: block; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--dim); transition: background 0.3s, transform 0.3s;
+}
+.dot-nav a.active { background: var(--accent); transform: scale(1.3); }
+.dot-nav a:hover { background: var(--accent); }
+
+/* Slide content reveal */
+.slide-content {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.slide-content.in { opacity: 1; transform: translateY(0); }
+
+/* ── Slide 1: Hero ── */
+.slide-hero { flex-direction: column; text-align: center; }
+.slide-hero img {
+  width: 140px; height: 140px; border-radius: 50%;
+  object-fit: cover; object-position: center 20%;
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 40px rgba(78,205,196,0.12);
+  margin-bottom: 2.5rem;
+}
+.slide-hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700;
+  line-height: 0.95; letter-spacing: -0.04em; margin-bottom: 1.5rem;
+}
+.slide-hero h1 .accent { color: var(--accent); }
+.slide-hero .hook {
+  font-family: var(--mono); font-size: clamp(0.85rem, 1.3vw, 1rem);
+  color: var(--muted); max-width: 42ch; margin: 0 auto;
+}
+.slide-hero .nav-links {
+  margin-top: 2rem; display: flex; gap: 1.5rem;
+}
+.slide-hero .nav-links a {
+  font-family: var(--mono); font-size: 0.85rem;
+  color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--dim);
+}
+.slide-hero .nav-links a:hover { border-color: var(--accent); }
+
+/* ── Slide 2: Bio ── */
+.slide-bio { flex-direction: column; }
+.bio-card {
+  max-width: 800px; width: 100%;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 2.5rem;
+}
+.bio-card h2 {
+  font-size: 1.6rem; font-weight: 700; margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+.bio-card h2 .accent { color: var(--accent); }
+.bio-prose p { margin-bottom: 1rem; color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+.bio-prose p:last-child { margin-bottom: 0; }
+.bio-prose strong { color: var(--text); font-weight: 600; }
+.bio-prose em { color: var(--accent); font-style: italic; }
+
+/* ── Slide 3+: Timeline ── */
+.slide-timeline { flex-direction: column; }
+.tl-wrap {
+  max-width: 800px; width: 100%;
+}
+.tl-wrap h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 700;
+  letter-spacing: -0.02em; text-align: center; margin-bottom: 3rem;
+}
+.tl-wrap h2 .accent { color: var(--accent); }
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: var(--border); border-radius: 2px;
+}
+.tl-entry {
+  position: relative; margin-bottom: 2rem; padding: 1.2rem 1.5rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; transition: border-color 0.3s;
+}
+.tl-entry:hover { border-color: var(--accent); }
+.tl-entry::before {
+  content: ''; position: absolute; left: -2.55rem; top: 1.5rem;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent); border: 2px solid var(--bg);
+}
+.tl-entry .year {
+  font-family: var(--mono); font-size: 0.78rem; font-weight: 700;
+  color: var(--accent); margin-bottom: 0.2rem;
+}
+.tl-entry .title { font-weight: 600; font-size: 1rem; margin-bottom: 0.2rem; }
+.tl-entry .title p { margin: 0; }
+.tl-entry .desc { color: var(--muted); font-size: 0.85rem; line-height: 1.5; }
+.tl-entry .desc p { margin: 0; }
+
+/* Typewriter */
+.char { opacity: 0; transition: opacity 0.04s; }
+.char.shown { opacity: 1; }
+.typing-caret {
+  display: inline-block; width: 0.55ch; height: 1.1em;
+  background: var(--accent); vertical-align: text-bottom;
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ── Footer slide ── */
+.slide-footer-text {
+  position: absolute; bottom: 1.5rem;
+  font-family: var(--mono); font-size: 0.75rem; color: var(--dim);
+}
+.slide-footer-text a { color: var(--muted); text-decoration: none; margin: 0 0.5rem; }
+.slide-footer-text a:hover { color: var(--accent); }
+
+.scroll-arrow {
+  position: absolute; bottom: 2rem;
+  font-family: var(--mono); font-size: 0.8rem; color: var(--dim);
+  animation: bob 1.8s ease-in-out infinite;
+}
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.25rem; }
+  .dot-nav { display: none; }
+  .bio-card { padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Dot navigation -->
+<nav class="dot-nav">
+  <a href="#s1" title="About"></a>
+  <a href="#s2" title="Bio"></a>
+  <a href="#s3" title="Timeline"></a>
 </nav>
 
-<section class="about-hero">
-  <div class="eyebrow">// about</div>
-  <h1>About me<span class="accent">.</span></h1>
-  <p class="about-hook">From a small town in India to building tools that power automotive teams worldwide.</p>
+<!-- SLIDE 1: Hero -->
+<section class="slide slide-hero" id="s1">
+  <div class="slide-content">
+    <img src="_static/bio-photo-circle.png" alt="Akshit Kobagapu" />
+    <h1>About me<span class="accent">.</span></h1>
+    <p class="hook">From a small town in India to building tools that power automotive teams worldwide.</p>
+    <div class="nav-links">
+      <a href="index.html">← Home</a>
+      <a href="#s3">Timeline ↓</a>
+    </div>
+  </div>
+  <div class="scroll-arrow">↓</div>
 </section>
 
-<section class="bio">
-  <div class="bio-grid">
-    <img class="bio-photo" src="_static/bio-photo-circle.png" alt="" aria-hidden="true" />
+<!-- SLIDE 2: Bio -->
+<section class="slide slide-bio" id="s2">
+  <div class="slide-content bio-card">
+    <h2>My <span class="accent">story.</span></h2>
     <div class="bio-prose">
       <p>I was born in 1994 into a family that was rich in values but short on everything else. My father was a school teacher — a man who never earned much but walked through his town like a king, because everyone knew him, respected him, and trusted him. My mother held the house together in ways only Indian mothers know how. I was the middle child, often sick, often home. But being home meant I read everything I could get my hands on, studied on my own, and somehow kept finishing first or second in my class. Growing up watching my parents stretch every rupee taught me something no textbook ever could — that the things worth having are the things you fight for.</p>
 <p>That belief was put to the test during a science exam I was completely unprepared for. I had been too sick to study, and I sat there staring at the paper, tears rolling down, convinced this was the day my streak ended. Then my science teacher walked over, leaned in, and said something I carry with me to this day: <em>"You sat in my class. You listened. You understood. Now stop crying and write what you know — in your own words. If I can understand it, you get the marks."</em> I wrote. I scored 95%. That was the day I stopped trying to memorize the world and started trying to understand it.</p>
@@ -40,99 +201,122 @@
   </div>
 </section>
 
-<section class="timeline-section" id="timeline">
-  <div class="eyebrow">// the long version</div>
-  <h2>Over a decade of <span class="accent">building things that matter.</span></h2>
-  <div class="timeline">
-    <div class="tl-entry in">
-      <div class="year">2014</div>
-      <div class="title">Technical Paper on Moletronics</div>
-      <div class="desc">Presented a national level technical paper on <strong>Moletronics — An Invisible Technology</strong> during my engineering studies.</div>
-    </div>
-    <div class="tl-entry in">
-      <div class="year">2015</div>
-      <div class="title">First Coding Experience</div>
-      <div class="desc">My first hands-on coding — wrote embedded code to flash into a robot for line following and object detection at the <strong>Robosapiens</strong> workshop.</div>
-    </div>
-    <div class="tl-entry in">
-      <div class="year">2015</div>
-      <div class="title">B.Tech Final Project — Healthcare Monitoring</div>
-      <div class="desc">Designed a patient health care monitoring system using <strong>Zigbee</strong> protocol and <strong>LTE</strong> messaging to enable emergency alerts when caretakers are unavailable.</div>
-    </div>
-    <div class="tl-entry in">
-      <div class="year">2015</div>
-      <div class="title">B.Tech in Electronics and Communication Engineering</div>
-      <div class="desc">Completed my engineering degree. From the third year onward, I taught fellow students Control Systems, Embedded Systems, and Microprocessors — while working part-time to fund my education.</div>
-    </div>
-    <div class="tl-entry in">
-      <div class="year">2016</div>
-      <div class="title">PG Diploma — CDAC Kolkata</div>
-      <div class="desc">Post Graduate Diploma in Embedded Systems Design with <strong>Grade A</strong>. My project was a <strong>GPIO Device Driver on Linux</strong> for ARM to control motors and LEDs.</div>
-    </div>
-    <div class="tl-entry in">
-      <div class="year">2016</div>
-      <div class="title">Continental Automotive</div>
-      <div class="desc">Started my career at <strong>Continental Automotive</strong> in the Vehicle Dynamics business unit. I automated the resource analysis process using <strong>Perl</strong> — extracting data, generating reports, and updating internal webpages.</div>
-    </div>
-    <div class="tl-entry in">
-      <div class="year">2017</div>
-      <div class="title">Worldwide Resource Estimation</div>
-      <div class="desc">Took worldwide responsibility for control function resource estimation across Asia, Germany, and the USA. Traveled to Germany to build the TB2015 database for MKC1 projects.</div>
-    </div>
-    <div class="tl-entry in">
-      <div class="year">2018</div>
-      <div class="title">Git Ambassador</div>
-      <div class="desc">Became a Git Ambassador, training a 40-member team on GitHub workflows. Extended resource estimation to support tricore microcontrollers and fully automated the end-to-end testing and reporting pipeline.</div>
-    </div>
-    <div class="tl-entry in">
-      <div class="year">2019</div>
-      <div class="title">GLIWA T1 Timing Analysis</div>
-      <div class="desc">Spent 3 months in Frankfurt integrating <strong>GLIWA T1</strong> timing analysis into the RTM component for Vector OS. Analyzed timing parameters for vision control software across all global projects.</div>
-    </div>
-    <div class="tl-entry in">
-      <div class="year">2021</div>
-      <div class="title">Technical Architect</div>
-      <div class="desc">Developed a <strong>Python application</strong> to extract detailed timing data from GLIWA T1 enabled software — my first experience with Python and databases. It became the standard tool for worldwide timing analysis.</div>
-    </div>
-    <div class="tl-entry in">
-      <div class="year">2022</div>
-      <div class="title">Marquardt GmbH, Germany</div>
-      <div class="desc">After 6.5 years at Continental and 15 spot awards, moved to Germany and joined <strong>Marquardt GmbH</strong> as an Advanced Software Development Engineer. Started working on the SPLE platform build system.</div>
-    </div>
-    <div class="tl-entry in">
-      <div class="year">2023</div>
-      <div class="title">RAM/ROM Reporting &amp; Build Automation</div>
-      <div class="desc">Introduced automated <strong>RAM/ROM consumption reporting</strong> into the build process — giving project teams resource visibility for the first time. Co-developed build extensions that replaced numerous manual scripts, saving approximately one day per project per variant.</div>
-    </div>
-    <div class="tl-entry in">
-      <div class="year">2024</div>
-      <div class="title">Replacing Licensed Tools with Python</div>
-      <div class="desc">Built custom Python tooling to generate <strong>ODX/PDX/OUC</strong> artifacts and <strong>vFlashpacks</strong>, completely replacing expensive Vector tool licenses and eliminating recurring annual costs.</div>
-    </div>
-    <div class="tl-entry in">
-      <div class="year">2025–present</div>
-      <div class="title">SPLE Platform Trainer &amp; AI Adoption</div>
-      <div class="desc">Co-conducted <strong>10+ SPLE Platform Basic Training</strong> sessions. Co-introduced AI-assisted development workflows, already adopted by teams achieving up to <strong>85% code coverage</strong> for legacy components in a single day.</div>
+<!-- SLIDE 3: Timeline -->
+<section class="slide slide-timeline" id="s3">
+  <div class="slide-content tl-wrap">
+    <h2>Over a decade of <span class="accent">building things that matter.</span></h2>
+    <div class="timeline">
+      <div class="tl-entry">
+        <div class="year">2014</div>
+        <div class="title">Technical Paper on Moletronics</div>
+        <div class="desc">Presented a national level technical paper on <strong>Moletronics — An Invisible Technology</strong> during my engineering studies.</div>
+      </div>
+      <div class="tl-entry">
+        <div class="year">2015</div>
+        <div class="title">First Coding Experience</div>
+        <div class="desc">My first hands-on coding — wrote embedded code to flash into a robot for line following and object detection at the <strong>Robosapiens</strong> workshop.</div>
+      </div>
+      <div class="tl-entry">
+        <div class="year">2015</div>
+        <div class="title">B.Tech Final Project — Healthcare Monitoring</div>
+        <div class="desc">Designed a patient health care monitoring system using <strong>Zigbee</strong> protocol and <strong>LTE</strong> messaging to enable emergency alerts when caretakers are unavailable.</div>
+      </div>
+      <div class="tl-entry">
+        <div class="year">2015</div>
+        <div class="title">B.Tech in Electronics and Communication Engineering</div>
+        <div class="desc">Completed my engineering degree. From the third year onward, I taught fellow students Control Systems, Embedded Systems, and Microprocessors — while working part-time to fund my education.</div>
+      </div>
+      <div class="tl-entry">
+        <div class="year">2016</div>
+        <div class="title">PG Diploma — CDAC Kolkata</div>
+        <div class="desc">Post Graduate Diploma in Embedded Systems Design with <strong>Grade A</strong>. My project was a <strong>GPIO Device Driver on Linux</strong> for ARM to control motors and LEDs.</div>
+      </div>
+      <div class="tl-entry">
+        <div class="year">2016</div>
+        <div class="title">Continental Automotive</div>
+        <div class="desc">Started my career at <strong>Continental Automotive</strong> in the Vehicle Dynamics business unit. I automated the resource analysis process using <strong>Perl</strong> — extracting data, generating reports, and updating internal webpages.</div>
+      </div>
+      <div class="tl-entry">
+        <div class="year">2017</div>
+        <div class="title">Worldwide Resource Estimation</div>
+        <div class="desc">Took worldwide responsibility for control function resource estimation across Asia, Germany, and the USA. Traveled to Germany to build the TB2015 database for MKC1 projects.</div>
+      </div>
+      <div class="tl-entry">
+        <div class="year">2018</div>
+        <div class="title">Git Ambassador</div>
+        <div class="desc">Became a Git Ambassador, training a 40-member team on GitHub workflows. Extended resource estimation to support tricore microcontrollers and fully automated the end-to-end testing and reporting pipeline.</div>
+      </div>
+      <div class="tl-entry">
+        <div class="year">2019</div>
+        <div class="title">GLIWA T1 Timing Analysis</div>
+        <div class="desc">Spent 3 months in Frankfurt integrating <strong>GLIWA T1</strong> timing analysis into the RTM component for Vector OS. Analyzed timing parameters for vision control software across all global projects.</div>
+      </div>
+      <div class="tl-entry">
+        <div class="year">2021</div>
+        <div class="title">Technical Architect</div>
+        <div class="desc">Developed a <strong>Python application</strong> to extract detailed timing data from GLIWA T1 enabled software — my first experience with Python and databases. It became the standard tool for worldwide timing analysis.</div>
+      </div>
+      <div class="tl-entry">
+        <div class="year">2022</div>
+        <div class="title">Marquardt GmbH, Germany</div>
+        <div class="desc">After 6.5 years at Continental and 15 spot awards, moved to Germany and joined <strong>Marquardt GmbH</strong> as an Advanced Software Development Engineer. Started working on the SPLE platform build system.</div>
+      </div>
+      <div class="tl-entry">
+        <div class="year">2023</div>
+        <div class="title">RAM/ROM Reporting &amp; Build Automation</div>
+        <div class="desc">Introduced automated <strong>RAM/ROM consumption reporting</strong> into the build process — giving project teams resource visibility for the first time. Co-developed build extensions that replaced numerous manual scripts, saving approximately one day per project per variant.</div>
+      </div>
+      <div class="tl-entry">
+        <div class="year">2024</div>
+        <div class="title">Replacing Licensed Tools with Python</div>
+        <div class="desc">Built custom Python tooling to generate <strong>ODX/PDX/OUC</strong> artifacts and <strong>vFlashpacks</strong>, completely replacing expensive Vector tool licenses and eliminating recurring annual costs.</div>
+      </div>
+      <div class="tl-entry">
+        <div class="year">2025–present</div>
+        <div class="title">SPLE Platform Trainer &amp; AI Adoption</div>
+        <div class="desc">Co-conducted <strong>10+ SPLE Platform Basic Training</strong> sessions. Co-introduced AI-assisted development workflows, already adopted by teams achieving up to <strong>85% code coverage</strong> for legacy components in a single day.</div>
+      </div>
     </div>
   </div>
-</section>
-
-<footer>
-  <div>© <span id="year"></span> Akshit Kobagapu</div>
-  <div>
+  <div class="slide-footer-text">
+    © <span id="year"></span> Akshit Kobagapu ·
     <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">github</a>
     <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">linkedin</a>
   </div>
-</footer>
+</section>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // ----- Timeline typewriter -----
+  // Slide content reveal
+  (function () {
+    const items = document.querySelectorAll('.slide-content');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    items.forEach(i => io.observe(i));
+  })();
+
+  // Dot nav active
+  (function () {
+    const dots = document.querySelectorAll('.dot-nav a');
+    const slides = document.querySelectorAll('.slide');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          dots.forEach(d => d.classList.remove('active'));
+          const idx = Array.from(slides).indexOf(e.target);
+          if (dots[idx]) dots[idx].classList.add('active');
+        }
+      });
+    }, { threshold: 0.5 });
+    slides.forEach(s => io.observe(s));
+  })();
+
+  // Timeline typewriter
   (function () {
     const entries = document.querySelectorAll('.tl-entry');
     if (!entries.length) return;
-
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function splitChars(root) {
@@ -141,15 +325,12 @@
       while (walker.nextNode()) textNodes.push(walker.currentNode);
       const chars = [];
       for (const node of textNodes) {
-        const text = node.nodeValue;
-        if (!text) continue;
+        const text = node.nodeValue; if (!text) continue;
         const frag = document.createDocumentFragment();
         for (const ch of Array.from(text)) {
           const span = document.createElement('span');
-          span.className = 'char';
-          span.textContent = ch;
-          frag.appendChild(span);
-          chars.push(span);
+          span.className = 'char'; span.textContent = ch;
+          frag.appendChild(span); chars.push(span);
         }
         node.parentNode.replaceChild(frag, node);
       }
@@ -157,40 +338,20 @@
     }
 
     const data = Array.from(entries).map(el => ({
-      el,
-      groups: [
+      el, groups: [
         { root: el.querySelector('.year'),  delay: 30, chars: [] },
         { root: el.querySelector('.title'), delay: 14, chars: [] },
         { root: el.querySelector('.desc'),  delay: 5,  chars: [] },
       ],
     }));
+    for (const d of data) for (const g of d.groups) g.chars = splitChars(g.root);
 
-    for (const d of data) {
-      for (const g of d.groups) g.chars = splitChars(g.root);
-    }
-
-    if (reduced) {
-      for (const d of data) {
-        for (const g of d.groups) {
-          for (const c of g.chars) c.classList.add('shown');
-        }
-      }
-      return;
-    }
+    if (reduced) { for (const d of data) for (const g of d.groups) for (const c of g.chars) c.classList.add('shown'); return; }
 
     const sleep = ms => new Promise(r => setTimeout(r, ms));
-
     async function typeEntry(d) {
-      const caret = document.createElement('span');
-      caret.className = 'typing-caret';
-      for (const g of d.groups) {
-        g.root.prepend(caret);
-        for (const c of g.chars) {
-          c.classList.add('shown');
-          c.after(caret);
-          await sleep(g.delay);
-        }
-      }
+      const caret = document.createElement('span'); caret.className = 'typing-caret';
+      for (const g of d.groups) { g.root.prepend(caret); for (const c of g.chars) { c.classList.add('shown'); c.after(caret); await sleep(g.delay); } }
       caret.remove();
     }
 
@@ -199,12 +360,9 @@
         if (!e.isIntersecting) continue;
         const d = data.find(x => x.el === e.target);
         if (!d || d.started) continue;
-        d.started = true;
-        typeEntry(d);
-        io.unobserve(e.target);
+        d.started = true; typeEntry(d); io.unobserve(e.target);
       }
     }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
-
     for (const d of data) io.observe(d.el);
   })();
 </script>
