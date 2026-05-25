@@ -1,10 +1,10 @@
 # About me
 
-When I was born in 1994, I had no shortage of curiosity — just resources. Growing up in a modest family in India, with a school teacher father and a homemaker mother, I spent most of my childhood at home due to health issues. That turned out to be a gift: I became a self-learner early, consistently finishing first or second in my class.
+When I was born in 1994, I had no shortage of curiosity — just resources. Growing up in a modest family in India with a school teacher father who didn't earn much but earned everyone's respect, I spent most of my childhood at home due to health issues. That turned out to be a gift: I became a self-learner early, consistently finishing first or second in my class — and it taught me something more. Watching my parents navigate every day with so little, I decided early on that when I grow up, they should never have to worry about money again.
 
-I learned the power of understanding over memorization when my science teacher told me during an exam: *"Just write what you understand in your own words."* I scored 95%. That lesson shaped everything that followed.
+The power of understanding over memorization hit me during a science exam I was too sick to prepare for. I sat there, convinced I would fail, when my teacher walked up and said: *"You were in my class. You remember what I taught. Just write what you understand in your own words."* I scored 95%. That moment shaped my entire approach to learning — never memorize blindly, always understand first.
 
-I learned self-reliance the hard way — my bicycle was stolen five days after I finally got one. What you earn yourself stays with you.
+Self-reliance came the hard way. After years of borrowing friends' bicycles because we couldn't afford one, my father finally managed to get me one. Five days later, it was stolen. That day I decided: what you earn yourself stays with you. Free things don't stick.
 
 Against all odds — financial hardships, entrance exams, and my mother pledging her only gold jewelry — I completed my engineering degree and earned a Post Graduate Diploma in Embedded Systems Design at CDAC Kolkata with Grade A.
 
