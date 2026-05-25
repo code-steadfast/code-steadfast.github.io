@@ -93,7 +93,7 @@ section { position: relative; z-index: 1; }
 .hero .eyebrow { margin-bottom: 1.5rem; }
 .hero h1 {
   font-weight: 700;
-  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-size: clamp(3rem, 9vw, 7.5rem);
   line-height: 0.95;
   letter-spacing: -0.045em;
   margin-bottom: 2rem;
@@ -143,21 +143,6 @@ section { position: relative; z-index: 1; }
 @keyframes bob { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
 
 /* ========== HERO TERMINAL ========== */
-.hero-intro {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-.hero-portrait {
-  width: 75px;
-  height: 75px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center 20%;
-  border: 2px solid var(--accent);
-  box-shadow: 0 0 20px rgba(232, 197, 71, 0.15);
-  flex-shrink: 0;
-}
 .hero-terminal {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -519,7 +504,6 @@ footer a:hover { color: var(--accent); }
   }
   .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .hero-terminal { display: none; }
-  .hero-portrait { width: 80px; height: 80px; }
   .impact-grid { grid-template-columns: repeat(2, 1fr); }
   .interests-grid { grid-template-columns: repeat(2, 1fr); }
   .bio-grid {
