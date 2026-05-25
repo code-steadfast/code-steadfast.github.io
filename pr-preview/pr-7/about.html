@@ -7,28 +7,123 @@
 <link rel="icon" href="_static/bio-photo-circle.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/landing.css" />
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #0c0c0c;
+  --text: #c8c8c8;
+  --accent: #4ecdc4;
+  --prompt: #4ecdc4;
+  --cmd: #ffffff;
+  --dim: #555;
+  --link: #ff6b6b;
+  --mono: "Fira Code", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 15px; line-height: 1.7; }
+
+.terminal {
+  max-width: 860px; margin: 0 auto;
+  padding: 1.5rem 2rem 4rem; min-height: 100vh;
+}
+
+/* Window chrome */
+.window-bar {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 1rem 0 2rem; position: sticky; top: 0;
+  background: var(--bg); z-index: 10;
+}
+.window-bar .dot { width: 12px; height: 12px; border-radius: 50%; }
+.window-bar .dot:nth-child(1) { background: #ff5f56; }
+.window-bar .dot:nth-child(2) { background: #ffbd2e; }
+.window-bar .dot:nth-child(3) { background: #27c93f; }
+.window-bar .title { margin-left: 1rem; color: var(--dim); font-size: 0.8rem; }
+
+/* Command blocks */
+.cmd-block { margin-bottom: 2rem; opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
+.cmd-block.visible { opacity: 1; transform: translateY(0); }
+.prompt { color: var(--prompt); }
+.command { color: var(--cmd); font-weight: 700; }
+.output { margin-top: 0.3rem; }
+.output p { margin: 0.3rem 0; color: var(--text); }
+.output .highlight { color: var(--accent); }
+.output .dim { color: var(--dim); }
+.output a { color: var(--accent); text-decoration: none; }
+.output a:hover { text-decoration: underline; }
+
+/* Bio rendered as terminal output */
+.bio-output p { margin: 0.6rem 0; color: var(--text); font-size: 0.9rem; line-height: 1.7; }
+.bio-output strong { color: var(--cmd); font-weight: 700; }
+.bio-output em { color: var(--accent); font-style: normal; }
+
+/* Timeline as log entries */
+.tl-entry { margin-bottom: 1.2rem; padding-left: 1rem; border-left: 2px solid #222; }
+.tl-entry .year { color: var(--accent); font-weight: 700; font-size: 0.85rem; }
+.tl-entry .title { color: var(--cmd); font-weight: 600; }
+.tl-entry .title p { margin: 0; }
+.tl-entry .desc { color: var(--dim); font-size: 0.85rem; }
+.tl-entry .desc p { margin: 0; }
+
+/* Typewriter */
+.char { opacity: 0; transition: opacity 0.04s; }
+.char.shown { opacity: 1; }
+.typing-caret {
+  display: inline-block; width: 0.6ch; height: 1.15em;
+  background: var(--accent); vertical-align: text-bottom;
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Cursor */
+.cursor-line .cursor {
+  display: inline-block; width: 0.6ch; height: 1.15em;
+  background: var(--accent); vertical-align: text-bottom;
+  animation: blink 1.1s steps(1) infinite;
+}
+
+/* Footer */
+.term-footer {
+  margin-top: 3rem; padding-top: 1rem;
+  border-top: 1px solid #222; color: var(--dim); font-size: 0.75rem;
+}
+.term-footer a { color: var(--dim); text-decoration: none; }
+.term-footer a:hover { color: var(--accent); }
+
+@media (max-width: 600px) {
+  .terminal { padding: 1rem 1rem 3rem; font-size: 13px; }
+}
+</style>
 </head>
-<body class="about-page">
+<body>
 
-<nav>
-  <a class="brand" href="index.html">akshitkobagapu.com</a>
-  <ul>
-    <li><a href="index.html">← home</a></li>
-  </ul>
-</nav>
+<div class="terminal">
 
-<section class="about-hero">
-  <div class="eyebrow">// about</div>
-  <h1>About me<span class="accent">.</span></h1>
-  <p class="about-hook">From a small town in India to building tools that power automotive teams worldwide.</p>
-</section>
+  <div class="window-bar">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <span class="title">akshit@kobagapu: ~/about</span>
+  </div>
 
-<section class="bio">
-  <div class="bio-grid">
-    <img class="bio-photo" src="_static/bio-photo-circle.png" alt="" aria-hidden="true" />
-    <div class="bio-prose">
+  <!-- Navigation -->
+  <div class="cmd-block">
+    <div><span class="prompt">akshit@kobagapu:~$</span> <span class="command">cd ../</span></div>
+    <div class="output">
+      <p><a href="index.html">← back to home</a></p>
+    </div>
+  </div>
+
+  <!-- About header -->
+  <div class="cmd-block">
+    <div><span class="prompt">akshit@kobagapu:~$</span> <span class="command">cat about.md</span></div>
+    <div class="output">
+      <p><span class="highlight">## About me</span></p>
+      <p class="dim">From a small town in India to building tools that power automotive teams worldwide.</p>
+    </div>
+  </div>
+
+  <!-- Bio -->
+  <div class="cmd-block">
+    <div><span class="prompt">akshit@kobagapu:~$</span> <span class="command">cat bio.txt</span></div>
+    <div class="output bio-output">
       <p>I was born in 1994 into a family that was rich in values but short on everything else. My father was a school teacher — a man who never earned much but walked through his town like a king, because everyone knew him, respected him, and trusted him. My mother held the house together in ways only Indian mothers know how. I was the middle child, often sick, often home. But being home meant I read everything I could get my hands on, studied on my own, and somehow kept finishing first or second in my class. Growing up watching my parents stretch every rupee taught me something no textbook ever could — that the things worth having are the things you fight for.</p>
 <p>That belief was put to the test during a science exam I was completely unprepared for. I had been too sick to study, and I sat there staring at the paper, tears rolling down, convinced this was the day my streak ended. Then my science teacher walked over, leaned in, and said something I carry with me to this day: <em>"You sat in my class. You listened. You understood. Now stop crying and write what you know — in your own words. If I can understand it, you get the marks."</em> I wrote. I scored 95%. That was the day I stopped trying to memorize the world and started trying to understand it.</p>
 <p>I wanted a bicycle for as long as I could remember. We couldn't afford one, so I learned to ride on borrowed ones — a friend's bike here, a neighbor's there. After years of asking, my father struck a deal: score above 500 in my 10th standard exams, and he would find a way. I scored 499. A year later, he managed to get me one anyway. I was bedridden for a month and couldn't touch it. When I finally rode it, I had five days of pure joy — and then someone stole it. Standing there with nothing again, I made a quiet promise to myself: <em>I will never depend on anyone for anything. What I earn with my own hands, that stays.</em></p>
@@ -38,101 +133,152 @@
 <p>I am driven by curiosity, shaped by struggle, and always learning. Whether it is build systems, software architecture, design patterns, automation, or a new recipe in the kitchen — I don't stop until I understand how it works.</p>
     </div>
   </div>
-</section>
 
-<section class="timeline-section" id="timeline">
-  <div class="eyebrow">// the long version</div>
-  <h2>Over a decade of <span class="accent">building things that matter.</span></h2>
-  <div class="timeline">
-    <div class="tl-entry in">
+  <!-- Timeline -->
+  <div class="cmd-block">
+    <div><span class="prompt">akshit@kobagapu:~$</span> <span class="command">git log --oneline --reverse career.log</span></div>
+    <div class="output">
+      <p class="dim"># Showing 14 entries...</p>
+    </div>
+  </div>
+  <div class="cmd-block">
+    <div class="tl-entry">
       <div class="year">2014</div>
       <div class="title">Technical Paper on Moletronics</div>
       <div class="desc">Presented a national level technical paper on <strong>Moletronics — An Invisible Technology</strong> during my engineering studies.</div>
     </div>
-    <div class="tl-entry in">
+  </div>
+  <div class="cmd-block">
+    <div class="tl-entry">
       <div class="year">2015</div>
       <div class="title">First Coding Experience</div>
       <div class="desc">My first hands-on coding — wrote embedded code to flash into a robot for line following and object detection at the <strong>Robosapiens</strong> workshop.</div>
     </div>
-    <div class="tl-entry in">
+  </div>
+  <div class="cmd-block">
+    <div class="tl-entry">
       <div class="year">2015</div>
       <div class="title">B.Tech Final Project — Healthcare Monitoring</div>
       <div class="desc">Designed a patient health care monitoring system using <strong>Zigbee</strong> protocol and <strong>LTE</strong> messaging to enable emergency alerts when caretakers are unavailable.</div>
     </div>
-    <div class="tl-entry in">
+  </div>
+  <div class="cmd-block">
+    <div class="tl-entry">
       <div class="year">2015</div>
       <div class="title">B.Tech in Electronics and Communication Engineering</div>
       <div class="desc">Completed my engineering degree. From the third year onward, I taught fellow students Control Systems, Embedded Systems, and Microprocessors — while working part-time to fund my education.</div>
     </div>
-    <div class="tl-entry in">
+  </div>
+  <div class="cmd-block">
+    <div class="tl-entry">
       <div class="year">2016</div>
       <div class="title">PG Diploma — CDAC Kolkata</div>
       <div class="desc">Post Graduate Diploma in Embedded Systems Design with <strong>Grade A</strong>. My project was a <strong>GPIO Device Driver on Linux</strong> for ARM to control motors and LEDs.</div>
     </div>
-    <div class="tl-entry in">
+  </div>
+  <div class="cmd-block">
+    <div class="tl-entry">
       <div class="year">2016</div>
       <div class="title">Continental Automotive</div>
       <div class="desc">Started my career at <strong>Continental Automotive</strong> in the Vehicle Dynamics business unit. I automated the resource analysis process using <strong>Perl</strong> — extracting data, generating reports, and updating internal webpages.</div>
     </div>
-    <div class="tl-entry in">
+  </div>
+  <div class="cmd-block">
+    <div class="tl-entry">
       <div class="year">2017</div>
       <div class="title">Worldwide Resource Estimation</div>
       <div class="desc">Took worldwide responsibility for control function resource estimation across Asia, Germany, and the USA. Traveled to Germany to build the TB2015 database for MKC1 projects.</div>
     </div>
-    <div class="tl-entry in">
+  </div>
+  <div class="cmd-block">
+    <div class="tl-entry">
       <div class="year">2018</div>
       <div class="title">Git Ambassador</div>
       <div class="desc">Became a Git Ambassador, training a 40-member team on GitHub workflows. Extended resource estimation to support tricore microcontrollers and fully automated the end-to-end testing and reporting pipeline.</div>
     </div>
-    <div class="tl-entry in">
+  </div>
+  <div class="cmd-block">
+    <div class="tl-entry">
       <div class="year">2019</div>
       <div class="title">GLIWA T1 Timing Analysis</div>
       <div class="desc">Spent 3 months in Frankfurt integrating <strong>GLIWA T1</strong> timing analysis into the RTM component for Vector OS. Analyzed timing parameters for vision control software across all global projects.</div>
     </div>
-    <div class="tl-entry in">
+  </div>
+  <div class="cmd-block">
+    <div class="tl-entry">
       <div class="year">2021</div>
       <div class="title">Technical Architect</div>
       <div class="desc">Developed a <strong>Python application</strong> to extract detailed timing data from GLIWA T1 enabled software — my first experience with Python and databases. It became the standard tool for worldwide timing analysis.</div>
     </div>
-    <div class="tl-entry in">
+  </div>
+  <div class="cmd-block">
+    <div class="tl-entry">
       <div class="year">2022</div>
       <div class="title">Marquardt GmbH, Germany</div>
       <div class="desc">After 6.5 years at Continental and 15 spot awards, moved to Germany and joined <strong>Marquardt GmbH</strong> as an Advanced Software Development Engineer. Started working on the SPLE platform build system.</div>
     </div>
-    <div class="tl-entry in">
+  </div>
+  <div class="cmd-block">
+    <div class="tl-entry">
       <div class="year">2023</div>
       <div class="title">RAM/ROM Reporting &amp; Build Automation</div>
       <div class="desc">Introduced automated <strong>RAM/ROM consumption reporting</strong> into the build process — giving project teams resource visibility for the first time. Co-developed build extensions that replaced numerous manual scripts, saving approximately one day per project per variant.</div>
     </div>
-    <div class="tl-entry in">
+  </div>
+  <div class="cmd-block">
+    <div class="tl-entry">
       <div class="year">2024</div>
       <div class="title">Replacing Licensed Tools with Python</div>
       <div class="desc">Built custom Python tooling to generate <strong>ODX/PDX/OUC</strong> artifacts and <strong>vFlashpacks</strong>, completely replacing expensive Vector tool licenses and eliminating recurring annual costs.</div>
     </div>
-    <div class="tl-entry in">
+  </div>
+  <div class="cmd-block">
+    <div class="tl-entry">
       <div class="year">2025–present</div>
       <div class="title">SPLE Platform Trainer &amp; AI Adoption</div>
       <div class="desc">Co-conducted <strong>10+ SPLE Platform Basic Training</strong> sessions. Co-introduced AI-assisted development workflows, already adopted by teams achieving up to <strong>85% code coverage</strong> for legacy components in a single day.</div>
     </div>
   </div>
-</section>
 
-<footer>
-  <div>© <span id="year"></span> Akshit Kobagapu</div>
-  <div>
-    <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">github</a>
-    <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">linkedin</a>
+  <!-- Links -->
+  <div class="cmd-block">
+    <div><span class="prompt">akshit@kobagapu:~$</span> <span class="command">cat links.txt</span></div>
+    <div class="output">
+      <p><a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">github.com/code-steadfast</a></p>
+      <p><a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">linkedin.com/in/akshit-kobagapu</a></p>
+    </div>
   </div>
-</footer>
+
+  <!-- Waiting cursor -->
+  <div class="cmd-block cursor-line">
+    <span class="prompt">akshit@kobagapu:~$</span> <span class="cursor"></span>
+  </div>
+
+  <footer class="term-footer">
+    © <span id="year"></span> Akshit Kobagapu ·
+    <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">github</a> ·
+    <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">linkedin</a>
+  </footer>
+
+</div>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // ----- Timeline typewriter -----
+  // Sequential reveal of command blocks
+  (function () {
+    const blocks = document.querySelectorAll('.cmd-block');
+    let delay = 0;
+    blocks.forEach(b => {
+      setTimeout(() => b.classList.add('visible'), delay);
+      delay += 250;
+    });
+  })();
+
+  // Timeline typewriter
   (function () {
     const entries = document.querySelectorAll('.tl-entry');
     if (!entries.length) return;
-
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function splitChars(root) {
@@ -141,15 +287,12 @@
       while (walker.nextNode()) textNodes.push(walker.currentNode);
       const chars = [];
       for (const node of textNodes) {
-        const text = node.nodeValue;
-        if (!text) continue;
+        const text = node.nodeValue; if (!text) continue;
         const frag = document.createDocumentFragment();
         for (const ch of Array.from(text)) {
           const span = document.createElement('span');
-          span.className = 'char';
-          span.textContent = ch;
-          frag.appendChild(span);
-          chars.push(span);
+          span.className = 'char'; span.textContent = ch;
+          frag.appendChild(span); chars.push(span);
         }
         node.parentNode.replaceChild(frag, node);
       }
@@ -157,40 +300,20 @@
     }
 
     const data = Array.from(entries).map(el => ({
-      el,
-      groups: [
+      el, groups: [
         { root: el.querySelector('.year'),  delay: 30, chars: [] },
         { root: el.querySelector('.title'), delay: 14, chars: [] },
         { root: el.querySelector('.desc'),  delay: 5,  chars: [] },
       ],
     }));
+    for (const d of data) for (const g of d.groups) g.chars = splitChars(g.root);
 
-    for (const d of data) {
-      for (const g of d.groups) g.chars = splitChars(g.root);
-    }
-
-    if (reduced) {
-      for (const d of data) {
-        for (const g of d.groups) {
-          for (const c of g.chars) c.classList.add('shown');
-        }
-      }
-      return;
-    }
+    if (reduced) { for (const d of data) for (const g of d.groups) for (const c of g.chars) c.classList.add('shown'); return; }
 
     const sleep = ms => new Promise(r => setTimeout(r, ms));
-
     async function typeEntry(d) {
-      const caret = document.createElement('span');
-      caret.className = 'typing-caret';
-      for (const g of d.groups) {
-        g.root.prepend(caret);
-        for (const c of g.chars) {
-          c.classList.add('shown');
-          c.after(caret);
-          await sleep(g.delay);
-        }
-      }
+      const caret = document.createElement('span'); caret.className = 'typing-caret';
+      for (const g of d.groups) { g.root.prepend(caret); for (const c of g.chars) { c.classList.add('shown'); c.after(caret); await sleep(g.delay); } }
       caret.remove();
     }
 
@@ -199,12 +322,9 @@
         if (!e.isIntersecting) continue;
         const d = data.find(x => x.el === e.target);
         if (!d || d.started) continue;
-        d.started = true;
-        typeEntry(d);
-        io.unobserve(e.target);
+        d.started = true; typeEntry(d); io.unobserve(e.target);
       }
     }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
-
     for (const d of data) io.observe(d.el);
   })();
 </script>
