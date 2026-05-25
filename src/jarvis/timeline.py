@@ -13,7 +13,7 @@ from py_app_dev.core.exceptions import UserNotificationException
 
 @dataclass
 class TimelineEntry(DataClassJSONMixin):
-    year: int
+    year: int | str
     title: str
     description: str
 
