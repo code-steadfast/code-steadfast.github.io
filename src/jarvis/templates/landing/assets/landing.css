@@ -430,6 +430,13 @@ section { position: relative; z-index: 1; }
   margin: 0;
 }
 .about-hero h1 .accent { color: var(--accent); }
+.about-hook {
+  margin-top: 1.2rem;
+  font-size: 1.1rem;
+  color: var(--muted);
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
 .bio {
   padding: 2rem 2.5rem 6rem;
   max-width: 1000px;
