@@ -7,197 +7,247 @@
 <link rel="icon" href="_static/bio-photo-circle.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/landing.css" />
+<style>
+:root {
+  --bg: #0c0c0c;
+  --text: #c8c8c8;
+  --accent: #4ecdc4;
+  --prompt: #4ecdc4;
+  --cmd: #ffffff;
+  --dim: #555;
+  --link: #ff6b6b;
+  --mono: "Fira Code", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 15px; line-height: 1.7; }
+
+.terminal {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 4rem;
+  min-height: 100vh;
+}
+
+/* Window chrome */
+.window-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0 2rem;
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 10;
+}
+.window-bar .dot { width: 12px; height: 12px; border-radius: 50%; }
+.window-bar .dot:nth-child(1) { background: #ff5f56; }
+.window-bar .dot:nth-child(2) { background: #ffbd2e; }
+.window-bar .dot:nth-child(3) { background: #27c93f; }
+.window-bar .title { margin-left: 1rem; color: var(--dim); font-size: 0.8rem; }
+
+/* Command blocks */
+.cmd-block { margin-bottom: 2rem; }
+.cmd-block.hidden { display: none; }
+.prompt { color: var(--prompt); }
+.command { color: var(--cmd); font-weight: 700; }
+.output { padding-left: 0; margin-top: 0.3rem; }
+.output p { margin: 0.2rem 0; }
+.output .highlight { color: var(--accent); }
+.output .warn { color: var(--link); }
+.output .dim { color: var(--dim); }
+.output a { color: var(--accent); text-decoration: none; }
+.output a:hover { text-decoration: underline; }
+
+/* Stats table */
+.stats-table { margin: 0.5rem 0; }
+.stats-table .row {
+  display: flex;
+  gap: 1rem;
+  padding: 0.15rem 0;
+}
+.stats-table .val { color: var(--accent); min-width: 5ch; font-weight: 700; }
+.stats-table .lbl { color: var(--text); }
+
+/* Interests */
+.interest-list { margin: 0.3rem 0; }
+.interest-list .item { padding: 0.15rem 0; }
+.interest-list .icon { margin-right: 0.5rem; }
+
+/* ASCII art */
+.ascii { color: var(--accent); line-height: 1.2; margin: 0.5rem 0 1rem; font-size: 0.7rem; }
+
+/* Links */
+.link-list a {
+  display: inline-block;
+  margin-right: 2rem;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--dim);
+  padding-bottom: 0.1rem;
+}
+.link-list a:hover { border-color: var(--accent); }
+
+/* Blinking cursor */
+.cursor-line .cursor {
+  display: inline-block;
+  width: 0.6ch;
+  height: 1.15em;
+  background: var(--accent);
+  vertical-align: text-bottom;
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Typing animation for commands */
+.cmd-block {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.cmd-block.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Footer */
+.term-footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid #222;
+  color: var(--dim);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .terminal { padding: 1rem; font-size: 13px; }
+  .ascii { font-size: 0.5rem; }
+}
+</style>
 </head>
 <body>
 
-<nav>
-  <a class="brand" href="index.html">akshitkobagapu.com</a>
-  <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
-    <span class="nav-toggle-icon" aria-hidden="true">☰</span>
-  </button>
-  <ul id="nav-menu">
-    <li><a href="#impact">impact</a></li>
-    <li><a href="#interests">interests</a></li>
-    <li><a href="about.html">about</a></li>
-  </ul>
-</nav>
+<div class="terminal">
+  <div class="window-bar">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <span class="title">akshit@dev ~ </span>
+  </div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-grid">
-    <div class="hero-text">
-      <div class="eyebrow"></div>
-      <h1>Akshit<br/><span class="accent">Kobagapu</span>.</h1>
-      <div class="tagline">I don't just fix problems. I eliminate them.<span class="cursor"></span></div>
-      <div class="meta">
-        <span>Build Systems</span>
-        <span>Automation</span>
-        <span><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener" class="meta-link">SPLE</a></span>
+  <!-- WHOAMI -->
+  <div class="cmd-block" data-delay="0">
+    <div><span class="prompt">❯ </span><span class="command">whoami</span></div>
+    <div class="output">
+<pre class="ascii">
+    _    _        _     _ _
+   / \  | | _____| |__ (_) |_
+  / _ \ | |/ / __| '_ \| | __|
+ / ___ \|   <\__ \ | | | | |_
+/_/   \_\_|\_\___/_| |_|_|\__|
+</pre>
+      <p><span class="highlight">Akshit Kobagapu</span></p>
+      <p>Advanced Software Development Engineer @ Marquardt GmbH, Germany</p>
+      <p class="dim">Build Systems · Automation · <a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener">SPLE</a></p>
+    </div>
+  </div>
+
+  <!-- MOTTO -->
+  <div class="cmd-block" data-delay="200">
+    <div><span class="prompt">❯ </span><span class="command">cat motto.txt</span></div>
+    <div class="output">
+      <p>"I don't just fix problems. I eliminate them."</p>
+    </div>
+  </div>
+
+  <!-- CAREER SCRIPT -->
+  <div class="cmd-block" data-delay="400">
+    <div><span class="prompt">❯ </span><span class="command">./career.sh</span></div>
+    <div class="output">
+      <p class="dim"># What I do</p>
+      <p>vector_tools → <span class="highlight">custom_python</span>    <span class="warn">✓ €0/year</span></p>
+      <p>manual_scripts → <span class="highlight">build_extensions</span> <span class="warn">✓ -1 day/variant</span></p>
+      <p>unknown_resources → <span class="highlight">ram_rom_report</span> <span class="warn">✓ every build</span></p>
+      <p><br/>Teams ship faster. I sleep well.</p>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="cmd-block" data-delay="600">
+    <div><span class="prompt">❯ </span><span class="command">impact --summary</span></div>
+    <div class="output">
+      <div class="stats-table">
+        <div class="row"><span class="val">15</span><span class="lbl">Spot Awards for exceptional contributions</span></div>
+        <div class="row"><span class="val">10+</span><span class="lbl"><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener">SPLE</a> Platform Trainings delivered</span></div>
+        <div class="row"><span class="val">5</span><span class="lbl">Promotions in 6 years (GET → Technical Architect)</span></div>
+        <div class="row"><span class="val">5+</span><span class="lbl">Days saved per release through automation</span></div>
       </div>
     </div>
-    <div class="hero-terminal">
-      <div class="terminal-bar">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        <span class="terminal-title">~/career.sh</span>
+  </div>
+
+  <!-- INTERESTS -->
+  <div class="cmd-block" data-delay="800">
+    <div><span class="prompt">❯ </span><span class="command">ls ~/interests/</span></div>
+    <div class="output">
+      <div class="interest-list">
+        <div class="item"><span class="icon">🏃</span> Sports — running, swimming, skating, hiking, bouldering, skiing</div>
+        <div class="item"><span class="icon">🎨</span> Art & Anime — drawing, painting, and a lot of anime</div>
+        <div class="item"><span class="icon">🍳</span> Cooking — experimenting with cuisines and flavors</div>
+        <div class="item"><span class="icon">💻</span> Coding Practice — dojos and katas with colleagues</div>
       </div>
-      <pre class="terminal-content"><span class="com"># What I do</span>
-<span class="kw">function</span> <span class="ac">eliminate_waste</span>() {
-  <span class="com"># Replace expensive licenses</span>
-  vector_tools → <span class="str">custom_python</span>  <span class="ok">✓ €0/year</span>
-
-  <span class="com"># Automate manual processes</span>
-  manual_scripts → <span class="str">build_extensions</span>  <span class="ok">✓ -1 day/variant</span>
-
-  <span class="com"># Make invisible things visible</span>
-  unknown_resources → <span class="str">ram_rom_report</span>  <span class="ok">✓ every build</span>
-}
-
-<span class="com"># Result</span>
-<span class="kw">echo</span> <span class="str">"Teams ship faster. I sleep well."</span></pre>
     </div>
   </div>
-  <div class="scroll-hint">SCROLL ↓</div>
-</section>
 
-<!-- IMPACT -->
-<section class="impact" id="impact">
-  <div class="eyebrow">// by the numbers</div>
-  <h2>A decade of <span class="accent">measurable impact.</span></h2>
-  <div class="impact-grid">
-    <div class="stat">
-      <div class="stat-number" data-target="15">0</div>
-      <div class="stat-label">Spot Awards</div>
-      <div class="stat-detail">for exceptional contributions</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number" data-target="10" data-suffix="+">0</div>
-      <div class="stat-label">Trainings Delivered</div>
-      <div class="stat-detail"><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener" class="stat-link">SPLE</a> platform sessions</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number" data-target="5">0</div>
-      <div class="stat-label">Promotions in 6 Years</div>
-      <div class="stat-detail">GET → Technical Architect</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number" data-target="5" data-suffix="+">0</div>
-      <div class="stat-label">Days Saved per Release</div>
-      <div class="stat-detail">through build automation</div>
+  <!-- ABOUT -->
+  <div class="cmd-block" data-delay="1000">
+    <div><span class="prompt">❯ </span><span class="command">cat about.txt | head -3</span></div>
+    <div class="output">
+      <p>From a small town in India to building tools that power</p>
+      <p>automotive teams worldwide. A journey of curiosity,</p>
+      <p>self-reliance, and relentless automation.</p>
+      <p><br/><span class="dim">...</span> <a href="about.html">read full story</a> · <a href="about.html#timeline">view timeline</a></p>
     </div>
   </div>
-</section>
 
-<!-- INTERESTS -->
-<section class="interests" id="interests">
-  <div class="eyebrow">// when not coding</div>
-  <h2>Things that keep me <span class="accent">moving.</span></h2>
-  <div class="interests-grid">
-    <div class="interest-card">
-      <div class="interest-icon">🏃</div>
-      <h3>Sports</h3>
-      <p>Running, swimming, inline skating, ice skating, hiking, bouldering, and recently — skiing</p>
-    </div>
-    <div class="interest-card">
-      <div class="interest-icon">🎨</div>
-      <h3>Art & Anime</h3>
-      <p>Drawing, painting, and watching anime — a lot of anime</p>
-    </div>
-    <div class="interest-card">
-      <div class="interest-icon">🍳</div>
-      <h3>Cooking</h3>
-      <p>Experimenting with recipes and flavors from different cuisines</p>
-    </div>
-    <div class="interest-card">
-      <div class="interest-icon">💻</div>
-      <h3>Coding Practice</h3>
-      <p>Coding dojos and katas with colleagues — always learning</p>
+  <!-- LINKS -->
+  <div class="cmd-block" data-delay="1200">
+    <div><span class="prompt">❯ </span><span class="command">open --links</span></div>
+    <div class="output link-list">
+      <p>
+        <a href="about.html">about ↗</a>
+        <a href="about.html#timeline">timeline ↗</a>
+        <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">github ↗</a>
+        <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">linkedin ↗</a>
+      </p>
     </div>
   </div>
-</section>
 
-<!-- ABOUT TEASER -->
-<section class="about" id="about">
-  <div class="section-head">
-    <h2>About <span class="accent">me.</span></h2>
-    <div class="see-all-group">
-      <a class="see-all" href="about.html">full story</a>
-      <a class="see-all" href="about.html#timeline">timeline</a>
-    </div>
+  <!-- Cursor -->
+  <div class="cmd-block cursor-line" data-delay="1400">
+    <span class="prompt">❯ </span><span class="cursor"></span>
   </div>
-  <p>I build tools that make teams faster. From automating resource analysis across three continents to eliminating six-figure license costs with custom Python — I find inefficiencies and make them disappear.</p>
-  <p class="muted">Currently an Advanced Software Development Engineer at Marquardt GmbH, Germany. Interested in build systems, software product line engineering, and automation.</p>
-</section>
 
-<footer>
-  <div>© <span id="year"></span> Akshit Kobagapu · Built with curiosity and Python</div>
-  <div>
-    <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">github</a>
-    <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">linkedin</a>
+  <div class="term-footer">
+    © <span id="year"></span> Akshit Kobagapu · Built with curiosity and Python
   </div>
-</footer>
+</div>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // ----- Mobile nav toggle -----
+  // Staggered reveal of command blocks
   (function () {
-    const nav = document.querySelector('nav');
-    const btn = document.querySelector('.nav-toggle');
-    const menu = document.getElementById('nav-menu');
-    if (!nav || !btn || !menu) return;
-    const setOpen = (open) => {
-      nav.classList.toggle('open', open);
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      btn.querySelector('.nav-toggle-icon').textContent = open ? '✕' : '☰';
-    };
-    btn.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
-    menu.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') setOpen(false);
-    });
-  })();
-
-  // ----- Animated counters -----
-  (function () {
-    const stats = document.querySelectorAll('.stat-number');
+    const blocks = document.querySelectorAll('.cmd-block');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const target = parseInt(el.dataset.target);
-        let current = 0;
-        const increment = Math.max(1, Math.floor(target / 40));
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            current = target;
-            clearInterval(timer);
-          }
-          const suffix = el.dataset.suffix || '';
-          el.textContent = current + suffix;
-        }, 30);
-        io.unobserve(el);
-      });
-    }, { threshold: 0.5 });
-    stats.forEach(s => io.observe(s));
-  })();
-
-  // ----- Interest card reveal -----
-  (function () {
-    const cards = document.querySelectorAll('.interest-card');
-    const io = new IntersectionObserver((items) => {
-      items.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
+        if (entry.isIntersecting) {
+          const delay = parseInt(entry.target.dataset.delay) || 0;
+          setTimeout(() => entry.target.classList.add('visible'), delay);
+          io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
-    cards.forEach((c, i) => {
-      c.style.transitionDelay = (i * 100) + 'ms';
-      io.observe(c);
-    });
+    }, { threshold: 0.1 });
+    blocks.forEach(b => io.observe(b));
   })();
 </script>
 
