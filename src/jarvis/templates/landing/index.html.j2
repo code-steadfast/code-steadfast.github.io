@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/landing.css" />
 </head>
-<body>
+<body class="bento-page">
 
 <nav>
   <a class="brand" href="index.html">akshitkobagapu.com</a>
@@ -18,31 +18,55 @@
     <span class="nav-toggle-icon" aria-hidden="true">☰</span>
   </button>
   <ul id="nav-menu">
-    <li><a href="#impact">impact</a></li>
-    <li><a href="#interests">interests</a></li>
     <li><a href="about.html">about</a></li>
+    <li><a href="about.html#timeline">timeline</a></li>
+    <li><a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">github</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-grid">
-    <div class="hero-text">
-      <div class="eyebrow"></div>
-      <h1>Akshit<br/><span class="accent">Kobagapu</span>.</h1>
-      <div class="tagline">I don't just fix problems. I eliminate them.<span class="cursor"></span></div>
-      <div class="meta">
-        <span>Build Systems</span>
-        <span>Automation</span>
-        <span><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener" class="meta-link">SPLE</a></span>
-      </div>
+<main class="bento">
+
+  <!-- Row 1: Name + Photo + Stat -->
+  <div class="card card-name">
+    <div class="card-eyebrow">$ whoami</div>
+    <h1>Akshit<br/><span class="accent">Kobagapu</span><span class="accent">.</span></h1>
+    <p class="card-tagline">I don't just fix problems. I eliminate them.<span class="cursor"></span></p>
+    <div class="card-meta">
+      <span>Build Systems</span>
+      <span>Automation</span>
+      <span><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener">SPLE</a></span>
     </div>
-    <div class="hero-terminal">
-      <div class="terminal-bar">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        <span class="terminal-title">~/career.sh</span>
-      </div>
-      <pre class="terminal-content"><span class="com"># What I do</span>
+  </div>
+
+  <div class="card card-photo">
+    <img src="_static/bio-photo-circle.png" alt="Akshit Kobagapu" />
+  </div>
+
+  <div class="card card-stat card-awards">
+    <div class="stat-number" data-target="15">0</div>
+    <div class="stat-label">Spot Awards</div>
+    <div class="stat-detail">exceptional contributions</div>
+  </div>
+
+  <!-- Row 2: Stats + Terminal -->
+  <div class="card card-stat card-trainings">
+    <div class="stat-number" data-target="10" data-suffix="+">0</div>
+    <div class="stat-label">Trainings</div>
+    <div class="stat-detail"><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener">SPLE</a> platform</div>
+  </div>
+
+  <div class="card card-stat card-promotions">
+    <div class="stat-number" data-target="5">0</div>
+    <div class="stat-label">Promotions</div>
+    <div class="stat-detail">GET → Tech Architect</div>
+  </div>
+
+  <div class="card card-terminal">
+    <div class="terminal-bar">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <span class="terminal-title">~/career.sh</span>
+    </div>
+    <pre class="terminal-content"><span class="com"># What I do</span>
 <span class="kw">function</span> <span class="ac">eliminate_waste</span>() {
   <span class="com"># Replace expensive licenses</span>
   vector_tools → <span class="str">custom_python</span>  <span class="ok">✓ €0/year</span>
@@ -56,86 +80,58 @@
 
 <span class="com"># Result</span>
 <span class="kw">echo</span> <span class="str">"Teams ship faster. I sleep well."</span></pre>
-    </div>
   </div>
-  <div class="scroll-hint">SCROLL ↓</div>
-</section>
 
-<!-- IMPACT -->
-<section class="impact" id="impact">
-  <div class="eyebrow">// by the numbers</div>
-  <h2>A decade of <span class="accent">measurable impact.</span></h2>
-  <div class="impact-grid">
-    <div class="stat">
-      <div class="stat-number" data-target="15">0</div>
-      <div class="stat-label">Spot Awards</div>
-      <div class="stat-detail">for exceptional contributions</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number" data-target="10" data-suffix="+">0</div>
-      <div class="stat-label">Trainings Delivered</div>
-      <div class="stat-detail"><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener" class="stat-link">SPLE</a> platform sessions</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number" data-target="5">0</div>
-      <div class="stat-label">Promotions in 6 Years</div>
-      <div class="stat-detail">GET → Technical Architect</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number" data-target="5" data-suffix="+">0</div>
-      <div class="stat-label">Days Saved per Release</div>
-      <div class="stat-detail">through build automation</div>
-    </div>
+  <!-- Row 3: Interests -->
+  <div class="card card-interest">
+    <div class="interest-icon">🏃</div>
+    <h3>Sports</h3>
+    <p>Running, swimming, skating, hiking, bouldering, skiing</p>
   </div>
-</section>
 
-<!-- INTERESTS -->
-<section class="interests" id="interests">
-  <div class="eyebrow">// when not coding</div>
-  <h2>Things that keep me <span class="accent">moving.</span></h2>
-  <div class="interests-grid">
-    <div class="interest-card">
-      <div class="interest-icon">🏃</div>
-      <h3>Sports</h3>
-      <p>Running, swimming, inline skating, ice skating, hiking, bouldering, and recently — skiing</p>
-    </div>
-    <div class="interest-card">
-      <div class="interest-icon">🎨</div>
-      <h3>Art & Anime</h3>
-      <p>Drawing, painting, and watching anime — a lot of anime</p>
-    </div>
-    <div class="interest-card">
-      <div class="interest-icon">🍳</div>
-      <h3>Cooking</h3>
-      <p>Experimenting with recipes and flavors from different cuisines</p>
-    </div>
-    <div class="interest-card">
-      <div class="interest-icon">💻</div>
-      <h3>Coding Practice</h3>
-      <p>Coding dojos and katas with colleagues — always learning</p>
-    </div>
+  <div class="card card-interest">
+    <div class="interest-icon">🎨</div>
+    <h3>Art & Anime</h3>
+    <p>Drawing, painting, and watching anime</p>
   </div>
-</section>
 
-<!-- ABOUT TEASER -->
-<section class="about" id="about">
-  <div class="section-head">
-    <h2>About <span class="accent">me.</span></h2>
-    <div class="see-all-group">
-      <a class="see-all" href="about.html">full story</a>
-      <a class="see-all" href="about.html#timeline">timeline</a>
-    </div>
+  <div class="card card-interest">
+    <div class="interest-icon">🍳</div>
+    <h3>Cooking</h3>
+    <p>Experimenting with cuisines and flavors</p>
   </div>
-  <p>I build tools that make teams faster. From automating resource analysis across three continents to eliminating six-figure license costs with custom Python — I find inefficiencies and make them disappear.</p>
-  <p class="muted">Currently an Advanced Software Development Engineer at Marquardt GmbH, Germany. Interested in build systems, software product line engineering, and automation.</p>
-</section>
 
-<footer>
+  <div class="card card-interest">
+    <div class="interest-icon">💻</div>
+    <h3>Coding Practice</h3>
+    <p>Dojos and katas with colleagues</p>
+  </div>
+
+  <!-- Row 4: About teaser + Days saved + Links -->
+  <div class="card card-about">
+    <p>From a small town in India to building tools that power automotive teams worldwide.</p>
+    <a class="card-link" href="about.html">Read my full story ↗</a>
+  </div>
+
+  <div class="card card-stat card-days">
+    <div class="stat-number" data-target="5" data-suffix="+">0</div>
+    <div class="stat-label">Days Saved</div>
+    <div class="stat-detail">per release via automation</div>
+  </div>
+
+  <div class="card card-links">
+    <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">
+      <span class="link-icon">⟨/⟩</span> GitHub
+    </a>
+    <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">
+      <span class="link-icon">in</span> LinkedIn
+    </a>
+  </div>
+
+</main>
+
+<footer class="bento-footer">
   <div>© <span id="year"></span> Akshit Kobagapu · Built with curiosity and Python</div>
-  <div>
-    <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">github</a>
-    <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">linkedin</a>
-  </div>
 </footer>
 
 <script>
@@ -183,9 +179,9 @@
     stats.forEach(s => io.observe(s));
   })();
 
-  // ----- Interest card reveal -----
+  // ----- Card reveal on scroll -----
   (function () {
-    const cards = document.querySelectorAll('.interest-card');
+    const cards = document.querySelectorAll('.card');
     const io = new IntersectionObserver((items) => {
       items.forEach(e => {
         if (e.isIntersecting) {
@@ -193,9 +189,9 @@
           io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.1 });
     cards.forEach((c, i) => {
-      c.style.transitionDelay = (i * 100) + 'ms';
+      c.style.transitionDelay = (i * 60) + 'ms';
       io.observe(c);
     });
   })();

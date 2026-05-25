@@ -449,6 +449,235 @@ section { position: relative; z-index: 1; }
 .bio-prose p:last-child { margin-bottom: 0; }
 .bio-prose em { color: var(--accent); font-style: italic; }
 
+/* ========== BENTO GRID LANDING ========== */
+.bento {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 6rem 1.5rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+}
+.card.in { opacity: 1; transform: translateY(0); }
+.card:hover { border-color: var(--accent); }
+
+/* Name card — spans 2 cols */
+.card-name {
+  grid-column: span 2;
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.5rem;
+}
+.card-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+.card-name h1 {
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+}
+.card-name h1 .accent { color: var(--accent); }
+.card-tagline {
+  font-family: var(--mono);
+  font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+  color: var(--muted);
+  border-left: 2px solid var(--accent);
+  padding-left: 1rem;
+  max-width: 30ch;
+}
+.card-tagline .cursor {
+  display: inline-block;
+  width: 0.55ch; height: 1em;
+  background: var(--accent);
+  margin-left: 0.2ch;
+  vertical-align: text-bottom;
+  animation: blink 1.1s steps(1) infinite;
+}
+.card-meta {
+  margin-top: 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--dim);
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.card-meta span { display: flex; align-items: center; gap: 0.4rem; }
+.card-meta span::before { content: ""; width: 5px; height: 5px; background: var(--accent); border-radius: 50%; }
+.card-meta a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); }
+.card-meta a:hover { color: var(--text); }
+
+/* Photo card */
+.card-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--bg-2) 100%);
+}
+.card-photo img {
+  width: 100%;
+  max-width: 180px;
+  height: auto;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 30px rgba(78, 205, 196, 0.1);
+}
+
+/* Stat cards */
+.card-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+.card-stat .stat-number {
+  font-family: var(--mono);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.card-stat .stat-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+.card-stat .stat-detail {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--dim);
+}
+.card-stat .stat-detail a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); }
+.card-stat .stat-detail a:hover { color: var(--text); }
+
+/* Terminal card — spans 2 cols */
+.card-terminal {
+  grid-column: span 2;
+  grid-row: span 2;
+  padding: 0;
+  overflow: hidden;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+/* Interest cards */
+.card-interest {
+  padding: 1.5rem;
+}
+.card-interest .interest-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+.card-interest h3 { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.4rem; color: var(--text); }
+.card-interest p { color: var(--muted); font-size: 0.82rem; line-height: 1.45; }
+
+/* About teaser card — spans 2 cols */
+.card-about {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+}
+.card-about p {
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--accent);
+  text-decoration: none;
+  align-self: flex-start;
+}
+.card-link:hover { color: var(--text); }
+
+/* Links card */
+.card-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+.card-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.card-links a:hover { color: var(--accent); }
+.link-icon {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent);
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-2);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+/* Bento footer */
+.bento-footer {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--dim);
+  text-align: center;
+}
+
+/* ========== BENTO MOBILE ========== */
+@media (max-width: 880px) {
+  .bento {
+    grid-template-columns: repeat(2, 1fr);
+    padding-top: 5rem;
+  }
+  .card-name { grid-column: span 2; grid-row: span 1; padding: 2rem; }
+  .card-name h1 { font-size: 2.5rem; }
+  .card-terminal { grid-column: span 2; grid-row: span 1; }
+  .card-about { grid-column: span 2; }
+}
+@media (max-width: 520px) {
+  .bento {
+    grid-template-columns: 1fr;
+    padding: 4.5rem 1rem 1rem;
+  }
+  .card-name, .card-terminal, .card-about { grid-column: span 1; }
+}
+
 /* ========== FOOTER ========== */
 footer {
   padding: 5rem 2.5rem 3rem;
