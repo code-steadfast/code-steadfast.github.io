@@ -127,6 +127,8 @@ section { position: relative; z-index: 1; }
 }
 .hero .meta span { display: flex; align-items: center; gap: 0.5rem; }
 .hero .meta span::before { content: ""; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+.meta-link, .stat-link { color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); }
+.meta-link:hover, .stat-link:hover { color: var(--text); border-bottom-color: var(--text); }
 .scroll-hint {
   position: absolute;
   bottom: 2rem;
@@ -147,11 +149,11 @@ section { position: relative; z-index: 1; }
   gap: 1.5rem;
 }
 .hero-portrait {
-  width: 100px;
-  height: 100px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 20%;
   border: 2px solid var(--accent);
   box-shadow: 0 0 20px rgba(232, 197, 71, 0.15);
   flex-shrink: 0;
