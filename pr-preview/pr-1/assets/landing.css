@@ -141,24 +141,55 @@ section { position: relative; z-index: 1; }
 @keyframes bob { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
 
 /* ========== HERO TERMINAL ========== */
-.hero-photo {
+.hero-intro {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 1.5rem;
 }
 .hero-portrait {
-  width: 280px;
-  height: 280px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--accent);
-  box-shadow: 0 0 40px rgba(232, 197, 71, 0.15), 0 30px 80px rgba(0,0,0,0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  object-position: center top;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 20px rgba(232, 197, 71, 0.15);
+  flex-shrink: 0;
 }
-.hero-portrait:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 60px rgba(232, 197, 71, 0.25), 0 40px 100px rgba(0,0,0,0.5);
+.hero-terminal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
 }
+.terminal-bar {
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.terminal-bar .dot { width: 11px; height: 11px; border-radius: 50%; }
+.terminal-bar .dot:nth-child(1) { background: #ff5f56; }
+.terminal-bar .dot:nth-child(2) { background: #ffbd2e; }
+.terminal-bar .dot:nth-child(3) { background: #27c93f; }
+.terminal-title { margin-left: 1rem; color: var(--dim); font-size: 0.78rem; }
+.terminal-content {
+  padding: 1.5rem;
+  color: var(--text);
+  line-height: 1.7;
+  white-space: pre;
+  overflow-x: auto;
+}
+.terminal-content .kw { color: var(--keyword); }
+.terminal-content .str { color: var(--string); }
+.terminal-content .com { color: var(--comment); font-style: italic; }
+.terminal-content .ac { color: var(--accent); }
+.terminal-content .ok { color: var(--good); }
 
 /* ========== IMPACT ========== */
 .impact {
@@ -478,8 +509,8 @@ footer a:hover { color: var(--accent); }
     padding-right: 1.25rem;
   }
   .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  .hero-photo { order: -1; }
-  .hero-portrait { width: 200px; height: 200px; }
+  .hero-terminal { display: none; }
+  .hero-portrait { width: 80px; height: 80px; }
   .impact-grid { grid-template-columns: repeat(2, 1fr); }
   .interests-grid { grid-template-columns: repeat(2, 1fr); }
   .bio-grid {
