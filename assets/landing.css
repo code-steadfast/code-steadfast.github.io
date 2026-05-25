@@ -127,6 +127,8 @@ section { position: relative; z-index: 1; }
 }
 .hero .meta span { display: flex; align-items: center; gap: 0.5rem; }
 .hero .meta span::before { content: ""; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+.meta-link, .stat-link { color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); }
+.meta-link:hover, .stat-link:hover { color: var(--text); border-bottom-color: var(--text); }
 .scroll-hint {
   position: absolute;
   bottom: 2rem;
@@ -413,6 +415,13 @@ section { position: relative; z-index: 1; }
   margin: 0;
 }
 .about-hero h1 .accent { color: var(--accent); }
+.about-hook {
+  margin-top: 1.2rem;
+  font-size: 1.1rem;
+  color: var(--muted);
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
 .bio {
   padding: 2rem 2.5rem 6rem;
   max-width: 1000px;
