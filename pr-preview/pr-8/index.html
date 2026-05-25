@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Akshit Kobagapu</title>
+<link rel="icon" href="_static/bio-photo-circle.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/landing.css" />
+<style>
+:root {
+  --bg: #0f1114;
+  --surface: #191c20;
+  --text: #eae8de;
+  --muted: #8f9196;
+  --dim: #5d6065;
+  --border: #2a2d32;
+  --accent: #4ecdc4;
+  --accent2: #ff6b6b;
+  --good: #98c379;
+  --mono: "Fira Code", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+/* Each slide is full viewport */
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2.5rem;
+  position: relative;
+}
+
+/* Dot nav on the right */
+.dot-nav {
+  position: fixed;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  z-index: 100;
+}
+.dot-nav a {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--dim);
+  transition: background 0.3s, transform 0.3s;
+}
+.dot-nav a.active { background: var(--accent); transform: scale(1.3); }
+.dot-nav a:hover { background: var(--accent); }
+
+/* SLIDE 1: Identity */
+.slide-identity { flex-direction: column; text-align: center; }
+.slide-identity img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 40px rgba(78, 205, 196, 0.12);
+  margin-bottom: 2.5rem;
+}
+.slide-identity h1 {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+}
+.slide-identity h1 .accent { color: var(--accent); }
+.slide-identity .tagline {
+  font-family: var(--mono);
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  color: var(--muted);
+  max-width: 32ch;
+  margin: 0 auto 2rem;
+}
+.slide-identity .cursor {
+  display: inline-block;
+  width: 0.55ch; height: 1em;
+  background: var(--accent);
+  margin-left: 0.2ch;
+  vertical-align: text-bottom;
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.slide-identity .tags {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.slide-identity .tags span {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--dim);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+}
+.slide-identity .tags a { color: var(--accent); text-decoration: none; }
+.scroll-arrow {
+  position: absolute;
+  bottom: 2rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--dim);
+  animation: bob 1.8s ease-in-out infinite;
+}
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+/* SLIDE 2: What I do (terminal) */
+.slide-terminal { background: var(--bg); }
+.slide-terminal-inner {
+  max-width: 700px;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+.terminal-bar {
+  background: #1a1c1f;
+  border-bottom: 1px solid var(--border);
+  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.terminal-bar .dot { width: 11px; height: 11px; border-radius: 50%; }
+.terminal-bar .dot:nth-child(1) { background: #ff5f56; }
+.terminal-bar .dot:nth-child(2) { background: #ffbd2e; }
+.terminal-bar .dot:nth-child(3) { background: #27c93f; }
+.terminal-title { margin-left: 1rem; color: var(--dim); font-size: 0.78rem; font-family: var(--mono); }
+.terminal-content {
+  padding: 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.7;
+  white-space: pre;
+  overflow-x: auto;
+}
+.terminal-content .kw { color: var(--accent2); }
+.terminal-content .str { color: var(--accent); }
+.terminal-content .com { color: var(--dim); font-style: italic; }
+.terminal-content .ac { color: var(--accent); }
+.terminal-content .ok { color: var(--good); }
+
+/* SLIDE 3: Impact numbers */
+.slide-impact { flex-direction: column; text-align: center; }
+.slide-impact h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 4rem;
+}
+.slide-impact h2 .accent { color: var(--accent); }
+.impact-row {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.impact-item { text-align: center; min-width: 140px; }
+.impact-item .num {
+  font-family: var(--mono);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.impact-item .label { font-size: 0.95rem; color: var(--muted); font-weight: 500; }
+.impact-item .label a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); }
+
+/* SLIDE 4: Interests */
+.slide-interests { flex-direction: column; }
+.slide-interests h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+.slide-interests h2 .accent { color: var(--accent); }
+.interests-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: 900px;
+}
+.int-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.int-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+.int-card .icon { font-size: 2.2rem; margin-bottom: 1rem; }
+.int-card h3 { font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; }
+.int-card p { color: var(--muted); font-size: 0.85rem; line-height: 1.45; }
+
+/* SLIDE 5: Story + links */
+.slide-story { flex-direction: column; text-align: center; }
+.slide-story blockquote {
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 36ch;
+  margin: 0 auto 2.5rem;
+  font-style: italic;
+}
+.slide-story blockquote em { color: var(--accent); font-style: normal; }
+.story-links {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.story-links a {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+.story-links a:hover { opacity: 0.85; }
+.story-links a.outline {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.story-links a.outline:hover { background: var(--accent); color: var(--bg); opacity: 1; }
+.slide-footer {
+  position: absolute;
+  bottom: 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--dim);
+}
+.slide-footer a { color: var(--muted); text-decoration: none; margin: 0 0.5rem; }
+.slide-footer a:hover { color: var(--accent); }
+
+/* Slide content reveal */
+.slide-content {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.slide-content.in { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.25rem; }
+  .interests-row { grid-template-columns: repeat(2, 1fr); }
+  .impact-row { gap: 2rem; }
+  .dot-nav { display: none; }
+}
+@media (max-width: 480px) {
+  .interests-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Dot navigation -->
+<nav class="dot-nav">
+  <a href="#s1" title="Identity"></a>
+  <a href="#s2" title="What I do"></a>
+  <a href="#s3" title="Impact"></a>
+  <a href="#s4" title="Interests"></a>
+  <a href="#s5" title="Story"></a>
+</nav>
+
+<!-- SLIDE 1: Identity -->
+<section class="slide slide-identity" id="s1">
+  <div class="slide-content">
+    <img src="_static/bio-photo-circle.png" alt="Akshit Kobagapu" />
+    <h1>Akshit<br/><span class="accent">Kobagapu</span><span class="accent">.</span></h1>
+    <div class="tagline">I don't just fix problems. I eliminate them.<span class="cursor"></span></div>
+    <div class="tags">
+      <span>Build Systems</span>
+      <span>Automation</span>
+      <span><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener">SPLE</a></span>
+    </div>
+  </div>
+  <div class="scroll-arrow">↓</div>
+</section>
+
+<!-- SLIDE 2: Terminal -->
+<section class="slide slide-terminal" id="s2">
+  <div class="slide-content slide-terminal-inner">
+    <div class="terminal-bar">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <span class="terminal-title">~/career.sh</span>
+    </div>
+    <pre class="terminal-content"><span class="com"># What I do</span>
+<span class="kw">function</span> <span class="ac">eliminate_waste</span>() {
+  <span class="com"># Replace expensive licenses</span>
+  vector_tools → <span class="str">custom_python</span>  <span class="ok">✓ €0/year</span>
+
+  <span class="com"># Automate manual processes</span>
+  manual_scripts → <span class="str">build_extensions</span>  <span class="ok">✓ -1 day/variant</span>
+
+  <span class="com"># Make invisible things visible</span>
+  unknown_resources → <span class="str">ram_rom_report</span>  <span class="ok">✓ every build</span>
+}
+
+<span class="com"># Result</span>
+<span class="kw">echo</span> <span class="str">"Teams ship faster. I sleep well."</span></pre>
+  </div>
+</section>
+
+<!-- SLIDE 3: Impact -->
+<section class="slide slide-impact" id="s3">
+  <div class="slide-content">
+    <h2>A decade of <span class="accent">impact.</span></h2>
+    <div class="impact-row">
+      <div class="impact-item">
+        <div class="num" data-target="15">0</div>
+        <div class="label">Spot Awards</div>
+      </div>
+      <div class="impact-item">
+        <div class="num" data-target="10" data-suffix="+">0</div>
+        <div class="label"><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener">SPLE</a> Trainings</div>
+      </div>
+      <div class="impact-item">
+        <div class="num" data-target="5">0</div>
+        <div class="label">Promotions</div>
+      </div>
+      <div class="impact-item">
+        <div class="num" data-target="5" data-suffix="+">0</div>
+        <div class="label">Days Saved / Release</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4: Interests -->
+<section class="slide slide-interests" id="s4">
+  <div class="slide-content">
+    <h2>When not <span class="accent">coding.</span></h2>
+    <div class="interests-row">
+      <div class="int-card"><div class="icon">🏃</div><h3>Sports</h3><p>Running, swimming, skating, hiking, bouldering, skiing</p></div>
+      <div class="int-card"><div class="icon">🎨</div><h3>Art & Anime</h3><p>Drawing, painting, and watching anime</p></div>
+      <div class="int-card"><div class="icon">🍳</div><h3>Cooking</h3><p>Experimenting with cuisines and flavors</p></div>
+      <div class="int-card"><div class="icon">💻</div><h3>Coding</h3><p>Dojos and katas with colleagues</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: Story -->
+<section class="slide slide-story" id="s5">
+  <div class="slide-content">
+    <blockquote>From a <em>small town in India</em> to building tools that power automotive teams <em>worldwide</em>.</blockquote>
+    <div class="story-links">
+      <a href="about.html">Read my story</a>
+      <a href="about.html#timeline" class="outline">View timeline</a>
+    </div>
+  </div>
+  <div class="slide-footer">
+    © <span id="year"></span> Akshit Kobagapu ·
+    <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">github</a>
+    <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">linkedin</a>
+  </div>
+</section>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Slide content reveal
+  (function () {
+    const items = document.querySelectorAll('.slide-content');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.2 });
+    items.forEach(i => io.observe(i));
+  })();
+
+  // Dot nav active state
+  (function () {
+    const dots = document.querySelectorAll('.dot-nav a');
+    const slides = document.querySelectorAll('.slide');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          dots.forEach(d => d.classList.remove('active'));
+          const idx = Array.from(slides).indexOf(e.target);
+          if (dots[idx]) dots[idx].classList.add('active');
+        }
+      });
+    }, { threshold: 0.5 });
+    slides.forEach(s => io.observe(s));
+  })();
+
+  // Animated counters
+  (function () {
+    const nums = document.querySelectorAll('.num[data-target]');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        let current = 0;
+        const inc = Math.max(1, Math.floor(target / 40));
+        const timer = setInterval(() => {
+          current += inc;
+          if (current >= target) { current = target; clearInterval(timer); }
+          el.textContent = current + (el.dataset.suffix || '');
+        }, 30);
+        io.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    nums.forEach(n => io.observe(n));
+  })();
+</script>
+
+</body>
+</html>
