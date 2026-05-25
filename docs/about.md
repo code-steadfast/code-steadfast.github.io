@@ -12,7 +12,7 @@ My career in the automotive industry began at Continental, where a shy kid from 
 
 In 2022, I packed my life into two suitcases and moved to Germany. At Marquardt GmbH, I design and maintain tools for the Software Product Line Engineering platform — building automation that saves teams days of manual work, replacing expensive commercial tools with custom Python solutions, and conducting trainings that help colleagues ship better software. Every tool I build carries the same philosophy: if someone has to do it manually twice, it should be automated forever.
 
-I am driven by curiosity, shaped by struggle, and always learning. Whether it is build systems, automation, or a new recipe in the kitchen — I don't stop until I understand how it works.
+I am driven by curiosity, shaped by struggle, and always learning. Whether it is build systems, software architecture, design patterns, automation, or a new recipe in the kitchen — I don't stop until I understand how it works.
 
 ## A rough timeline
 
