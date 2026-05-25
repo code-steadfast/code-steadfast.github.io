@@ -6,6 +6,11 @@
       "description": "Presented a national level technical paper on **Moletronics — An Invisible Technology** during my engineering studies."
     },
     {
+      "year": "2013–2015",
+      "title": "Teaching Fellow Students",
+      "description": "From my second year through graduation, self-learned subjects, clarified concepts with professors, and taught fellow students **Control Systems**, **Embedded Systems**, **Microprocessors**, and **Digital Signal Processing** — semester after semester, while working part-time to fund my education."
+    },
+    {
       "year": 2015,
       "title": "First Coding Experience",
       "description": "My first hands-on coding — wrote embedded code to flash into a robot for line following and object detection at the **Robosapiens** workshop."
@@ -18,7 +23,7 @@
     {
       "year": 2015,
       "title": "B.Tech in Electronics and Communication Engineering",
-      "description": "Completed my engineering degree. From the third year onward, I taught fellow students Control Systems, Embedded Systems, and Microprocessors — while working part-time to fund my education."
+      "description": "Completed my engineering degree in **Electronics and Communication Engineering**."
     },
     {
       "year": 2016,
@@ -28,32 +33,52 @@
     {
       "year": 2016,
       "title": "Continental Automotive",
-      "description": "Started my career at **Continental Automotive** in the Vehicle Dynamics business unit. I automated the resource analysis process using **Perl** — extracting data, generating reports, and updating internal webpages."
+      "description": "Started my career at **Continental Automotive** in the Vehicle Dynamics business unit. Automated the resource analysis process using **Perl** — extracting data, generating reports, and updating internal webpages."
     },
     {
       "year": 2017,
-      "title": "Worldwide Resource Estimation",
-      "description": "Took worldwide responsibility for control function resource estimation across Asia, Germany, and the USA. Traveled to Germany to build the TB2015 database for MKC1 projects."
+      "title": "MKC1 Braking System — Worldwide Responsibility",
+      "description": "Took worldwide responsibility for control function resource estimation across Asia, Germany, and the USA for [MK100/MKC1](https://www.continental-automotive.com/) braking system products. Created the quotation database for new project estimations."
+    },
+    {
+      "year": 2017,
+      "title": "First International Travel",
+      "description": "Traveled to Germany for the first time to prepare **MKC1 resource estimations** for **Ford**, **BMW**, and **Volvo** projects and built the TB2015 database."
     },
     {
       "year": 2018,
       "title": "Git Ambassador",
-      "description": "Became a Git Ambassador, training a 40-member team on GitHub workflows. Extended resource estimation to support tricore microcontrollers and fully automated the end-to-end testing and reporting pipeline."
+      "description": "Became a **Git Ambassador**, training a 40-member team on GitHub workflows and best practices. Fully automated the end-to-end testing and reporting pipeline."
+    },
+    {
+      "year": 2018,
+      "title": "TriCore Resource Estimation",
+      "description": "Extended the resource estimation Excel macro template (**.xlsm**) to support **TriCore** microcontroller project quotations — learned VBA and Excel macro automation on the job."
     },
     {
       "year": 2019,
       "title": "GLIWA T1 Timing Analysis",
-      "description": "Spent 3 months in Frankfurt integrating **GLIWA T1** timing analysis into the RTM component for Vector OS. Analyzed timing parameters for vision control software across all global projects."
+      "description": "Spent 3 months in Frankfurt integrating **GLIWA T1** timing analysis into the RTM component for both **Vector OS** and **Elektrobit OS**. Analyzed timing parameters for vision control software across all global projects."
+    },
+    {
+      "year": 2020,
+      "title": "MKC2 Braking Product Support",
+      "description": "Developed and improved the quotation template for the new [MKC2](https://www.continental-automotive.com/) braking product — extending the Excel macro tooling to support resource estimation for the new product line."
     },
     {
       "year": 2021,
-      "title": "Technical Architect",
+      "title": "Technical Architect & Python Tool",
       "description": "Developed a **Python application** to extract detailed timing data from GLIWA T1 enabled software — my first experience with Python and databases. It became the standard tool for worldwide timing analysis."
     },
     {
       "year": 2022,
+      "title": "Train the Trainer & Knowledge Transfer",
+      "description": "Participated in the **Train the Trainer** program. Trained **4+ deputies** across teams, ensuring complete knowledge transfer of all responsibilities and helping colleagues take ownership before transitioning."
+    },
+    {
+      "year": 2022,
       "title": "Marquardt GmbH, Germany",
-      "description": "After 6.5 years at Continental and 15 spot awards, moved to Germany and joined **Marquardt GmbH** as an Advanced Software Development Engineer. Started working on the SPLE platform build system."
+      "description": "After 6.5 years at Continental and 15 spot awards, packed my life into two suitcases and moved to Germany. Joined **Marquardt GmbH** as an Advanced Software Development Engineer, working on the SPLE platform build system."
     },
     {
       "year": 2023,
