@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Akshit Kobagapu</title>
+<link rel="icon" href="_static/bio-photo-circle.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/landing.css" />
+</head>
+<body class="bento-page">
+
+<nav>
+  <a class="brand" href="index.html">akshitkobagapu.com</a>
+  <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+    <span class="nav-toggle-icon" aria-hidden="true">☰</span>
+  </button>
+  <ul id="nav-menu">
+    <li><a href="about.html">about</a></li>
+    <li><a href="about.html#timeline">timeline</a></li>
+  </ul>
+</nav>
+
+<main class="bento">
+
+  <!-- Row 1: Name + Photo + Stat -->
+  <div class="card card-name">
+    <div class="card-eyebrow">$ whoami</div>
+    <h1>Akshit<br/><span class="accent">Kobagapu</span><span class="accent">.</span></h1>
+    <p class="card-tagline">I don't just fix problems. I eliminate them.<span class="cursor"></span></p>
+    <div class="card-meta">
+      <span>Build Systems</span>
+      <span>Automation</span>
+      <span><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener">SPLE</a></span>
+    </div>
+  </div>
+
+  <div class="card card-photo">
+    <img src="_static/bio-photo-circle.png" alt="Akshit Kobagapu" />
+  </div>
+
+  <div class="card card-stat card-awards">
+    <div class="stat-number" data-target="15">0</div>
+    <div class="stat-label">Spot Awards</div>
+    <div class="stat-detail">exceptional contributions</div>
+  </div>
+
+  <!-- Row 2: Stats + Terminal -->
+  <div class="card card-stat card-trainings">
+    <div class="stat-number" data-target="10" data-suffix="+">0</div>
+    <div class="stat-label">Trainings</div>
+    <div class="stat-detail"><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener">SPLE</a> platform</div>
+  </div>
+
+  <div class="card card-stat card-promotions">
+    <div class="stat-number" data-target="5">0</div>
+    <div class="stat-label">Promotions</div>
+    <div class="stat-detail">GET → Tech Architect</div>
+  </div>
+
+  <div class="card card-terminal">
+    <div class="terminal-bar">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <span class="terminal-title">~/career.sh</span>
+    </div>
+    <pre class="terminal-content"><span class="com"># What I do</span>
+<span class="kw">function</span> <span class="ac">eliminate_waste</span>() {
+  <span class="com"># Replace expensive licenses</span>
+  vector_tools → <span class="str">custom_python</span>  <span class="ok">✓ €0/year</span>
+
+  <span class="com"># Automate manual processes</span>
+  manual_scripts → <span class="str">build_extensions</span>  <span class="ok">✓ -1 day/variant</span>
+
+  <span class="com"># Make invisible things visible</span>
+  unknown_resources → <span class="str">ram_rom_report</span>  <span class="ok">✓ every build</span>
+}
+
+<span class="com"># Result</span>
+<span class="kw">echo</span> <span class="str">"Teams ship faster. I sleep well."</span></pre>
+  </div>
+
+  <!-- Row 3: Interests -->
+  <div class="card card-interest">
+    <div class="interest-icon">🏃</div>
+    <h3>Sports</h3>
+    <p>Running, swimming, skating, hiking, bouldering, skiing</p>
+  </div>
+
+  <div class="card card-interest">
+    <div class="interest-icon">🎨</div>
+    <h3>Art & Anime</h3>
+    <p>Drawing, painting, and watching anime</p>
+  </div>
+
+  <div class="card card-interest">
+    <div class="interest-icon">🍳</div>
+    <h3>Cooking</h3>
+    <p>Experimenting with cuisines and flavors</p>
+  </div>
+
+  <div class="card card-interest">
+    <div class="interest-icon">💻</div>
+    <h3>Coding Practice</h3>
+    <p>Dojos and katas with colleagues</p>
+  </div>
+
+  <!-- Row 4: About teaser + Days saved + Links -->
+  <div class="card card-about">
+    <p>From a small town in India to building tools that power automotive teams worldwide.</p>
+    <a class="card-link" href="about.html">Read my full story ↗</a>
+  </div>
+
+  <div class="card card-stat card-days">
+    <div class="stat-number" data-target="5" data-suffix="+">0</div>
+    <div class="stat-label">Days Saved</div>
+    <div class="stat-detail">per release via automation</div>
+  </div>
+
+  <div class="card card-links">
+    <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">
+      <span class="link-icon">⟨/⟩</span> GitHub
+    </a>
+    <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">
+      <span class="link-icon">in</span> LinkedIn
+    </a>
+  </div>
+
+</main>
+
+<footer class="bento-footer">
+  <div>© <span id="year"></span> Akshit Kobagapu · Built with curiosity and Python</div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ----- Mobile nav toggle -----
+  (function () {
+    const nav = document.querySelector('nav');
+    const btn = document.querySelector('.nav-toggle');
+    const menu = document.getElementById('nav-menu');
+    if (!nav || !btn || !menu) return;
+    const setOpen = (open) => {
+      nav.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.querySelector('.nav-toggle-icon').textContent = open ? '✕' : '☰';
+    };
+    btn.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+    menu.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') setOpen(false);
+    });
+  })();
+
+  // ----- Animated counters -----
+  (function () {
+    const stats = document.querySelectorAll('.stat-number');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        let current = 0;
+        const increment = Math.max(1, Math.floor(target / 40));
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          const suffix = el.dataset.suffix || '';
+          el.textContent = current + suffix;
+        }, 30);
+        io.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    stats.forEach(s => io.observe(s));
+  })();
+
+  // ----- Card reveal on scroll -----
+  (function () {
+    const cards = document.querySelectorAll('.card');
+    const io = new IntersectionObserver((items) => {
+      items.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    cards.forEach((c, i) => {
+      c.style.transitionDelay = (i * 60) + 'ms';
+      io.observe(c);
+    });
+  })();
+</script>
+
+</body>
+</html>
