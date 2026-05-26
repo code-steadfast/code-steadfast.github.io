@@ -12,7 +12,6 @@
 :root {
   --bg: #0f0f1a;
   --surface: #1a1a2e;
-  --surface-2: #22223a;
   --text: #f5f0e8;
   --muted: #9a9590;
   --dim: #5a5565;
@@ -20,7 +19,8 @@
   --orange: #ff6a00;
   --gold: #ffd700;
   --crimson: #e63946;
-  --navy: #16213e;
+  --parchment: #2a2218;
+  --parchment-text: #b8a88a;
   --font-display: "Bebas Neue", Impact, sans-serif;
   --font-body: "Inter", -apple-system, sans-serif;
   --font-mono: "Fira Code", monospace;
@@ -32,12 +32,10 @@ body {
   -webkit-font-smoothing: antialiased; overflow-x: hidden; line-height: 1.6;
 }
 
-/* ── Speed Lines Background ── */
+/* ── Speed Lines ── */
 .speed-lines {
   position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.04;
-  background: repeating-conic-gradient(
-    var(--text) 0deg 0.5deg, transparent 0.5deg 3deg
-  ) center / 100% 100%;
+  background: repeating-conic-gradient(var(--text) 0deg 0.5deg, transparent 0.5deg 3deg) center / 100% 100%;
 }
 
 /* ── Nav ── */
@@ -62,20 +60,15 @@ body {
 
 /* ── Layout ── */
 .page { position: relative; z-index: 1; }
-.section {
-  max-width: 1100px; margin: 0 auto; padding: 6rem 2rem;
-}
+.section { max-width: 1100px; margin: 0 auto; padding: 6rem 2rem; }
 
 /* ── Arc Labels ── */
 .arc-label {
   font-family: var(--font-display); font-size: 0.9rem;
-  color: var(--orange); letter-spacing: 0.25em;
-  text-transform: uppercase; margin-bottom: 0.8rem;
-  display: flex; align-items: center; gap: 0.8rem;
+  color: var(--orange); letter-spacing: 0.25em; text-transform: uppercase;
+  margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem;
 }
-.arc-label::after {
-  content: ''; flex: 1; height: 2px; background: var(--orange); opacity: 0.3;
-}
+.arc-label::after { content: ''; flex: 1; height: 2px; background: var(--orange); opacity: 0.3; }
 .section h2 {
   font-family: var(--font-display);
   font-size: clamp(2.2rem, 4.5vw, 3.5rem);
@@ -84,44 +77,77 @@ body {
 .section h2 .accent { color: var(--orange); }
 .section h2 .gold { color: var(--gold); }
 
-/* ── Reveal Animation ── */
+/* ── Reveal ── */
 .reveal {
   opacity: 0; transform: translateY(40px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* ═══════ HERO ═══════ */
+/* ═══════ HERO — MANGA TITLE PAGE ═══════ */
 .hero {
   min-height: 100vh; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center; padding: 6rem 2rem 4rem;
-  position: relative; z-index: 1;
+  position: relative; z-index: 1; overflow: hidden;
+}
+/* Radial burst behind hero */
+.hero::before {
+  content: ''; position: absolute; inset: -50%;
+  background: radial-gradient(circle at center,
+    rgba(255,106,0,0.08) 0%, transparent 40%);
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+@keyframes pulse-glow { 0%,100%{opacity:0.6} 50%{opacity:1} }
+
+/* Kanji watermark */
+.hero-kanji {
+  position: absolute; font-size: clamp(15rem, 35vw, 30rem);
+  color: var(--orange); opacity: 0.03;
+  font-weight: 900; pointer-events: none;
+  line-height: 1; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
 }
 .hero-photo {
-  width: 140px; height: 140px; border-radius: 50%;
+  width: 160px; height: 160px; border-radius: 0;
   object-fit: cover; object-position: center 20%;
   border: 4px solid var(--orange);
-  box-shadow: 0 0 60px rgba(255,106,0,0.2), 0 0 120px rgba(255,106,0,0.06);
-  margin-bottom: 2rem;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  box-shadow: 0 0 60px rgba(255,106,0,0.25);
+  margin-bottom: 2rem; position: relative; z-index: 2;
 }
 .hero-name {
   font-family: var(--font-display);
   font-size: clamp(4rem, 12vw, 9rem);
-  letter-spacing: 0.06em;
-  line-height: 0.9;
-  margin-bottom: 1.5rem;
+  letter-spacing: 0.06em; line-height: 0.9;
+  margin-bottom: 0.5rem; position: relative; z-index: 2;
 }
 .hero-name .first { color: var(--text); }
 .hero-name .last { color: var(--orange); }
+/* Impact lines around name */
+.hero-impact {
+  font-family: var(--font-display); font-size: 0.8rem;
+  color: var(--gold); letter-spacing: 0.4em;
+  text-transform: uppercase; margin-bottom: 1.5rem;
+  position: relative; z-index: 2;
+  display: flex; align-items: center; gap: 1rem; justify-content: center;
+}
+.hero-impact::before, .hero-impact::after {
+  content: ''; width: 60px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+.hero-impact::after { background: linear-gradient(270deg, transparent, var(--gold)); }
+
 .hero-tagline {
   font-size: clamp(1rem, 1.8vw, 1.3rem);
   color: var(--muted); max-width: 36ch;
   margin: 0 auto 2rem; font-weight: 500;
+  position: relative; z-index: 2;
 }
 .hero-tagline strong { color: var(--gold); font-weight: 700; }
 .hero-tags {
   display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;
+  position: relative; z-index: 2;
 }
 .tag {
   font-family: var(--font-mono); font-size: 0.75rem;
@@ -135,53 +161,68 @@ body {
   position: absolute; bottom: 2.5rem;
   font-family: var(--font-display); font-size: 1rem;
   color: var(--dim); letter-spacing: 0.3em;
-  animation: bob 2s ease-in-out infinite;
+  animation: bob 2s ease-in-out infinite; z-index: 2;
 }
 @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
 
-/* ═══════ ARC 01: WHAT I BUILD ═══════ */
+/* ═══════ ARC 01: JUTSU SCROLLS (WHAT I BUILD) ═══════ */
 .work-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
 }
 .work-card {
-  background: var(--surface); border: 2px solid var(--border);
-  border-radius: 4px; padding: 2rem; position: relative;
+  background: linear-gradient(135deg, var(--parchment) 0%, #1e1a14 50%, var(--parchment) 100%);
+  border: 2px solid #4a3a28; border-radius: 6px;
+  padding: 0; position: relative; overflow: hidden;
   transition: border-color 0.3s, transform 0.3s;
-  overflow: hidden;
 }
-.work-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0;
-  height: 3px; background: var(--orange); transform: scaleX(0);
-  transition: transform 0.3s; transform-origin: left;
+/* Scroll rolls top & bottom */
+.work-card::before, .work-card::after {
+  content: ''; display: block; height: 8px;
+  background: linear-gradient(90deg,
+    #5a4530 0%, #8a6a40 15%, #c8a050 30%, #dbb860 50%,
+    #c8a050 70%, #8a6a40 85%, #5a4530 100%);
 }
-.work-card:hover { border-color: var(--orange); transform: translateY(-4px); }
-.work-card:hover::before { transform: scaleX(1); }
+.work-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+.work-card-body { padding: 1.8rem; }
 .work-card .icon { font-size: 2rem; margin-bottom: 1rem; }
 .work-card h3 {
   font-family: var(--font-display); font-size: 1.3rem;
-  letter-spacing: 0.05em; margin-bottom: 0.6rem;
+  letter-spacing: 0.05em; margin-bottom: 0.6rem; color: var(--gold);
 }
-.work-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.55; }
+.work-card p { color: var(--parchment-text); font-size: 0.9rem; line-height: 1.55; }
 .work-card .highlight { color: var(--gold); font-weight: 700; }
+/* Corner marks */
+.work-card-body::before {
+  content: ''; position: absolute; top: 16px; left: 16px;
+  width: 14px; height: 14px;
+  border-top: 2px solid var(--gold); border-left: 2px solid var(--gold); opacity: 0.3;
+}
+.work-card-body::after {
+  content: ''; position: absolute; bottom: 16px; right: 16px;
+  width: 14px; height: 14px;
+  border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold); opacity: 0.3;
+}
+.work-card-body { position: relative; }
 
-/* Terminal */
+/* Terminal — styled as ninja scroll terminal */
 .terminal-wrap {
   margin-top: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;
-  background: var(--surface); border: 2px solid var(--border);
-  border-radius: 4px; overflow: hidden;
+  background: linear-gradient(135deg, var(--parchment) 0%, #1e1a14 100%);
+  border: 2px solid #4a3a28; border-radius: 6px; overflow: hidden;
 }
 .terminal-bar {
-  background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border);
+  background: linear-gradient(90deg, #5a4530, #8a6a40, #c8a050, #8a6a40, #5a4530);
+  border-bottom: 1px solid #3a2a18;
   padding: 0.6rem 1rem; display: flex; align-items: center; gap: 0.4rem;
 }
 .terminal-bar .dot { width: 10px; height: 10px; border-radius: 50%; }
 .terminal-bar .dot:nth-child(1) { background: var(--crimson); }
 .terminal-bar .dot:nth-child(2) { background: var(--gold); }
 .terminal-bar .dot:nth-child(3) { background: #27c93f; }
-.terminal-title { margin-left: 0.8rem; color: var(--dim); font-size: 0.75rem; font-family: var(--font-mono); }
+.terminal-title { margin-left: 0.8rem; color: var(--parchment); font-size: 0.75rem; font-family: var(--font-mono); }
 .terminal-content {
   padding: 1.2rem; font-family: var(--font-mono); font-size: 0.8rem;
-  color: var(--text); line-height: 1.7; white-space: pre; overflow-x: auto;
+  color: var(--parchment-text); line-height: 1.7; white-space: pre; overflow-x: auto;
 }
 .terminal-content .kw { color: var(--crimson); }
 .terminal-content .str { color: var(--orange); }
@@ -189,49 +230,75 @@ body {
 .terminal-content .ac { color: var(--gold); }
 .terminal-content .ok { color: #34d399; }
 
-/* ═══════ ARC 02: POWER LEVEL (IMPACT) ═══════ */
+/* ═══════ ARC 02: POWER LEVEL ═══════ */
 .stats-grid {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
 }
 .stat-card {
-  background: var(--surface); border: 2px solid var(--border);
-  border-radius: 4px; padding: 2rem 1.5rem; text-align: center;
+  background: linear-gradient(135deg, var(--parchment) 0%, #1e1a14 100%);
+  border: 2px solid #4a3a28; border-radius: 6px;
+  padding: 0; text-align: center;
   position: relative; overflow: hidden;
   transition: border-color 0.3s;
 }
-.stat-card:hover { border-color: var(--gold); }
-.stat-card::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-  height: 3px; background: linear-gradient(90deg, var(--orange), var(--gold));
+.stat-card::before, .stat-card::after {
+  content: ''; display: block; height: 6px;
+  background: linear-gradient(90deg,
+    #5a4530 0%, #8a6a40 15%, #c8a050 30%, #dbb860 50%,
+    #c8a050 70%, #8a6a40 85%, #5a4530 100%);
 }
+.stat-card:hover { border-color: var(--gold); }
+.stat-card-body { padding: 1.5rem; }
 .stat-num {
   font-family: var(--font-display);
   font-size: clamp(3rem, 6vw, 4rem);
   color: var(--gold); line-height: 1;
   margin-bottom: 0.5rem; letter-spacing: 0.04em;
+  text-shadow: 0 0 15px rgba(255,215,0,0.3);
 }
-.stat-label { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
+.stat-label { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; color: var(--text); }
 .stat-label a { color: var(--orange); text-decoration: none; border-bottom: 1px dashed rgba(255,106,0,0.4); }
-.stat-detail { font-size: 0.78rem; color: var(--dim); }
+.stat-detail { font-size: 0.78rem; color: var(--parchment-text); }
 
-/* ═══════ ARC 03: BEYOND THE FIGHT ═══════ */
+/* Seal stamp on the last stat card */
+.stat-card:last-child .stat-card-body::after {
+  content: '力'; position: absolute; top: 50%; right: 10px;
+  transform: translateY(-50%) rotate(-15deg);
+  font-size: 3rem; color: var(--crimson); opacity: 0.12; font-weight: 900;
+}
+.stat-card:last-child .stat-card-body { position: relative; }
+
+/* ═══════ ARC 03: BEYOND THE CODE ═══════ */
 .interests-grid {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
 }
 .int-card {
-  background: var(--surface); border: 2px solid var(--border);
-  border-radius: 4px; padding: 1.8rem; text-align: center;
+  background: linear-gradient(135deg, var(--parchment) 0%, #1e1a14 100%);
+  border: 3px solid #111; border-radius: 0;
+  padding: 1.8rem; text-align: center;
   transition: border-color 0.3s, transform 0.3s;
+  position: relative;
+}
+/* Manga panel corners */
+.int-card::before {
+  content: ''; position: absolute; top: 6px; left: 6px;
+  width: 12px; height: 12px;
+  border-top: 2px solid var(--gold); border-left: 2px solid var(--gold); opacity: 0.3;
+}
+.int-card::after {
+  content: ''; position: absolute; bottom: 6px; right: 6px;
+  width: 12px; height: 12px;
+  border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold); opacity: 0.3;
 }
 .int-card:hover { border-color: var(--crimson); transform: translateY(-3px); }
 .int-card .icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
 .int-card h3 {
   font-family: var(--font-display); font-size: 1.2rem;
-  letter-spacing: 0.05em; margin-bottom: 0.4rem;
+  letter-spacing: 0.05em; margin-bottom: 0.4rem; color: var(--gold);
 }
-.int-card p { color: var(--muted); font-size: 0.85rem; line-height: 1.45; }
+.int-card p { color: var(--parchment-text); font-size: 0.85rem; line-height: 1.45; }
 
-/* ═══════ CTA: THE JOURNEY CONTINUES ═══════ */
+/* ═══════ CTA ═══════ */
 .cta {
   text-align: center; padding: 8rem 2rem;
   max-width: 1100px; margin: 0 auto; position: relative; z-index: 1;
@@ -245,8 +312,7 @@ body {
 .cta-quote .accent { color: var(--orange); }
 .cta-quote .gold { color: var(--gold); }
 .cta-sub {
-  font-size: 1rem; color: var(--muted); margin-bottom: 3rem;
-  font-style: italic;
+  font-size: 1rem; color: var(--muted); margin-bottom: 3rem; font-style: italic;
 }
 .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 .btn-fire {
@@ -263,15 +329,16 @@ body {
   background: transparent; color: var(--text);
   text-decoration: none; font-weight: 700; font-size: 0.95rem;
   border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase;
-  border: 2px solid var(--border);
+  border: 2px solid #4a3a28;
   transition: border-color 0.2s, transform 0.2s;
 }
-.btn-outline:hover { border-color: var(--orange); transform: translateY(-2px); }
+.btn-outline:hover { border-color: var(--gold); transform: translateY(-2px); }
 
 /* ═══════ FOOTER ═══════ */
 .site-footer {
   position: relative; z-index: 1; text-align: center;
-  padding: 2rem; border-top: 2px solid var(--orange); font-size: 0.8rem; color: var(--dim);
+  padding: 2rem; border-top: 2px solid var(--orange);
+  font-size: 0.8rem; color: var(--dim);
 }
 .footer-links { margin-top: 0.5rem; }
 .footer-links a {
@@ -291,6 +358,7 @@ body {
   .top-nav { padding: 0.8rem 1.25rem; }
   .nav-links { gap: 1rem; }
   .speed-lines { opacity: 0.02; }
+  .hero-kanji { font-size: 12rem; }
 }
 @media (max-width: 480px) {
   .interests-grid { grid-template-columns: 1fr; }
@@ -300,10 +368,8 @@ body {
 </head>
 <body>
 
-<!-- Speed lines background -->
 <div class="speed-lines" aria-hidden="true"></div>
 
-<!-- Nav -->
 <nav class="top-nav">
   <a class="brand" href="index.html">AKSHIT K.</a>
   <div class="nav-links">
@@ -316,13 +382,15 @@ body {
 
 <div class="page">
 
-<!-- ═══ HERO ═══ -->
+<!-- ═══ HERO — MANGA TITLE PAGE ═══ -->
 <section class="hero">
+  <div class="hero-kanji" aria-hidden="true">忍</div>
   <img class="hero-photo reveal" src="_static/bio-photo-circle.png" alt="Akshit Kobagapu" />
   <h1 class="hero-name reveal">
     <span class="first">AKSHIT</span><br/>
     <span class="last">KOBAGAPU.</span>
   </h1>
+  <div class="hero-impact reveal">SOFTWARE ENGINEER · TOOL BUILDER · AUTOMATOR</div>
   <p class="hero-tagline reveal">I don't just fix problems. I <strong>eliminate</strong> them.</p>
   <div class="hero-tags reveal">
     <span class="tag">Build Systems</span>
@@ -332,31 +400,37 @@ body {
   <div class="scroll-cue">SCROLL ↓</div>
 </section>
 
-<!-- ═══ ARC 01: WHAT I BUILD ═══ -->
+<!-- ═══ ARC 01: JUTSU SCROLLS ═══ -->
 <section class="section reveal" id="work">
-  <div class="arc-label">ARC 01</div>
+  <div class="arc-label">ARC 01 — JUTSU</div>
   <h2>WHAT I <span class="accent">BUILD.</span></h2>
   <div class="work-grid">
     <div class="work-card">
-      <div class="icon">⚡</div>
-      <h3>LICENSE-FREE TOOLS</h3>
-      <p>Replaced expensive vendor tools with custom Python solutions. <span class="highlight">€0/year</span> licensing cost.</p>
+      <div class="work-card-body">
+        <div class="icon">⚡</div>
+        <h3>LICENSE-FREE TOOLS</h3>
+        <p>Replaced expensive vendor tools with custom Python solutions. <span class="highlight">€0/year</span> licensing cost.</p>
+      </div>
     </div>
     <div class="work-card">
-      <div class="icon">🔧</div>
-      <h3>BUILD AUTOMATION</h3>
-      <p>Extended build systems to eliminate manual steps. <span class="highlight">-1 day per variant</span> per release.</p>
+      <div class="work-card-body">
+        <div class="icon">🔧</div>
+        <h3>BUILD AUTOMATION</h3>
+        <p>Extended build systems to eliminate manual steps. <span class="highlight">-1 day per variant</span> per release.</p>
+      </div>
     </div>
     <div class="work-card">
-      <div class="icon">📊</div>
-      <h3>RESOURCE VISIBILITY</h3>
-      <p>RAM & ROM reports generated automatically. <span class="highlight">Every build</span>, every time.</p>
+      <div class="work-card-body">
+        <div class="icon">📊</div>
+        <h3>RESOURCE VISIBILITY</h3>
+        <p>RAM & ROM reports generated automatically. <span class="highlight">Every build</span>, every time.</p>
+      </div>
     </div>
   </div>
   <div class="terminal-wrap reveal">
     <div class="terminal-bar">
       <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-      <span class="terminal-title">~/career.sh</span>
+      <span class="terminal-title">~/jutsu.sh</span>
     </div>
     <pre class="terminal-content"><span class="com"># What I do</span>
 <span class="kw">function</span> <span class="ac">eliminate_waste</span>() {
@@ -377,35 +451,43 @@ body {
 
 <!-- ═══ ARC 02: POWER LEVEL ═══ -->
 <section class="section reveal" id="impact">
-  <div class="arc-label">ARC 02</div>
-  <h2>POWER <span class="gold">LEVEL.</span></h2>
+  <div class="arc-label">ARC 02 — POWER LEVEL</div>
+  <h2>COMBAT <span class="gold">STATS.</span></h2>
   <div class="stats-grid">
     <div class="stat-card">
-      <div class="stat-num" data-target="15">0</div>
-      <div class="stat-label">Spot Awards</div>
-      <div class="stat-detail">exceptional contributions</div>
+      <div class="stat-card-body">
+        <div class="stat-num" data-target="15">0</div>
+        <div class="stat-label">Spot Awards</div>
+        <div class="stat-detail">exceptional contributions</div>
+      </div>
     </div>
     <div class="stat-card">
-      <div class="stat-num" data-target="10" data-suffix="+">0</div>
-      <div class="stat-label"><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener">SPLE</a> Trainings</div>
-      <div class="stat-detail">platform sessions delivered</div>
+      <div class="stat-card-body">
+        <div class="stat-num" data-target="10" data-suffix="+">0</div>
+        <div class="stat-label"><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener">SPLE</a> Trainings</div>
+        <div class="stat-detail">platform sessions delivered</div>
+      </div>
     </div>
     <div class="stat-card">
-      <div class="stat-num" data-target="5">0</div>
-      <div class="stat-label">Promotions</div>
-      <div class="stat-detail">GET → Technical Architect</div>
+      <div class="stat-card-body">
+        <div class="stat-num" data-target="5">0</div>
+        <div class="stat-label">Promotions</div>
+        <div class="stat-detail">GET → Technical Architect</div>
+      </div>
     </div>
     <div class="stat-card">
-      <div class="stat-num" data-target="5" data-suffix="+">0</div>
-      <div class="stat-label">Days Saved / Release</div>
-      <div class="stat-detail">through build automation</div>
+      <div class="stat-card-body">
+        <div class="stat-num" data-target="5" data-suffix="+">0</div>
+        <div class="stat-label">Days Saved / Release</div>
+        <div class="stat-detail">through build automation</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ ARC 03: BEYOND THE FIGHT ═══ -->
+<!-- ═══ ARC 03: BEYOND THE CODE ═══ -->
 <section class="section reveal" id="interests">
-  <div class="arc-label">ARC 03</div>
+  <div class="arc-label">ARC 03 — FILLER ARC</div>
   <h2>BEYOND THE <span class="accent">CODE.</span></h2>
   <div class="interests-grid">
     <div class="int-card">
@@ -431,7 +513,7 @@ body {
   </div>
 </section>
 
-<!-- ═══ THE JOURNEY CONTINUES ═══ -->
+<!-- ═══ CTA ═══ -->
 <section class="cta reveal">
   <p class="cta-quote">THE <span class="accent">JOURNEY</span> FROM A SMALL TOWN TO THE <span class="gold">WORLD STAGE.</span></p>
   <p class="cta-sub">— and it's far from over.</p>
@@ -443,7 +525,6 @@ body {
 
 </div>
 
-<!-- Footer -->
 <footer class="site-footer">
   <p>© <span id="year"></span> Akshit Kobagapu · Built with curiosity and Python</p>
   <div class="footer-links">
@@ -455,7 +536,7 @@ body {
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Scroll reveal with stagger
+  // Scroll reveal
   (function () {
     const reveals = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
