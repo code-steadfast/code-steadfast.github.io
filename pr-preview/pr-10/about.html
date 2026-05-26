@@ -98,28 +98,82 @@ body {
   max-width: 42ch; margin: 0 auto; line-height: 1.6;
 }
 
-/* Bio */
+/* Bio — Manga panel style */
 .bio-grid {
-  display: grid; grid-template-columns: 200px 1fr; gap: 2.5rem; align-items: start;
+  display: grid; grid-template-columns: 220px 1fr; gap: 0; align-items: stretch;
+}
+.bio-photo-panel {
+  position: relative; background: #1a1a2e;
+  border: 3px solid #111; border-right: none;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.bio-photo-panel::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at center, rgba(255,106,0,0.15) 0%, transparent 70%);
+}
+.bio-photo-panel::after {
+  content: '主人公'; position: absolute; bottom: 8px; left: 50%;
+  transform: translateX(-50%); font-size: 0.7rem;
+  color: var(--gold); opacity: 0.4; letter-spacing: 0.2em;
+  font-family: var(--font-body);
 }
 .bio-photo {
-  width: 200px; height: 200px; border-radius: 4px;
+  width: 100%; height: 100%; min-height: 280px;
   object-fit: cover; object-position: center 20%;
-  border: 3px solid var(--orange);
-  box-shadow: 0 0 40px rgba(255,106,0,0.1);
+  filter: contrast(1.1) saturate(1.1);
 }
 .bio-prose {
-  background: var(--surface); border: 2px solid var(--border);
-  border-radius: 4px; padding: 2.5rem; position: relative;
+  background: linear-gradient(135deg, #2a2218 0%, #1e1a14 50%, #2a2218 100%);
+  border: 3px solid #111;
+  padding: 2.5rem; position: relative;
 }
+/* Manga panel corner marks */
 .bio-prose::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0;
-  height: 3px; background: var(--orange);
+  content: ''; position: absolute; top: 8px; left: 8px;
+  width: 20px; height: 20px;
+  border-top: 2px solid var(--gold); border-left: 2px solid var(--gold);
+  opacity: 0.4;
 }
-.bio-prose p { margin-bottom: 1rem; color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+.bio-prose::after {
+  content: ''; position: absolute; bottom: 8px; right: 8px;
+  width: 20px; height: 20px;
+  border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold);
+  opacity: 0.4;
+}
+.bio-prose p {
+  margin-bottom: 1.2rem; color: #b8a88a; font-size: 0.95rem; line-height: 1.7;
+  text-align: justify;
+}
+.bio-prose p:first-child::first-letter {
+  font-family: var(--font-display); font-size: 3rem; float: left;
+  line-height: 1; margin-right: 0.15em; margin-top: 0.05em;
+  color: var(--orange); text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+}
 .bio-prose p:last-child { margin-bottom: 0; }
 .bio-prose strong { color: var(--text); font-weight: 600; }
 .bio-prose em { color: var(--orange); font-style: italic; }
+
+/* Speech bubble quote */
+.origin-quote {
+  position: relative; margin-top: 2rem;
+  background: var(--surface); border: 2px solid var(--orange);
+  border-radius: 8px; padding: 1.2rem 1.5rem;
+  font-style: italic; color: var(--gold); font-size: 0.95rem;
+  text-align: center;
+}
+.origin-quote::before {
+  content: ''; position: absolute; top: -10px; left: 30px;
+  width: 0; height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid var(--orange);
+}
+.origin-quote .quote-attr {
+  display: block; margin-top: 0.5rem;
+  font-size: 0.75rem; color: var(--muted); font-style: normal;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
 
 /* Timeline — Scroll Path */
 .timeline { position: relative; padding-left: 3.5rem; }
@@ -215,8 +269,9 @@ body {
 .footer-links a:hover { color: var(--orange); }
 
 @media (max-width: 768px) {
-  .bio-grid { grid-template-columns: 1fr; justify-items: center; }
-  .bio-photo { width: 150px; height: 150px; }
+  .bio-grid { grid-template-columns: 1fr; }
+  .bio-photo-panel { min-height: 250px; border-right: 3px solid #111; border-bottom: none; }
+  .bio-photo { min-height: 250px; }
   .about-hero { padding: 7rem 1.25rem 3rem; }
   .section { padding: 4rem 1.25rem; }
   .top-nav { padding: 0.8rem 1.25rem; }
@@ -247,9 +302,11 @@ body {
 </section>
 
 <section class="section reveal">
-  <div class="arc-label">THE ORIGIN</div>
+  <div class="arc-label">ARC 01 — THE ORIGIN</div>
   <div class="bio-grid">
-    <img class="bio-photo" src="_static/bio-photo-circle.png" alt="Akshit Kobagapu" />
+    <div class="bio-photo-panel">
+      <img class="bio-photo" src="_static/bio-photo-circle.png" alt="Akshit Kobagapu" />
+    </div>
     <div class="bio-prose">
       <p>I was born in 1994 into a family that was rich in values but short on everything else. My father was a school teacher — a man who never earned much but walked through his town like a king, because everyone knew him, respected him, and trusted him. My mother held the house together in ways only Indian mothers know how. I was the middle child, often sick, often home. But being home meant I read everything I could get my hands on, studied on my own, and somehow kept finishing first or second in my class. Growing up watching my parents stretch every rupee taught me something no textbook ever could — that the things worth having are the things you fight for.</p>
 <p>That belief was put to the test during a science exam I was completely unprepared for. I had been too sick to study, and I sat there staring at the paper, tears rolling down, convinced this was the day my streak ended. Then my science teacher walked over, leaned in, and said something I carry with me to this day: <em>"You sat in my class. You listened. You understood. Now stop crying and write what you know — in your own words. If I can understand it, you get the marks."</em> I wrote. I scored 95%. That was the day I stopped trying to memorize the world and started trying to understand it.</p>
@@ -260,10 +317,14 @@ body {
 <p>I am driven by curiosity, shaped by struggle, and always learning. Whether it is build systems, software architecture, design patterns, automation, or a new recipe in the kitchen — I don't stop until I understand how it works. And at the end of every month, when I see my family standing on their own feet because I didn't give up — that's the reward no spot award will ever match.</p>
     </div>
   </div>
+  <div class="origin-quote">
+    "Stop crying and write what you know — in your own words."
+    <span class="quote-attr">— The science teacher who changed everything</span>
+  </div>
 </section>
 
 <section class="section reveal" id="timeline">
-  <div class="arc-label">THE JOURNEY</div>
+  <div class="arc-label">ARC 02 — THE JOURNEY</div>
   <h2>OVER A DECADE OF <span class="gold">BUILDING THINGS THAT MATTER.</span></h2>
   <div class="timeline">
     <div class="tl-entry">
@@ -443,7 +504,7 @@ body {
     els.forEach(el => io.observe(el));
   })();
 
-  // Scroll reveal — entries slide in as you scroll
+  // Scroll reveal — entries appear/disappear based on scroll direction
   (function () {
     const entries = document.querySelectorAll('.tl-entry');
     if (!entries.length) return;
@@ -452,9 +513,11 @@ body {
 
     const io = new IntersectionObserver((items) => {
       items.forEach(e => {
-        if (!e.isIntersecting) return;
-        e.target.classList.add('scroll-visible');
-        io.unobserve(e.target);
+        if (e.isIntersecting) {
+          e.target.classList.add('scroll-visible');
+        } else {
+          e.target.classList.remove('scroll-visible');
+        }
       });
     }, { threshold: 0.05 });
     entries.forEach(el => io.observe(el));
