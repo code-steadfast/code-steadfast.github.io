@@ -451,12 +451,12 @@ body {
     if (reduced) { entries.forEach(el => el.classList.add('scroll-visible')); return; }
 
     const io = new IntersectionObserver((items) => {
-      items.forEach((e, i) => {
+      items.forEach(e => {
         if (!e.isIntersecting) return;
-        setTimeout(() => e.target.classList.add('scroll-visible'), i * 80);
+        e.target.classList.add('scroll-visible');
         io.unobserve(e.target);
       });
-    }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
+    }, { threshold: 0.05 });
     entries.forEach(el => io.observe(el));
   })();
 </script>
