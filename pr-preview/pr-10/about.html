@@ -121,46 +121,84 @@ body {
 .bio-prose strong { color: var(--text); font-weight: 600; }
 .bio-prose em { color: var(--orange); font-style: italic; }
 
-/* Timeline */
-.timeline { position: relative; padding-left: 2.5rem; }
+/* Timeline — Scroll Path */
+.timeline { position: relative; padding-left: 3.5rem; }
 .timeline::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-  width: 3px; background: linear-gradient(180deg, var(--orange), var(--gold), var(--crimson));
-  border-radius: 3px;
+  content: ''; position: absolute; left: 14px; top: 0; bottom: 0;
+  width: 3px;
+  background: repeating-linear-gradient(180deg,
+    var(--gold) 0px, var(--gold) 12px,
+    transparent 12px, transparent 18px);
+  opacity: 0.5;
 }
+
+/* Scroll entry */
 .tl-entry {
-  position: relative; margin-bottom: 2rem; padding: 1.5rem;
-  background: var(--surface); border: 2px solid var(--border);
-  border-radius: 4px; transition: border-color 0.3s;
+  position: relative; margin-bottom: 2.5rem;
+  background: linear-gradient(135deg, #2a2218 0%, #1e1a14 50%, #2a2218 100%);
+  border: 2px solid #4a3a28;
+  border-radius: 6px;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0; transform: translateX(-30px);
+  transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s;
 }
-.tl-entry:hover { border-color: var(--orange); }
-.tl-entry::before {
-  content: ''; position: absolute; left: -2.95rem; top: 1.8rem;
-  width: 12px; height: 12px; border-radius: 50%;
-  background: var(--orange); border: 3px solid var(--bg);
-  box-shadow: 0 0 10px rgba(255,106,0,0.4);
+.tl-entry.scroll-visible { opacity: 1; transform: translateX(0); }
+.tl-entry:hover { border-color: var(--gold); }
+
+/* Scroll top & bottom roll decorations */
+.tl-entry::before, .tl-entry::after {
+  content: ''; display: block; height: 10px;
+  background: linear-gradient(90deg,
+    #5a4530 0%, #8a6a40 15%, #c8a050 30%, #dbb860 50%,
+    #c8a050 70%, #8a6a40 85%, #5a4530 100%);
+  border-radius: 0;
 }
+.tl-entry::before { border-bottom: 1px solid #3a2a18; }
+.tl-entry::after { border-top: 1px solid #3a2a18; }
+
+.tl-entry-body { padding: 1.5rem 1.8rem; }
+
+/* Kunai marker on the scroll path */
+.tl-entry .kunai {
+  position: absolute; left: -3.55rem; top: 1.8rem;
+  width: 0; height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 14px solid var(--gold);
+  filter: drop-shadow(0 0 6px rgba(255,215,0,0.5));
+}
+
 .tl-entry .year {
-  font-family: var(--font-display); font-size: 1rem;
-  color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.2rem;
+  font-family: var(--font-display); font-size: 1.1rem;
+  color: var(--gold); letter-spacing: 0.15em; margin-bottom: 0.3rem;
+  text-shadow: 0 0 8px rgba(255,215,0,0.3);
 }
 .tl-entry .title {
-  font-family: var(--font-display); font-size: 1.1rem;
-  letter-spacing: 0.04em; margin-bottom: 0.3rem;
+  font-family: var(--font-display); font-size: 1.15rem;
+  letter-spacing: 0.04em; margin-bottom: 0.4rem;
+  color: var(--text);
 }
 .tl-entry .title p { margin: 0; }
-.tl-entry .desc { color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
+.tl-entry .desc {
+  color: #b8a88a; font-size: 0.88rem; line-height: 1.6;
+  font-style: italic;
+}
 .tl-entry .desc p { margin: 0; }
 
-/* Typewriter */
-.char { opacity: 0; transition: opacity 0.04s; }
-.char.shown { opacity: 1; }
-.typing-caret {
-  display: inline-block; width: 0.55ch; height: 1.1em;
-  background: var(--orange); vertical-align: text-bottom;
-  animation: blink 1.1s steps(1) infinite;
+/* Seal stamp on every 5th scroll */
+.tl-entry:nth-child(5n) .tl-entry-body::after {
+  content: '印'; position: absolute; bottom: 20px; right: 20px;
+  font-size: 2.5rem; color: var(--crimson); opacity: 0.15;
+  font-weight: 900; transform: rotate(-15deg);
 }
-@keyframes blink { 50% { opacity: 0; } }
+.tl-entry:nth-child(5n) .tl-entry-body { position: relative; }
+
+/* Scroll unroll animation */
+@keyframes unroll {
+  from { max-height: 0; opacity: 0; }
+  to { max-height: 500px; opacity: 1; }
+}
 
 /* Footer */
 .site-footer {
@@ -229,99 +267,156 @@ body {
   <h2>OVER A DECADE OF <span class="gold">BUILDING THINGS THAT MATTER.</span></h2>
   <div class="timeline">
     <div class="tl-entry">
-      <div class="year">2014</div>
-      <div class="title">Technical Paper on Moletronics</div>
-      <div class="desc">Presented a national level technical paper on <strong>Moletronics — An Invisible Technology</strong> during my engineering studies.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2014</div>
+        <div class="title">Technical Paper on Moletronics</div>
+        <div class="desc">Presented a national level technical paper on <strong>Moletronics — An Invisible Technology</strong> during my engineering studies.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2013–2015</div>
-      <div class="title">Teaching Fellow Students</div>
-      <div class="desc">From my second year through graduation, self-learned subjects, clarified concepts with professors, and taught fellow students <strong>Control Systems</strong>, <strong>Embedded Systems</strong>, <strong>Microprocessors</strong>, and <strong>Digital Signal Processing</strong> — semester after semester, while working part-time to fund my education.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2013–2015</div>
+        <div class="title">Teaching Fellow Students</div>
+        <div class="desc">From my second year through graduation, self-learned subjects, clarified concepts with professors, and taught fellow students <strong>Control Systems</strong>, <strong>Embedded Systems</strong>, <strong>Microprocessors</strong>, and <strong>Digital Signal Processing</strong> — semester after semester, while working part-time to fund my education.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2014</div>
-      <div class="title">First Coding Experience</div>
-      <div class="desc">My first hands-on coding — wrote embedded code to flash into a robot for line following and object detection at the <strong>Robosapiens</strong> workshop.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2014</div>
+        <div class="title">First Coding Experience</div>
+        <div class="desc">My first hands-on coding — wrote embedded code to flash into a robot for line following and object detection at the <strong>Robosapiens</strong> workshop.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2015</div>
-      <div class="title">B.Tech Final Project — Healthcare Monitoring</div>
-      <div class="desc">Designed a patient health care monitoring system using <strong>Zigbee</strong> protocol and <strong>LTE</strong> messaging to enable emergency alerts when caretakers are unavailable.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2015</div>
+        <div class="title">B.Tech Final Project — Healthcare Monitoring</div>
+        <div class="desc">Designed a patient health care monitoring system using <strong>Zigbee</strong> protocol and <strong>LTE</strong> messaging to enable emergency alerts when caretakers are unavailable.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2015</div>
-      <div class="title">B.Tech in Electronics and Communication Engineering</div>
-      <div class="desc">Completed my engineering degree in <strong>Electronics and Communication Engineering</strong>.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2015</div>
+        <div class="title">B.Tech in Electronics and Communication Engineering</div>
+        <div class="desc">Completed my engineering degree in <strong>Electronics and Communication Engineering</strong>.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2016</div>
-      <div class="title">PG Diploma — CDAC Kolkata</div>
-      <div class="desc">Post Graduate Diploma in Embedded Systems Design with <strong>Grade A</strong>. My project was a <strong>GPIO Device Driver on Linux</strong> for ARM to control motors and LEDs.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2016</div>
+        <div class="title">PG Diploma — CDAC Kolkata</div>
+        <div class="desc">Post Graduate Diploma in Embedded Systems Design with <strong>Grade A</strong>. My project was a <strong>GPIO Device Driver on Linux</strong> for ARM to control motors and LEDs.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2016</div>
-      <div class="title">Continental Automotive</div>
-      <div class="desc">Started my career at <strong>Continental Automotive</strong> in the Vehicle Dynamics business unit. Automated the resource analysis process using <strong>Perl</strong> — extracting data, generating reports, and updating internal webpages.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2016</div>
+        <div class="title">Continental Automotive</div>
+        <div class="desc">Started my career at <strong>Continental Automotive</strong> in the Vehicle Dynamics business unit. Automated the resource analysis process using <strong>Perl</strong> — extracting data, generating reports, and updating internal webpages.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2017</div>
-      <div class="title">MKC1 Braking System — Worldwide Responsibility</div>
-      <div class="desc">Took worldwide responsibility for control function resource estimation across Asia, Germany, and the USA for <a href="https://www.continental-automotive.com/">MK100/MKC1</a> braking system products. Created the quotation database for new project estimations.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2017</div>
+        <div class="title">MKC1 Braking System — Worldwide Responsibility</div>
+        <div class="desc">Took worldwide responsibility for control function resource estimation across Asia, Germany, and the USA for <a href="https://www.continental-automotive.com/">MK100/MKC1</a> braking system products. Created the quotation database for new project estimations.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2017</div>
-      <div class="title">First International Travel</div>
-      <div class="desc">Traveled to Germany for the first time to prepare <strong>MKC1 resource estimations</strong> for <strong>Ford</strong>, <strong>BMW</strong>, and <strong>Volvo</strong> projects and built the TB2015 database.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2017</div>
+        <div class="title">First International Travel</div>
+        <div class="desc">Traveled to Germany for the first time to prepare <strong>MKC1 resource estimations</strong> for <strong>Ford</strong>, <strong>BMW</strong>, and <strong>Volvo</strong> projects and built the TB2015 database.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2018</div>
-      <div class="title">Git Ambassador</div>
-      <div class="desc">Became a <strong>Git Ambassador</strong>, training a 40-member team on GitHub workflows and best practices. Fully automated the end-to-end testing and reporting pipeline.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2018</div>
+        <div class="title">Git Ambassador</div>
+        <div class="desc">Became a <strong>Git Ambassador</strong>, training a 40-member team on GitHub workflows and best practices. Fully automated the end-to-end testing and reporting pipeline.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2018</div>
-      <div class="title">TriCore Resource Estimation</div>
-      <div class="desc">Extended the resource estimation Excel macro template (<strong>.xlsm</strong>) to support <strong>TriCore</strong> microcontroller project quotations — learned VBA and Excel macro automation on the job.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2018</div>
+        <div class="title">TriCore Resource Estimation</div>
+        <div class="desc">Extended the resource estimation Excel macro template (<strong>.xlsm</strong>) to support <strong>TriCore</strong> microcontroller project quotations — learned VBA and Excel macro automation on the job.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2019</div>
-      <div class="title">GLIWA T1 Timing Analysis</div>
-      <div class="desc">Spent 3 months in Frankfurt integrating <strong>GLIWA T1</strong> timing analysis into the RTM component for both <strong>Vector OS</strong> and <strong>Elektrobit OS</strong>. Analyzed timing parameters for vision control software across all global projects.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2019</div>
+        <div class="title">GLIWA T1 Timing Analysis</div>
+        <div class="desc">Spent 3 months in Frankfurt integrating <strong>GLIWA T1</strong> timing analysis into the RTM component for both <strong>Vector OS</strong> and <strong>Elektrobit OS</strong>. Analyzed timing parameters for vision control software across all global projects.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2020</div>
-      <div class="title">MKC2 Braking Product Support</div>
-      <div class="desc">Developed and improved the quotation template for the new <a href="https://www.continental-automotive.com/">MKC2</a> braking product — extending the Excel macro tooling to support resource estimation for the new product line.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2020</div>
+        <div class="title">MKC2 Braking Product Support</div>
+        <div class="desc">Developed and improved the quotation template for the new <a href="https://www.continental-automotive.com/">MKC2</a> braking product — extending the Excel macro tooling to support resource estimation for the new product line.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2021</div>
-      <div class="title">Technical Architect &amp; Python Tool</div>
-      <div class="desc">Developed a <strong>Python application</strong> to extract detailed timing data from GLIWA T1 enabled software — my first experience with Python and databases. It became the standard tool for worldwide timing analysis.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2021</div>
+        <div class="title">Technical Architect &amp; Python Tool</div>
+        <div class="desc">Developed a <strong>Python application</strong> to extract detailed timing data from GLIWA T1 enabled software — my first experience with Python and databases. It became the standard tool for worldwide timing analysis.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2022</div>
-      <div class="title">Train the Trainer &amp; Knowledge Transfer</div>
-      <div class="desc">Participated in the <strong>Train the Trainer</strong> program. Trained <strong>4+ deputies</strong> across teams, ensuring complete knowledge transfer of all responsibilities and helping colleagues take ownership before transitioning.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2022</div>
+        <div class="title">Train the Trainer &amp; Knowledge Transfer</div>
+        <div class="desc">Participated in the <strong>Train the Trainer</strong> program. Trained <strong>4+ deputies</strong> across teams, ensuring complete knowledge transfer of all responsibilities and helping colleagues take ownership before transitioning.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2022</div>
-      <div class="title">Marquardt GmbH, Germany</div>
-      <div class="desc">After 6.5 years at Continental and 15 spot awards, packed my life into two suitcases and moved to Germany. Joined <strong>Marquardt GmbH</strong> as an Advanced Software Development Engineer, working on the SPLE platform build system.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2022</div>
+        <div class="title">Marquardt GmbH, Germany</div>
+        <div class="desc">After 6.5 years at Continental and 15 spot awards, packed my life into two suitcases and moved to Germany. Joined <strong>Marquardt GmbH</strong> as an Advanced Software Development Engineer, working on the SPLE platform build system.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2023</div>
-      <div class="title">RAM/ROM Reporting &amp; Build Automation</div>
-      <div class="desc">Introduced automated <strong>RAM/ROM consumption reporting</strong> into the build process — giving project teams resource visibility for the first time. Co-developed build extensions that replaced numerous manual scripts, saving approximately one day per project per variant.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2023</div>
+        <div class="title">RAM/ROM Reporting &amp; Build Automation</div>
+        <div class="desc">Introduced automated <strong>RAM/ROM consumption reporting</strong> into the build process — giving project teams resource visibility for the first time. Co-developed build extensions that replaced numerous manual scripts, saving approximately one day per project per variant.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2024</div>
-      <div class="title">Replacing Licensed Tools with Python</div>
-      <div class="desc">Built custom Python tooling to generate <strong>ODX/PDX/OUC</strong> artifacts and <strong>vFlashpacks</strong>, completely replacing expensive Vector tool licenses and eliminating recurring annual costs.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2024</div>
+        <div class="title">Replacing Licensed Tools with Python</div>
+        <div class="desc">Built custom Python tooling to generate <strong>ODX/PDX/OUC</strong> artifacts and <strong>vFlashpacks</strong>, completely replacing expensive Vector tool licenses and eliminating recurring annual costs.</div>
+      </div>
     </div>
     <div class="tl-entry">
-      <div class="year">2025–present</div>
-      <div class="title">SPLE Platform Trainer &amp; AI Adoption</div>
-      <div class="desc">Co-conducted <strong>10+ SPLE Platform Basic Training</strong> sessions. Co-introduced AI-assisted development workflows, already adopted by teams achieving up to <strong>85% code coverage</strong> for legacy components in a single day.</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">2025–present</div>
+        <div class="title">SPLE Platform Trainer &amp; AI Adoption</div>
+        <div class="desc">Co-conducted <strong>10+ SPLE Platform Basic Training</strong> sessions. Co-introduced AI-assisted development workflows, already adopted by teams achieving up to <strong>85% code coverage</strong> for legacy components in a single day.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -348,57 +443,21 @@ body {
     els.forEach(el => io.observe(el));
   })();
 
-  // Typewriter
+  // Scroll reveal — entries slide in as you scroll
   (function () {
     const entries = document.querySelectorAll('.tl-entry');
     if (!entries.length) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function splitChars(root) {
-      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-      const textNodes = [];
-      while (walker.nextNode()) textNodes.push(walker.currentNode);
-      const chars = [];
-      for (const node of textNodes) {
-        const text = node.nodeValue; if (!text) continue;
-        const frag = document.createDocumentFragment();
-        for (const ch of Array.from(text)) {
-          const span = document.createElement('span');
-          span.className = 'char'; span.textContent = ch;
-          frag.appendChild(span); chars.push(span);
-        }
-        node.parentNode.replaceChild(frag, node);
-      }
-      return chars;
-    }
-
-    const data = Array.from(entries).map(el => ({
-      el, groups: [
-        { root: el.querySelector('.year'),  delay: 30, chars: [] },
-        { root: el.querySelector('.title'), delay: 14, chars: [] },
-        { root: el.querySelector('.desc'),  delay: 5,  chars: [] },
-      ],
-    }));
-    for (const d of data) for (const g of d.groups) g.chars = splitChars(g.root);
-
-    if (reduced) { for (const d of data) for (const g of d.groups) for (const c of g.chars) c.classList.add('shown'); return; }
-
-    const sleep = ms => new Promise(r => setTimeout(r, ms));
-    async function typeEntry(d) {
-      const caret = document.createElement('span'); caret.className = 'typing-caret';
-      for (const g of d.groups) { g.root.prepend(caret); for (const c of g.chars) { c.classList.add('shown'); c.after(caret); await sleep(g.delay); } }
-      caret.remove();
-    }
+    if (reduced) { entries.forEach(el => el.classList.add('scroll-visible')); return; }
 
     const io = new IntersectionObserver((items) => {
-      for (const e of items) {
-        if (!e.isIntersecting) continue;
-        const d = data.find(x => x.el === e.target);
-        if (!d || d.started) continue;
-        d.started = true; typeEntry(d); io.unobserve(e.target);
-      }
-    }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
-    for (const d of data) io.observe(d.el);
+      items.forEach((e, i) => {
+        if (!e.isIntersecting) return;
+        setTimeout(() => e.target.classList.add('scroll-visible'), i * 80);
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
+    entries.forEach(el => io.observe(el));
   })();
 </script>
 
