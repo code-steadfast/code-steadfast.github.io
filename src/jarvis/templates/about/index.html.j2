@@ -7,136 +7,372 @@
 <link rel="icon" href="_static/bio-photo-circle.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/landing.css" />
-</head>
-<body class="about-page">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #0f0f1a;
+  --surface: #1a1a2e;
+  --text: #f5f0e8;
+  --muted: #9a9590;
+  --dim: #5a5565;
+  --border: #2e2e45;
+  --orange: #ff6a00;
+  --gold: #ffd700;
+  --crimson: #e63946;
+  --font-display: "Bebas Neue", Impact, sans-serif;
+  --font-body: "Inter", -apple-system, sans-serif;
+  --font-mono: "Fira Code", monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased; overflow-x: hidden; line-height: 1.6;
+}
 
-<nav>
-  <a class="brand" href="index.html">akshitkobagapu.com</a>
-  <ul>
-    <li><a href="index.html">← home</a></li>
-  </ul>
+/* Speed lines */
+.speed-lines {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.04;
+  background: repeating-conic-gradient(var(--text) 0deg 0.5deg, transparent 0.5deg 3deg) center / 100% 100%;
+}
+
+/* Nav */
+.top-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2.5rem;
+  background: rgba(15,15,26,0.85); backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--orange);
+}
+.top-nav .brand {
+  font-family: var(--font-display); font-size: 1.4rem;
+  color: var(--orange); text-decoration: none; letter-spacing: 0.08em;
+}
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  color: var(--muted); text-decoration: none; font-size: 0.85rem;
+  font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--orange); }
+
+/* Arc label */
+.arc-label {
+  font-family: var(--font-display); font-size: 0.9rem;
+  color: var(--orange); letter-spacing: 0.25em; text-transform: uppercase;
+  margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem;
+}
+.arc-label::after { content: ''; flex: 1; height: 2px; background: var(--orange); opacity: 0.3; }
+
+/* Reveal */
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Page */
+.page { position: relative; z-index: 1; }
+.section { max-width: 900px; margin: 0 auto; padding: 6rem 2rem; }
+.section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 0.04em; margin-bottom: 2rem;
+}
+.section h2 .accent { color: var(--orange); }
+.section h2 .gold { color: var(--gold); }
+
+/* Hero */
+.about-hero {
+  padding: 10rem 2rem 4rem; text-align: center;
+  max-width: 900px; margin: 0 auto;
+}
+.about-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 5rem);
+  letter-spacing: 0.06em; margin-bottom: 1.5rem;
+}
+.about-hero h1 .accent { color: var(--orange); }
+.about-hook {
+  font-size: 1.05rem; color: var(--muted);
+  max-width: 42ch; margin: 0 auto; line-height: 1.6;
+}
+
+/* Bio — Manga panel style */
+.bio-grid {
+  display: grid; grid-template-columns: 220px 1fr; gap: 0; align-items: stretch;
+}
+.bio-photo-panel {
+  position: relative; background: #1a1a2e;
+  border: 3px solid #111; border-right: none;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.bio-photo-panel::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at center, rgba(255,106,0,0.15) 0%, transparent 70%);
+}
+.bio-photo-panel::after {
+  content: '主人公'; position: absolute; bottom: 8px; left: 50%;
+  transform: translateX(-50%); font-size: 0.7rem;
+  color: var(--gold); opacity: 0.4; letter-spacing: 0.2em;
+  font-family: var(--font-body);
+}
+.bio-photo {
+  width: 100%; height: 100%; min-height: 280px;
+  object-fit: cover; object-position: center 20%;
+  filter: contrast(1.1) saturate(1.1);
+}
+.bio-prose {
+  background: linear-gradient(135deg, #2a2218 0%, #1e1a14 50%, #2a2218 100%);
+  border: 3px solid #111;
+  padding: 2.5rem; position: relative;
+}
+/* Manga panel corner marks */
+.bio-prose::before {
+  content: ''; position: absolute; top: 8px; left: 8px;
+  width: 20px; height: 20px;
+  border-top: 2px solid var(--gold); border-left: 2px solid var(--gold);
+  opacity: 0.4;
+}
+.bio-prose::after {
+  content: ''; position: absolute; bottom: 8px; right: 8px;
+  width: 20px; height: 20px;
+  border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold);
+  opacity: 0.4;
+}
+.bio-prose p {
+  margin-bottom: 1.2rem; color: #b8a88a; font-size: 0.95rem; line-height: 1.7;
+  text-align: justify;
+}
+.bio-prose p:first-child::first-letter {
+  font-family: var(--font-display); font-size: 3rem; float: left;
+  line-height: 1; margin-right: 0.15em; margin-top: 0.05em;
+  color: var(--orange); text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+}
+.bio-prose p:last-child { margin-bottom: 0; }
+.bio-prose strong { color: var(--text); font-weight: 600; }
+.bio-prose em { color: var(--orange); font-style: italic; }
+
+/* Speech bubble quote */
+.origin-quote {
+  position: relative; margin-top: 2rem;
+  background: var(--surface); border: 2px solid var(--orange);
+  border-radius: 8px; padding: 1.2rem 1.5rem;
+  font-style: italic; color: var(--gold); font-size: 0.95rem;
+  text-align: center;
+}
+.origin-quote::before {
+  content: ''; position: absolute; top: -10px; left: 30px;
+  width: 0; height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid var(--orange);
+}
+.origin-quote .quote-attr {
+  display: block; margin-top: 0.5rem;
+  font-size: 0.75rem; color: var(--muted); font-style: normal;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+
+/* Timeline — Scroll Path */
+.timeline { position: relative; padding-left: 3.5rem; }
+.timeline::before {
+  content: ''; position: absolute; left: 14px; top: 0; bottom: 0;
+  width: 3px;
+  background: repeating-linear-gradient(180deg,
+    var(--gold) 0px, var(--gold) 12px,
+    transparent 12px, transparent 18px);
+  opacity: 0.5;
+}
+
+/* Scroll entry */
+.tl-entry {
+  position: relative; margin-bottom: 2.5rem;
+  background: linear-gradient(135deg, #2a2218 0%, #1e1a14 50%, #2a2218 100%);
+  border: 2px solid #4a3a28;
+  border-radius: 6px;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0; transform: translateX(-30px);
+  transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s;
+}
+.tl-entry.scroll-visible { opacity: 1; transform: translateX(0); }
+.tl-entry:hover { border-color: var(--gold); }
+
+/* Scroll top & bottom roll decorations */
+.tl-entry::before, .tl-entry::after {
+  content: ''; display: block; height: 10px;
+  background: linear-gradient(90deg,
+    #5a4530 0%, #8a6a40 15%, #c8a050 30%, #dbb860 50%,
+    #c8a050 70%, #8a6a40 85%, #5a4530 100%);
+  border-radius: 0;
+}
+.tl-entry::before { border-bottom: 1px solid #3a2a18; }
+.tl-entry::after { border-top: 1px solid #3a2a18; }
+
+.tl-entry-body { padding: 1.5rem 1.8rem; }
+
+/* Kunai marker on the scroll path */
+.tl-entry .kunai {
+  position: absolute; left: -3.55rem; top: 1.8rem;
+  width: 0; height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 14px solid var(--gold);
+  filter: drop-shadow(0 0 6px rgba(255,215,0,0.5));
+}
+
+.tl-entry .year {
+  font-family: var(--font-display); font-size: 1.1rem;
+  color: var(--gold); letter-spacing: 0.15em; margin-bottom: 0.3rem;
+  text-shadow: 0 0 8px rgba(255,215,0,0.3);
+}
+.tl-entry .title {
+  font-family: var(--font-display); font-size: 1.15rem;
+  letter-spacing: 0.04em; margin-bottom: 0.4rem;
+  color: var(--text);
+}
+.tl-entry .title p { margin: 0; }
+.tl-entry .desc {
+  color: #b8a88a; font-size: 0.88rem; line-height: 1.6;
+  font-style: italic;
+}
+.tl-entry .desc p { margin: 0; }
+
+/* Seal stamp on every 5th scroll */
+.tl-entry:nth-child(5n) .tl-entry-body::after {
+  content: '印'; position: absolute; bottom: 20px; right: 20px;
+  font-size: 2.5rem; color: var(--crimson); opacity: 0.15;
+  font-weight: 900; transform: rotate(-15deg);
+}
+.tl-entry:nth-child(5n) .tl-entry-body { position: relative; }
+
+/* Scroll unroll animation */
+@keyframes unroll {
+  from { max-height: 0; opacity: 0; }
+  to { max-height: 500px; opacity: 1; }
+}
+
+/* Footer */
+.site-footer {
+  position: relative; z-index: 1; text-align: center;
+  padding: 2rem; border-top: 2px solid var(--orange);
+  font-size: 0.8rem; color: var(--dim);
+}
+.footer-links { margin-top: 0.5rem; }
+.footer-links a {
+  color: var(--muted); text-decoration: none; margin: 0 0.8rem;
+  font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+  font-size: 0.75rem; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--orange); }
+
+@media (max-width: 768px) {
+  .bio-grid { grid-template-columns: 1fr; }
+  .bio-photo-panel { min-height: 250px; border-right: 3px solid #111; border-bottom: none; }
+  .bio-photo { min-height: 250px; }
+  .about-hero { padding: 7rem 1.25rem 3rem; }
+  .section { padding: 4rem 1.25rem; }
+  .top-nav { padding: 0.8rem 1.25rem; }
+  .nav-links { display: none; }
+  .speed-lines { opacity: 0.02; }
+}
+</style>
+</head>
+<body>
+
+<div class="speed-lines" aria-hidden="true"></div>
+
+<nav class="top-nav">
+  <a class="brand" href="index.html">AKSHIT K.</a>
+  <div class="nav-links">
+    <a href="index.html">← Home</a>
+    <a href="#timeline">Timeline</a>
+    <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
 </nav>
 
-<section class="about-hero">
-  <div class="eyebrow">// about</div>
+<div class="page">
+
+<section class="about-hero reveal">
   <h1>{{ title }}<span class="accent">.</span></h1>
   <p class="about-hook">From a small town in India to building tools that power automotive teams worldwide.</p>
 </section>
 
-<section class="bio">
+<section class="section reveal">
+  <div class="arc-label">ARC 01 — THE ORIGIN</div>
   <div class="bio-grid">
-    <img class="bio-photo" src="_static/bio-photo-circle.png" alt="" aria-hidden="true" />
+    <div class="bio-photo-panel">
+      <img class="bio-photo" src="_static/bio-photo-circle.png" alt="Akshit Kobagapu" />
+    </div>
     <div class="bio-prose">
       {{ body_html | safe }}
     </div>
   </div>
+  <div class="origin-quote">
+    "Stop crying and write what you know — in your own words."
+    <span class="quote-attr">— The science teacher who changed everything</span>
+  </div>
 </section>
 
-<section class="timeline-section" id="timeline">
-  <div class="eyebrow">// the long version</div>
-  <h2>Over a decade of <span class="accent">building things that matter.</span></h2>
+<section class="section reveal" id="timeline">
+  <div class="arc-label">ARC 02 — THE JOURNEY</div>
+  <h2>OVER A DECADE OF <span class="gold">BUILDING THINGS THAT MATTER.</span></h2>
   <div class="timeline">
     {%- for entry in timeline_entries %}
-    <div class="tl-entry in">
-      <div class="year">{{ entry.year }}</div>
-      <div class="title">{{ entry.title | md }}</div>
-      <div class="desc">{{ entry.description | md }}</div>
+    <div class="tl-entry">
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">{{ entry.year }}</div>
+        <div class="title">{{ entry.title | md }}</div>
+        <div class="desc">{{ entry.description | md }}</div>
+      </div>
     </div>
     {%- endfor %}
   </div>
 </section>
 
-<footer>
-  <div>© <span id="year"></span> Akshit Kobagapu</div>
-  <div>
-    <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">github</a>
-    <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">linkedin</a>
+</div>
+
+<footer class="site-footer">
+  <p>© <span id="year"></span> Akshit Kobagapu · Built with curiosity and Python</p>
+  <div class="footer-links">
+    <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">LinkedIn</a>
   </div>
 </footer>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // ----- Timeline typewriter -----
+  // Reveal
+  (function () {
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    els.forEach(el => io.observe(el));
+  })();
+
+  // Scroll reveal — entries appear/disappear based on scroll direction
   (function () {
     const entries = document.querySelectorAll('.tl-entry');
     if (!entries.length) return;
-
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function splitChars(root) {
-      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-      const textNodes = [];
-      while (walker.nextNode()) textNodes.push(walker.currentNode);
-      const chars = [];
-      for (const node of textNodes) {
-        const text = node.nodeValue;
-        if (!text) continue;
-        const frag = document.createDocumentFragment();
-        for (const ch of Array.from(text)) {
-          const span = document.createElement('span');
-          span.className = 'char';
-          span.textContent = ch;
-          frag.appendChild(span);
-          chars.push(span);
-        }
-        node.parentNode.replaceChild(frag, node);
-      }
-      return chars;
-    }
-
-    const data = Array.from(entries).map(el => ({
-      el,
-      groups: [
-        { root: el.querySelector('.year'),  delay: 30, chars: [] },
-        { root: el.querySelector('.title'), delay: 14, chars: [] },
-        { root: el.querySelector('.desc'),  delay: 5,  chars: [] },
-      ],
-    }));
-
-    for (const d of data) {
-      for (const g of d.groups) g.chars = splitChars(g.root);
-    }
-
-    if (reduced) {
-      for (const d of data) {
-        for (const g of d.groups) {
-          for (const c of g.chars) c.classList.add('shown');
-        }
-      }
-      return;
-    }
-
-    const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-    async function typeEntry(d) {
-      const caret = document.createElement('span');
-      caret.className = 'typing-caret';
-      for (const g of d.groups) {
-        g.root.prepend(caret);
-        for (const c of g.chars) {
-          c.classList.add('shown');
-          c.after(caret);
-          await sleep(g.delay);
-        }
-      }
-      caret.remove();
-    }
+    if (reduced) { entries.forEach(el => el.classList.add('scroll-visible')); return; }
 
     const io = new IntersectionObserver((items) => {
-      for (const e of items) {
-        if (!e.isIntersecting) continue;
-        const d = data.find(x => x.el === e.target);
-        if (!d || d.started) continue;
-        d.started = true;
-        typeEntry(d);
-        io.unobserve(e.target);
-      }
-    }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
-
-    for (const d of data) io.observe(d.el);
+      items.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('scroll-visible');
+        } else {
+          e.target.classList.remove('scroll-visible');
+        }
+      });
+    }, { threshold: 0.05 });
+    entries.forEach(el => io.observe(el));
   })();
 </script>
 

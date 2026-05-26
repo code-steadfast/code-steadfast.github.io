@@ -7,42 +7,433 @@
 <link rel="icon" href="_static/bio-photo-circle.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/landing.css" />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #0f0f1a;
+  --surface: #1a1a2e;
+  --text: #f5f0e8;
+  --muted: #9a9590;
+  --dim: #5a5565;
+  --border: #2e2e45;
+  --orange: #ff6a00;
+  --gold: #ffd700;
+  --crimson: #e63946;
+  --parchment: #2a2218;
+  --parchment-text: #b8a88a;
+  --font-display: "Bebas Neue", Impact, sans-serif;
+  --font-body: "Inter", -apple-system, sans-serif;
+  --font-mono: "Fira Code", monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased; overflow-x: hidden; line-height: 1.6;
+}
+
+/* ── Speed Lines ── */
+.speed-lines {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.04;
+  background: repeating-conic-gradient(var(--text) 0deg 0.5deg, transparent 0.5deg 3deg) center / 100% 100%;
+}
+
+/* ── Nav ── */
+.top-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2.5rem;
+  background: rgba(15,15,26,0.85); backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--orange);
+}
+.top-nav .brand {
+  font-family: var(--font-display); font-size: 1.4rem; color: var(--orange);
+  text-decoration: none; letter-spacing: 0.08em;
+}
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  color: var(--muted); text-decoration: none; font-size: 0.85rem;
+  font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--orange); }
+
+/* ── Layout ── */
+.page { position: relative; z-index: 1; }
+.section { max-width: 1100px; margin: 0 auto; padding: 6rem 2rem; }
+
+/* ── Arc Labels ── */
+.arc-label {
+  font-family: var(--font-display); font-size: 0.9rem;
+  color: var(--orange); letter-spacing: 0.25em; text-transform: uppercase;
+  margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem;
+}
+.arc-label::after { content: ''; flex: 1; height: 2px; background: var(--orange); opacity: 0.3; }
+.section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  letter-spacing: 0.04em; margin-bottom: 3rem;
+}
+.section h2 .accent { color: var(--orange); }
+.section h2 .gold { color: var(--gold); }
+
+/* ── Reveal ── */
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ═══════ HERO — MANGA TITLE PAGE ═══════ */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 6rem 2rem 4rem;
+  position: relative; z-index: 1; overflow: hidden;
+}
+/* Radial burst behind hero */
+.hero::before {
+  content: ''; position: absolute; inset: -50%;
+  background: radial-gradient(circle at center,
+    rgba(255,106,0,0.08) 0%, transparent 40%);
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+@keyframes pulse-glow { 0%,100%{opacity:0.6} 50%{opacity:1} }
+
+/* Kanji watermark */
+.hero-kanji {
+  position: absolute; font-size: clamp(15rem, 35vw, 30rem);
+  color: var(--orange); opacity: 0.03;
+  font-weight: 900; pointer-events: none;
+  line-height: 1; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.hero-photo {
+  width: 170px; height: 170px; border-radius: 50%;
+  object-fit: cover; object-position: center 20%;
+  border: 5px solid var(--orange);
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+  box-shadow: 0 0 60px rgba(255,106,0,0.3), 0 0 120px rgba(255,106,0,0.1);
+  margin-bottom: 2rem; position: relative; z-index: 2;
+}
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 12vw, 9rem);
+  letter-spacing: 0.06em; line-height: 0.9;
+  margin-bottom: 0.5rem; position: relative; z-index: 2;
+}
+.hero-name .first { color: var(--text); }
+.hero-name .last { color: var(--orange); }
+/* Impact lines around name */
+.hero-impact {
+  font-family: var(--font-display); font-size: 0.8rem;
+  color: var(--gold); letter-spacing: 0.4em;
+  text-transform: uppercase; margin-bottom: 1.5rem;
+  position: relative; z-index: 2;
+  display: flex; align-items: center; gap: 1rem; justify-content: center;
+}
+.hero-impact::before, .hero-impact::after {
+  content: ''; width: 60px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+.hero-impact::after { background: linear-gradient(270deg, transparent, var(--gold)); }
+
+.hero-tagline {
+  font-size: clamp(1rem, 1.8vw, 1.3rem);
+  color: var(--muted); max-width: 36ch;
+  margin: 0 auto 2rem; font-weight: 500;
+  position: relative; z-index: 2;
+}
+.hero-tagline strong { color: var(--gold); font-weight: 700; }
+.hero-tags {
+  display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;
+  position: relative; z-index: 2;
+}
+.tag {
+  font-family: var(--font-mono); font-size: 0.75rem;
+  color: var(--orange); background: rgba(255,106,0,0.08);
+  border: 2px solid rgba(255,106,0,0.25);
+  padding: 0.4rem 1.2rem; border-radius: 4px;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.tag a { color: var(--orange); text-decoration: none; }
+.scroll-cue {
+  position: absolute; bottom: 2.5rem;
+  font-family: var(--font-display); font-size: 1rem;
+  color: var(--dim); letter-spacing: 0.3em;
+  animation: bob 2s ease-in-out infinite; z-index: 2;
+}
+@keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
+
+/* ═══════ ARC 01: JUTSU SCROLLS (WHAT I BUILD) ═══════ */
+.work-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+}
+.work-card {
+  background: linear-gradient(135deg, var(--parchment) 0%, #1e1a14 50%, var(--parchment) 100%);
+  border: 2px solid #4a3a28; border-radius: 6px;
+  padding: 0; position: relative; overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+/* Scroll rolls top & bottom */
+.work-card::before, .work-card::after {
+  content: ''; display: block; height: 8px;
+  background: linear-gradient(90deg,
+    #5a4530 0%, #8a6a40 15%, #c8a050 30%, #dbb860 50%,
+    #c8a050 70%, #8a6a40 85%, #5a4530 100%);
+}
+.work-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+.work-card-body { padding: 1.8rem; }
+.work-card .icon { font-size: 2rem; margin-bottom: 1rem; }
+.work-card h3 {
+  font-family: var(--font-display); font-size: 1.3rem;
+  letter-spacing: 0.05em; margin-bottom: 0.6rem; color: var(--gold);
+}
+.work-card p { color: var(--parchment-text); font-size: 0.9rem; line-height: 1.55; }
+.work-card .highlight { color: var(--gold); font-weight: 700; }
+/* Corner marks */
+.work-card-body::before {
+  content: ''; position: absolute; top: 16px; left: 16px;
+  width: 14px; height: 14px;
+  border-top: 2px solid var(--gold); border-left: 2px solid var(--gold); opacity: 0.3;
+}
+.work-card-body::after {
+  content: ''; position: absolute; bottom: 16px; right: 16px;
+  width: 14px; height: 14px;
+  border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold); opacity: 0.3;
+}
+.work-card-body { position: relative; }
+
+/* Terminal — styled as ninja scroll terminal */
+.terminal-wrap {
+  margin-top: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;
+  background: linear-gradient(135deg, var(--parchment) 0%, #1e1a14 100%);
+  border: 2px solid #4a3a28; border-radius: 6px; overflow: hidden;
+}
+.terminal-bar {
+  background: linear-gradient(90deg, #5a4530, #8a6a40, #c8a050, #8a6a40, #5a4530);
+  border-bottom: 1px solid #3a2a18;
+  padding: 0.6rem 1rem; display: flex; align-items: center; gap: 0.4rem;
+}
+.terminal-bar .dot { width: 10px; height: 10px; border-radius: 50%; }
+.terminal-bar .dot:nth-child(1) { background: var(--crimson); }
+.terminal-bar .dot:nth-child(2) { background: var(--gold); }
+.terminal-bar .dot:nth-child(3) { background: #27c93f; }
+.terminal-title { margin-left: 0.8rem; color: var(--parchment); font-size: 0.75rem; font-family: var(--font-mono); }
+.terminal-content {
+  padding: 1.2rem; font-family: var(--font-mono); font-size: 0.8rem;
+  color: var(--parchment-text); line-height: 1.7; white-space: pre; overflow-x: auto;
+}
+.terminal-content .kw { color: var(--crimson); }
+.terminal-content .str { color: var(--orange); }
+.terminal-content .com { color: var(--dim); font-style: italic; }
+.terminal-content .ac { color: var(--gold); }
+.terminal-content .ok { color: #34d399; }
+
+/* ═══════ ARC 02: POWER LEVEL ═══════ */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+}
+.stat-card {
+  background: linear-gradient(135deg, var(--parchment) 0%, #1e1a14 100%);
+  border: 2px solid #4a3a28; border-radius: 6px;
+  padding: 0; text-align: center;
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s;
+}
+.stat-card::before, .stat-card::after {
+  content: ''; display: block; height: 6px;
+  background: linear-gradient(90deg,
+    #5a4530 0%, #8a6a40 15%, #c8a050 30%, #dbb860 50%,
+    #c8a050 70%, #8a6a40 85%, #5a4530 100%);
+}
+.stat-card:hover { border-color: var(--gold); }
+.stat-card-body { padding: 1.5rem; }
+.stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 4rem);
+  color: var(--gold); line-height: 1;
+  margin-bottom: 0.5rem; letter-spacing: 0.04em;
+  text-shadow: 0 0 15px rgba(255,215,0,0.3);
+}
+.stat-label { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; color: var(--text); }
+.stat-label a { color: var(--orange); text-decoration: none; border-bottom: 1px dashed rgba(255,106,0,0.4); }
+.stat-detail { font-size: 0.78rem; color: var(--parchment-text); }
+
+/* Seal stamp on the last stat card */
+.stat-card:last-child .stat-card-body::after {
+  content: '力'; position: absolute; top: 50%; right: 10px;
+  transform: translateY(-50%) rotate(-15deg);
+  font-size: 3rem; color: var(--crimson); opacity: 0.12; font-weight: 900;
+}
+.stat-card:last-child .stat-card-body { position: relative; }
+
+/* ═══════ ARC 03: BEYOND THE CODE ═══════ */
+.interests-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+}
+.int-card {
+  background: linear-gradient(135deg, var(--parchment) 0%, #1e1a14 100%);
+  border: 3px solid #111; border-radius: 0;
+  padding: 1.8rem; text-align: center;
+  transition: border-color 0.3s, transform 0.3s;
+  position: relative;
+}
+/* Manga panel corners */
+.int-card::before {
+  content: ''; position: absolute; top: 6px; left: 6px;
+  width: 12px; height: 12px;
+  border-top: 2px solid var(--gold); border-left: 2px solid var(--gold); opacity: 0.3;
+}
+.int-card::after {
+  content: ''; position: absolute; bottom: 6px; right: 6px;
+  width: 12px; height: 12px;
+  border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold); opacity: 0.3;
+}
+.int-card:hover { border-color: var(--crimson); transform: translateY(-3px); }
+.int-card .icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
+.int-card h3 {
+  font-family: var(--font-display); font-size: 1.2rem;
+  letter-spacing: 0.05em; margin-bottom: 0.4rem; color: var(--gold);
+}
+.int-card p { color: var(--parchment-text); font-size: 0.85rem; line-height: 1.45; }
+
+/* ═══════ CTA ═══════ */
+.cta {
+  text-align: center; padding: 8rem 2rem;
+  max-width: 1100px; margin: 0 auto; position: relative; z-index: 1;
+}
+.cta-quote {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: 0.04em; line-height: 1.2;
+  max-width: 20ch; margin: 0 auto 1rem;
+}
+.cta-quote .accent { color: var(--orange); }
+.cta-quote .gold { color: var(--gold); }
+.cta-sub {
+  font-size: 1rem; color: var(--muted); margin-bottom: 3rem; font-style: italic;
+}
+.cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn-fire {
+  display: inline-block; padding: 0.9rem 2.5rem;
+  background: var(--orange); color: var(--bg);
+  text-decoration: none; font-weight: 700; font-size: 0.95rem;
+  border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase;
+  box-shadow: 0 4px 20px rgba(255,106,0,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-fire:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,106,0,0.4); }
+.btn-outline {
+  display: inline-block; padding: 0.9rem 2.5rem;
+  background: transparent; color: var(--text);
+  text-decoration: none; font-weight: 700; font-size: 0.95rem;
+  border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase;
+  border: 2px solid #4a3a28;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.btn-outline:hover { border-color: var(--gold); transform: translateY(-2px); }
+
+/* ═══════ FOOTER ═══════ */
+.site-footer {
+  position: relative; z-index: 1; text-align: center;
+  padding: 2rem; border-top: 2px solid var(--orange);
+  font-size: 0.8rem; color: var(--dim);
+}
+.footer-links { margin-top: 0.5rem; }
+.footer-links a {
+  color: var(--muted); text-decoration: none; margin: 0 0.8rem;
+  font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+  font-size: 0.75rem; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--orange); }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .work-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .interests-grid { grid-template-columns: repeat(2, 1fr); }
+  .section { padding: 4rem 1.25rem; }
+  .hero { padding: 5rem 1.25rem 3rem; }
+  .top-nav { padding: 0.8rem 1.25rem; }
+  .nav-links { gap: 1rem; }
+  .speed-lines { opacity: 0.02; }
+  .hero-kanji { font-size: 12rem; }
+}
+@media (max-width: 480px) {
+  .interests-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+}
+</style>
 </head>
 <body>
 
-<nav>
-  <a class="brand" href="index.html">akshitkobagapu.com</a>
-  <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
-    <span class="nav-toggle-icon" aria-hidden="true">☰</span>
-  </button>
-  <ul id="nav-menu">
-    <li><a href="#impact">impact</a></li>
-    <li><a href="#interests">interests</a></li>
-    <li><a href="about.html">about</a></li>
-  </ul>
+<div class="speed-lines" aria-hidden="true"></div>
+
+<nav class="top-nav">
+  <a class="brand" href="index.html">AKSHIT K.</a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="about.html#timeline">Timeline</a>
+    <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
 </nav>
 
-<!-- HERO -->
+<div class="page">
+
+<!-- ═══ HERO — MANGA TITLE PAGE ═══ -->
 <section class="hero">
-  <div class="hero-grid">
-    <div class="hero-text">
-      <div class="eyebrow"></div>
-      <h1>Akshit<br/><span class="accent">Kobagapu</span>.</h1>
-      <div class="tagline">I don't just fix problems. I eliminate them.<span class="cursor"></span></div>
-      <div class="meta">
-        <span>Build Systems</span>
-        <span>Automation</span>
-        <span><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener" class="meta-link">SPLE</a></span>
+  <div class="hero-kanji" aria-hidden="true">忍</div>
+  <img class="hero-photo reveal" src="_static/bio-photo-circle.png" alt="Akshit Kobagapu" />
+  <h1 class="hero-name reveal">
+    <span class="first">AKSHIT</span><br/>
+    <span class="last">KOBAGAPU.</span>
+  </h1>
+  <div class="hero-impact reveal">SOFTWARE ENGINEER · TOOL BUILDER · AUTOMATOR</div>
+  <p class="hero-tagline reveal">I don't just fix problems. I <strong>eliminate</strong> them.</p>
+  <div class="hero-tags reveal">
+    <span class="tag">Build Systems</span>
+    <span class="tag">Automation</span>
+    <span class="tag"><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener">SPLE</a></span>
+  </div>
+  <div class="scroll-cue">SCROLL ↓</div>
+</section>
+
+<!-- ═══ ARC 01: JUTSU SCROLLS ═══ -->
+<section class="section reveal" id="work">
+  <div class="arc-label">ARC 01 — JUTSU</div>
+  <h2>WHAT I <span class="accent">BUILD.</span></h2>
+  <div class="work-grid">
+    <div class="work-card">
+      <div class="work-card-body">
+        <div class="icon">⚡</div>
+        <h3>LICENSE-FREE TOOLS</h3>
+        <p>Replaced expensive vendor tools with custom Python solutions. <span class="highlight">€0/year</span> licensing cost.</p>
       </div>
     </div>
-    <div class="hero-terminal">
-      <div class="terminal-bar">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        <span class="terminal-title">~/career.sh</span>
+    <div class="work-card">
+      <div class="work-card-body">
+        <div class="icon">🔧</div>
+        <h3>BUILD AUTOMATION</h3>
+        <p>Extended build systems to eliminate manual steps. <span class="highlight">-1 day per variant</span> per release.</p>
       </div>
-      <pre class="terminal-content"><span class="com"># What I do</span>
+    </div>
+    <div class="work-card">
+      <div class="work-card-body">
+        <div class="icon">📊</div>
+        <h3>RESOURCE VISIBILITY</h3>
+        <p>RAM & ROM reports generated automatically. <span class="highlight">Every build</span>, every time.</p>
+      </div>
+    </div>
+  </div>
+  <div class="terminal-wrap reveal">
+    <div class="terminal-bar">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <span class="terminal-title">~/jutsu.sh</span>
+    </div>
+    <pre class="terminal-content"><span class="com"># What I do</span>
 <span class="kw">function</span> <span class="ac">eliminate_waste</span>() {
   <span class="com"># Replace expensive licenses</span>
   vector_tools → <span class="str">custom_python</span>  <span class="ok">✓ €0/year</span>
@@ -56,148 +447,129 @@
 
 <span class="com"># Result</span>
 <span class="kw">echo</span> <span class="str">"Teams ship faster. I sleep well."</span></pre>
-    </div>
-  </div>
-  <div class="scroll-hint">SCROLL ↓</div>
-</section>
-
-<!-- IMPACT -->
-<section class="impact" id="impact">
-  <div class="eyebrow">// by the numbers</div>
-  <h2>A decade of <span class="accent">measurable impact.</span></h2>
-  <div class="impact-grid">
-    <div class="stat">
-      <div class="stat-number" data-target="15">0</div>
-      <div class="stat-label">Spot Awards</div>
-      <div class="stat-detail">for exceptional contributions</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number" data-target="10" data-suffix="+">0</div>
-      <div class="stat-label">Trainings Delivered</div>
-      <div class="stat-detail"><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener" class="stat-link">SPLE</a> platform sessions</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number" data-target="5">0</div>
-      <div class="stat-label">Promotions in 6 Years</div>
-      <div class="stat-detail">GET → Technical Architect</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number" data-target="5" data-suffix="+">0</div>
-      <div class="stat-label">Days Saved per Release</div>
-      <div class="stat-detail">through build automation</div>
-    </div>
   </div>
 </section>
 
-<!-- INTERESTS -->
-<section class="interests" id="interests">
-  <div class="eyebrow">// when not coding</div>
-  <h2>Things that keep me <span class="accent">moving.</span></h2>
+<!-- ═══ ARC 02: POWER LEVEL ═══ -->
+<section class="section reveal" id="impact">
+  <div class="arc-label">ARC 02 — POWER LEVEL</div>
+  <h2>COMBAT <span class="gold">STATS.</span></h2>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-card-body">
+        <div class="stat-num" data-target="15">0</div>
+        <div class="stat-label">Spot Awards</div>
+        <div class="stat-detail">exceptional contributions</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-body">
+        <div class="stat-num" data-target="10" data-suffix="+">0</div>
+        <div class="stat-label"><a href="https://en.wikipedia.org/wiki/Software_product_line" target="_blank" rel="noopener">SPLE</a> Trainings</div>
+        <div class="stat-detail">platform sessions delivered</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-body">
+        <div class="stat-num" data-target="5">0</div>
+        <div class="stat-label">Promotions</div>
+        <div class="stat-detail">GET → Technical Architect</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-body">
+        <div class="stat-num" data-target="5" data-suffix="+">0</div>
+        <div class="stat-label">Days Saved / Release</div>
+        <div class="stat-detail">through build automation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ARC 03: BEYOND THE CODE ═══ -->
+<section class="section reveal" id="interests">
+  <div class="arc-label">ARC 03 — FILLER ARC</div>
+  <h2>BEYOND THE <span class="accent">CODE.</span></h2>
   <div class="interests-grid">
-    <div class="interest-card">
-      <div class="interest-icon">🏃</div>
-      <h3>Sports</h3>
-      <p>Running, swimming, inline skating, ice skating, hiking, bouldering, and recently — skiing</p>
+    <div class="int-card">
+      <div class="icon">🏃</div>
+      <h3>SPORTS</h3>
+      <p>Running, swimming, cycling, ice skating, inline skating, hiking, bouldering, skiing</p>
     </div>
-    <div class="interest-card">
-      <div class="interest-icon">🎨</div>
-      <h3>Art & Anime</h3>
-      <p>Drawing, painting, and watching anime — a lot of anime</p>
+    <div class="int-card">
+      <div class="icon">🎨</div>
+      <h3>ART & ANIME</h3>
+      <p>Drawing, painting, and watching anime</p>
     </div>
-    <div class="interest-card">
-      <div class="interest-icon">🍳</div>
-      <h3>Cooking</h3>
-      <p>Experimenting with recipes and flavors from different cuisines</p>
+    <div class="int-card">
+      <div class="icon">🍳</div>
+      <h3>COOKING</h3>
+      <p>Experimenting with cuisines and flavors</p>
     </div>
-    <div class="interest-card">
-      <div class="interest-icon">💻</div>
-      <h3>Coding Practice</h3>
-      <p>Coding dojos and katas with colleagues — always learning</p>
+    <div class="int-card">
+      <div class="icon">💻</div>
+      <h3>CODING</h3>
+      <p>Dojos and katas with colleagues</p>
     </div>
   </div>
 </section>
 
-<!-- ABOUT TEASER -->
-<section class="about" id="about">
-  <div class="section-head">
-    <h2>About <span class="accent">me.</span></h2>
-    <div class="see-all-group">
-      <a class="see-all" href="about.html">full story</a>
-      <a class="see-all" href="about.html#timeline">timeline</a>
-    </div>
+<!-- ═══ CTA ═══ -->
+<section class="cta reveal">
+  <p class="cta-quote">THE <span class="accent">JOURNEY</span> FROM A SMALL TOWN TO THE <span class="gold">WORLD STAGE.</span></p>
+  <p class="cta-sub">— and it's far from over.</p>
+  <div class="cta-buttons">
+    <a href="about.html" class="btn-fire">Read My Story</a>
+    <a href="about.html#timeline" class="btn-outline">View Timeline</a>
   </div>
-  <p>I build tools that make teams faster. From automating resource analysis across three continents to eliminating six-figure license costs with custom Python — I find inefficiencies and make them disappear.</p>
-  <p class="muted">Currently an Advanced Software Development Engineer at Marquardt GmbH, Germany. Interested in build systems, software product line engineering, and automation.</p>
 </section>
 
-<footer>
-  <div>© <span id="year"></span> Akshit Kobagapu · Built with curiosity and Python</div>
-  <div>
-    <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">github</a>
-    <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">linkedin</a>
+</div>
+
+<footer class="site-footer">
+  <p>© <span id="year"></span> Akshit Kobagapu · Built with curiosity and Python</p>
+  <div class="footer-links">
+    <a href="https://github.com/code-steadfast/" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.linkedin.com/in/akshit-kobagapu/" target="_blank" rel="noopener">LinkedIn</a>
   </div>
 </footer>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // ----- Mobile nav toggle -----
+  // Scroll reveal
   (function () {
-    const nav = document.querySelector('nav');
-    const btn = document.querySelector('.nav-toggle');
-    const menu = document.getElementById('nav-menu');
-    if (!nav || !btn || !menu) return;
-    const setOpen = (open) => {
-      nav.classList.toggle('open', open);
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      btn.querySelector('.nav-toggle-icon').textContent = open ? '✕' : '☰';
-    };
-    btn.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
-    menu.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') setOpen(false);
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach((el, i) => {
+      el.style.transitionDelay = el.closest('.hero') ? (i * 0.15) + 's' : '0s';
+      io.observe(el);
     });
   })();
 
-  // ----- Animated counters -----
+  // Counter animation
   (function () {
-    const stats = document.querySelectorAll('.stat-number');
+    const nums = document.querySelectorAll('.stat-num[data-target]');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         const el = entry.target;
         const target = parseInt(el.dataset.target);
         let current = 0;
-        const increment = Math.max(1, Math.floor(target / 40));
+        const inc = Math.max(1, Math.floor(target / 40));
         const timer = setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            current = target;
-            clearInterval(timer);
-          }
-          const suffix = el.dataset.suffix || '';
-          el.textContent = current + suffix;
+          current += inc;
+          if (current >= target) { current = target; clearInterval(timer); }
+          el.textContent = current + (el.dataset.suffix || '');
         }, 30);
         io.unobserve(el);
       });
     }, { threshold: 0.5 });
-    stats.forEach(s => io.observe(s));
-  })();
-
-  // ----- Interest card reveal -----
-  (function () {
-    const cards = document.querySelectorAll('.interest-card');
-    const io = new IntersectionObserver((items) => {
-      items.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    cards.forEach((c, i) => {
-      c.style.transitionDelay = (i * 100) + 'ms';
-      io.observe(c);
-    });
+    nums.forEach(n => io.observe(n));
   })();
 </script>
 
