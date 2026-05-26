@@ -121,46 +121,84 @@ body {
 .bio-prose strong { color: var(--text); font-weight: 600; }
 .bio-prose em { color: var(--orange); font-style: italic; }
 
-/* Timeline */
-.timeline { position: relative; padding-left: 2.5rem; }
+/* Timeline — Scroll Path */
+.timeline { position: relative; padding-left: 3.5rem; }
 .timeline::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-  width: 3px; background: linear-gradient(180deg, var(--orange), var(--gold), var(--crimson));
-  border-radius: 3px;
+  content: ''; position: absolute; left: 14px; top: 0; bottom: 0;
+  width: 3px;
+  background: repeating-linear-gradient(180deg,
+    var(--gold) 0px, var(--gold) 12px,
+    transparent 12px, transparent 18px);
+  opacity: 0.5;
 }
+
+/* Scroll entry */
 .tl-entry {
-  position: relative; margin-bottom: 2rem; padding: 1.5rem;
-  background: var(--surface); border: 2px solid var(--border);
-  border-radius: 4px; transition: border-color 0.3s;
+  position: relative; margin-bottom: 2.5rem;
+  background: linear-gradient(135deg, #2a2218 0%, #1e1a14 50%, #2a2218 100%);
+  border: 2px solid #4a3a28;
+  border-radius: 6px;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0; transform: translateX(-30px);
+  transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s;
 }
-.tl-entry:hover { border-color: var(--orange); }
-.tl-entry::before {
-  content: ''; position: absolute; left: -2.95rem; top: 1.8rem;
-  width: 12px; height: 12px; border-radius: 50%;
-  background: var(--orange); border: 3px solid var(--bg);
-  box-shadow: 0 0 10px rgba(255,106,0,0.4);
+.tl-entry.scroll-visible { opacity: 1; transform: translateX(0); }
+.tl-entry:hover { border-color: var(--gold); }
+
+/* Scroll top & bottom roll decorations */
+.tl-entry::before, .tl-entry::after {
+  content: ''; display: block; height: 10px;
+  background: linear-gradient(90deg,
+    #5a4530 0%, #8a6a40 15%, #c8a050 30%, #dbb860 50%,
+    #c8a050 70%, #8a6a40 85%, #5a4530 100%);
+  border-radius: 0;
 }
+.tl-entry::before { border-bottom: 1px solid #3a2a18; }
+.tl-entry::after { border-top: 1px solid #3a2a18; }
+
+.tl-entry-body { padding: 1.5rem 1.8rem; }
+
+/* Kunai marker on the scroll path */
+.tl-entry .kunai {
+  position: absolute; left: -3.55rem; top: 1.8rem;
+  width: 0; height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 14px solid var(--gold);
+  filter: drop-shadow(0 0 6px rgba(255,215,0,0.5));
+}
+
 .tl-entry .year {
-  font-family: var(--font-display); font-size: 1rem;
-  color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.2rem;
+  font-family: var(--font-display); font-size: 1.1rem;
+  color: var(--gold); letter-spacing: 0.15em; margin-bottom: 0.3rem;
+  text-shadow: 0 0 8px rgba(255,215,0,0.3);
 }
 .tl-entry .title {
-  font-family: var(--font-display); font-size: 1.1rem;
-  letter-spacing: 0.04em; margin-bottom: 0.3rem;
+  font-family: var(--font-display); font-size: 1.15rem;
+  letter-spacing: 0.04em; margin-bottom: 0.4rem;
+  color: var(--text);
 }
 .tl-entry .title p { margin: 0; }
-.tl-entry .desc { color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
+.tl-entry .desc {
+  color: #b8a88a; font-size: 0.88rem; line-height: 1.6;
+  font-style: italic;
+}
 .tl-entry .desc p { margin: 0; }
 
-/* Typewriter */
-.char { opacity: 0; transition: opacity 0.04s; }
-.char.shown { opacity: 1; }
-.typing-caret {
-  display: inline-block; width: 0.55ch; height: 1.1em;
-  background: var(--orange); vertical-align: text-bottom;
-  animation: blink 1.1s steps(1) infinite;
+/* Seal stamp on every 5th scroll */
+.tl-entry:nth-child(5n) .tl-entry-body::after {
+  content: '印'; position: absolute; bottom: 20px; right: 20px;
+  font-size: 2.5rem; color: var(--crimson); opacity: 0.15;
+  font-weight: 900; transform: rotate(-15deg);
 }
-@keyframes blink { 50% { opacity: 0; } }
+.tl-entry:nth-child(5n) .tl-entry-body { position: relative; }
+
+/* Scroll unroll animation */
+@keyframes unroll {
+  from { max-height: 0; opacity: 0; }
+  to { max-height: 500px; opacity: 1; }
+}
 
 /* Footer */
 .site-footer {
@@ -224,9 +262,12 @@ body {
   <div class="timeline">
     {%- for entry in timeline_entries %}
     <div class="tl-entry">
-      <div class="year">{{ entry.year }}</div>
-      <div class="title">{{ entry.title | md }}</div>
-      <div class="desc">{{ entry.description | md }}</div>
+      <span class="kunai"></span>
+      <div class="tl-entry-body">
+        <div class="year">{{ entry.year }}</div>
+        <div class="title">{{ entry.title | md }}</div>
+        <div class="desc">{{ entry.description | md }}</div>
+      </div>
     </div>
     {%- endfor %}
   </div>
@@ -254,57 +295,21 @@ body {
     els.forEach(el => io.observe(el));
   })();
 
-  // Typewriter
+  // Scroll reveal — entries slide in as you scroll
   (function () {
     const entries = document.querySelectorAll('.tl-entry');
     if (!entries.length) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function splitChars(root) {
-      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-      const textNodes = [];
-      while (walker.nextNode()) textNodes.push(walker.currentNode);
-      const chars = [];
-      for (const node of textNodes) {
-        const text = node.nodeValue; if (!text) continue;
-        const frag = document.createDocumentFragment();
-        for (const ch of Array.from(text)) {
-          const span = document.createElement('span');
-          span.className = 'char'; span.textContent = ch;
-          frag.appendChild(span); chars.push(span);
-        }
-        node.parentNode.replaceChild(frag, node);
-      }
-      return chars;
-    }
-
-    const data = Array.from(entries).map(el => ({
-      el, groups: [
-        { root: el.querySelector('.year'),  delay: 30, chars: [] },
-        { root: el.querySelector('.title'), delay: 14, chars: [] },
-        { root: el.querySelector('.desc'),  delay: 5,  chars: [] },
-      ],
-    }));
-    for (const d of data) for (const g of d.groups) g.chars = splitChars(g.root);
-
-    if (reduced) { for (const d of data) for (const g of d.groups) for (const c of g.chars) c.classList.add('shown'); return; }
-
-    const sleep = ms => new Promise(r => setTimeout(r, ms));
-    async function typeEntry(d) {
-      const caret = document.createElement('span'); caret.className = 'typing-caret';
-      for (const g of d.groups) { g.root.prepend(caret); for (const c of g.chars) { c.classList.add('shown'); c.after(caret); await sleep(g.delay); } }
-      caret.remove();
-    }
+    if (reduced) { entries.forEach(el => el.classList.add('scroll-visible')); return; }
 
     const io = new IntersectionObserver((items) => {
-      for (const e of items) {
-        if (!e.isIntersecting) continue;
-        const d = data.find(x => x.el === e.target);
-        if (!d || d.started) continue;
-        d.started = true; typeEntry(d); io.unobserve(e.target);
-      }
-    }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
-    for (const d of data) io.observe(d.el);
+      items.forEach((e, i) => {
+        if (!e.isIntersecting) return;
+        setTimeout(() => e.target.classList.add('scroll-visible'), i * 80);
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
+    entries.forEach(el => io.observe(el));
   })();
 </script>
 
